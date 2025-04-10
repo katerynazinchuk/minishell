@@ -11,7 +11,7 @@ CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
 SRC = main.c \
-	
+	signal.c
 
 OBJ = $(addprefix $(BUILD_DIR)/, $(SRC:%.c=%.o))
 
