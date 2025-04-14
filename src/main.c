@@ -16,7 +16,7 @@ int main()
 		line = readline(prompt);
 		if (!line)
 		{
-			write(1, "exit\n", 6);
+			write(1, "exit\n", 4);
 			exit (0);
 		}
 		// if (*line)
