@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/14 14:56:08 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:56:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,7 @@
 # define LEXER_H
 # include "minishell.h"
 # include "my_signal.h"
-
-typedef enum e_token_type
-{
-	TOKEN_WORD,//argc, argv
-	TOKEN_PIPE,//|
-	TOKEN_REDIRECT_IN,//<
-	TOKEN_REDIRECT_OUT,//>
-	TOKEN_APPEND,//>>
-	TOKEN_HEREDOC,//<<
-	TOKEN_SPACE,
-	TOKEN_EOF,
-}	t_token_type;
-
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	struct s_token	*next;
-}	t_token;
-
-//helps you avoid writing token_last() every time you want to add to the end.
-typedef struct s_lexer_list
-{
-	t_token		*head;
-	t_token		*tail;
-}	t_lexer_list;
+# include "token.h"
 
 //help track the current position in the string, if we have multiple tokens
 typedef struct s_lexer
