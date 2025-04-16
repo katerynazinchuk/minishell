@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/14 15:56:17 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:48:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ typedef struct s_token_list
 {
 	t_token		*head;
 	t_token		*tail;
-}	t_lexer_list;
+}	t_token_list;
 
 #endif
