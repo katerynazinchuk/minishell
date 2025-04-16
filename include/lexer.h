@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/14 15:56:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:19:16 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-# include "minishell.h"
-# include "my_signal.h"
-# include "token.h"
+
+//only for token process 
 
 //help track the current position in the string, if we have multiple tokens
 typedef struct s_lexer
@@ -25,12 +24,11 @@ typedef struct s_lexer
 	int		len;
 }	t_lexer;
 
-//Tracks whether you're inside single quotes, double quotes, or escaping a character (\)
+//Tracks whether you're inside single quotes, double quotes
 typedef struct s_lexer_state
 {
 	int	quote;
 	int	dquote;
-	int	escape;
 }	t_lexer_state;
 
 #endif
