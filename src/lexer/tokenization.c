@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/16 19:02:44 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:20:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,15 @@ void add_token(t_token_list *list, t_token *new_token)
 //lexer->input[lexer->current_index] == '|' ? TOKEN_PIPE : lexer->input[lexer->current_index];
 //lexer->input[lexer->current_index] == '<' ? TOKEN_REDIRECT_IN : lexer->input[lexer->current_index];
 //lexer->input[lexer->current_index] == '>' ? TOKEN_REDIRECT_OUT : lexer->input[lexer->current_index];	
+
+t_node *parse_tokens 
+{
+	if (||)
+		return new node NODE_OR with left and right branches;
+	else if (&&)
+		return new node NODE_AND with left and right branches;
+	else if (|)
+		return new node NODE_PIPE with left and right branches;
+	else
+		return new node NODE_COMMAND or NODE_REDIRECT;;
+}

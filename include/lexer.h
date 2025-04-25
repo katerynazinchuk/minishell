@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/14 15:56:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:36:17 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ typedef struct s_lexer
 	int		len;
 }	t_lexer;
 
-//Tracks whether you're inside single quotes, double quotes, or escaping a character (\)
+//Tracks whether you're inside single quotes, double quotes
 typedef struct s_lexer_state
 {
 	int	quote;
 	int	dquote;
-	int	escape;
 }	t_lexer_state;
 
 #endif
