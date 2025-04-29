@@ -6,24 +6,18 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:49:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 14:52:11 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:07:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_str_pos *init_lexer_state(void)
+void init_lexer_state(t_str_pos *lexer, char *line)
 {
-	t_str_pos	*lexer;
-	lexer = (t_str_pos *)malloc(sizeof(t_str_pos));
-	if (!lexer)
-		return (NULL);
-
-	lexer->input = NULL;
+	lexer->input = line;
 	lexer->start = 0;
 	lexer->current = 0;
 	lexer->len = 0;
-	return (lexer);
 }
 
 t_token_list *init_token_list(void)
