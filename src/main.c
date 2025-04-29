@@ -19,6 +19,10 @@ int main()
 			write(1, "exit\n", 4);
 			exit (0);
 		}
+		//lexer = init_lexer(line);
+		//token = extract_token(lexer, state);
+		//parse_tokens(token);
+		//execute_command(token);
 		// if (*line)
 		// 	add_history(line);
 		printf("command: %s\n", line);

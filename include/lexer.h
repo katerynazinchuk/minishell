@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/22 17:36:17 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:27:55 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include "token.h"
 
 //help track the current position in the string, if we have multiple tokens
-typedef struct s_lexer
+typedef struct s_str_pos
 {
 	char	*input;
-	int		current_index;
-	int		start_index;//beggining of the token
+	int		start;//beginning of the token
+	int		current;
 	int		len;
-}	t_lexer;
+}	t_str_pos;
 
 //Tracks whether you're inside single quotes, double quotes
 typedef struct s_lexer_state
