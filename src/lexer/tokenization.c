@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 16:07:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:58:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ t_token_list *lexer(char *line)
 	while (lexer.input[lexer.current])
 	{
 		if (is_whitespace(lexer.input[lexer.current]))
-			skip_whitespace(lexer);
-		else if (lexer.input[lexer.current] == '|"')
-			add_pipe_token(list, lexer);
+			skip_whitespace(&lexer);
+		else if (lexer.input[lexer.current] == '|')
+			add_pipe_token(list, &lexer);
 		else if (lexer.input[lexer.current] == '<' || lexer.input[lexer.current] == '>')
-			add_redirection_token(list, lexer);
+			add_redirection_token(list, &lexer);
 		else
-			add_word_token(list, lexer);
+			add_word_token(list, &lexer);
 	}
 	return (list);
 }
@@ -42,7 +42,7 @@ void print_tokens(t_token_list *list)
 	current = list->head;
 	while (current)
 	{
-		printf("Token: %s, Type: %d\n", current->value, current->type);
+		printf("Token: [type = %d] [value = \"%s\"]\n", current->type, current->value);
 		current = current->next;
 	}
 }

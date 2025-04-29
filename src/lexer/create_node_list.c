@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create node list.c                                 :+:      :+:    :+:   */
+/*   create_node_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 16:07:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:38:03 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void free_token_list(t_token_list *list)
 	t_token	*next;
 
 	if (!list)
-	return;
+		return;
 	current = list->head;
 	while (current)
 	{

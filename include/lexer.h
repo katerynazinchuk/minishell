@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 14:27:55 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:16:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,26 @@ typedef struct s_lexer_state
 	int	quote;
 	int	dquote;
 }	t_lexer_state;
+
+//functions
+int		is_whitespace(char c);
+char	*ft_strndup(const char *s, size_t n);
+
+t_token *create_token(char *value, t_token_type type);
+void	add_to_token_list(t_token_list *list, t_token *new_token);
+void	free_token(t_token *token);
+void	free_token_list(t_token_list *list);
+
+void	init_lexer_state(t_str_pos *lexer, char *line);
+t_token_list	*init_token_list(void);
+
+void	skip_whitespace(t_str_pos *lexer);
+void	add_pipe_token(t_token_list *list, t_str_pos *lexer);
+void	add_redirection_token(t_token_list *list, t_str_pos *lexer);
+void	add_word_token(t_token_list *list, t_str_pos *lexer);
+
+t_token_list	*lexer(char *line);
+void	print_tokens(t_token_list *list);
 
 #endif
 

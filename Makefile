@@ -10,12 +10,32 @@ CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
-SRC = main.c \
-	signal.c
+
+# Define the source files and object files
+BUILD_IN = src/builtins/
+ENV = src/env/
+EXECUTOR = src/executor/
+LEXER = src/lexer/create_node_list.c \
+		src/lexer/initialize_structs.c \
+		src/lexer/token_types.c \
+		src/lexer/tokenization.c \
+		src/lexer/tokenize_utils.c
+PARSER = src/parser/parser.c \
+		src/parser/ 
+SIGNALS = 
+
+SRC = $(LEXER) main.c signal.c
 
 OBJ = $(addprefix $(BUILD_DIR)/, $(SRC:%.c=%.o))
 
 all: $(NAME)
+
+$(BUILD_DIR):
+	@mkdir -p $(BUILD_DIR)
+
+$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
 	@$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)

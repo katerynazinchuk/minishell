@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/04/29 16:20:20 by kzinchuk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /* [username@hostname current_working_directory]$ */
@@ -8,6 +20,7 @@ int main()
 {
 	char		*line;
 	const char	*prompt = "minishell> ";
+	t_token_list	*tokens;
 
 	init_signals();
 	while(1)
@@ -18,6 +31,16 @@ int main()
 		{
 			write(1, "exit\n", 4);
 			exit (0);
+		}
+		if(*line)
+		{
+			tokens = lexer(line);
+			if (tokens)
+			{
+				print_tokens(tokens);
+				free_token_list(tokens);
+			}
+			add_history(line);
 		}
 		//lexer = init_lexer(line);
 		//token = extract_token(lexer, state);
