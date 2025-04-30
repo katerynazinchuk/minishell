@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 17:58:16 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:01:01 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token_list *lexer(char *line)
 {
 	t_token_list	*list;
-	t_str_pos	lexer;
+	t_str_pos		lexer;
 	
 	list = init_token_list();
 	if (!list)

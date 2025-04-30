@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/16 15:48:05 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:52:27 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "my_signal.h"
 # include "lexer.h"
 
-typedef enum token_type
+typedef enum e_token_type
 {
 	TOKEN_WORD,//argc, argv
 	TOKEN_PIPE,//|
@@ -28,10 +28,19 @@ typedef enum token_type
 	TOKEN_EOF,
 }	t_token_type;
 
+//Tracks whether you're inside single quotes, double quotes
+typedef enum e_quote_type
+{
+	QUOTE_NONE,
+	QUOTE_SINGLE,
+	QUOTE_DOUBLE,
+}	t_quote_type;
+
 typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	t_quote_type	t_quote_type;
 	struct s_token	*next;
 }	t_token;
 
