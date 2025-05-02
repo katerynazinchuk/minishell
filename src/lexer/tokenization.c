@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/30 14:01:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:13:50 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void print_tokens(t_token_list *list)
 	current = list->head;
 	while (current)
 	{
-		printf("Token: [type = %d] [value = \"%s\"]\n", current->type, current->value);
+		printf("Token: [type = %d] [value = %s] [quotes = %u]\n", current->type, current->value, current->t_quote_type);
 		current = current->next;
 	}
 }

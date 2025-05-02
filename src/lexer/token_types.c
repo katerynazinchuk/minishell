@@ -6,11 +6,17 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/30 18:24:28 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:29:40 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+static int use_quotes(t_str_pos *lexer);
+static int check_quotes(t_str_pos *lexer);
+static int quotes_error(t_str_pos *lexer);
+static t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer);
+static t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer);
+static t_token *word_token(t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
 
 void skip_whitespace(t_str_pos *lexer)
 {
@@ -66,50 +72,22 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 }
 
-// void add_word_token(t_token_list *list, t_str_pos *lexer)
-// {
-// 	t_token	*new_token;
-// 	char *word;
-	
-// 	if (lexer->input[lexer->current] == '"' || lexer->input[lexer->current] == '\'')
-// 	{
-// 		return(check_quotes(lexer));
-// 	}	
-// 	lexer->start = lexer->current;
-// 	while (lexer->input[lexer->current] &&
-// 		!is_whitespace(lexer->input[lexer->current]) &&
-// 		lexer->input[lexer->current] != '|' &&
-// 		lexer->input[lexer->current] != '>' &&
-// 		lexer->input[lexer->current] != '<' &&
-// 		lexer->input[lexer->current] != '"')	
-// 	{
-// 		lexer->current++;
-// 	}
-// 	lexer->len = lexer->current - lexer->start;
-// 	if (lexer->len <= 0)
-// 		return;
-// 	word = ft_strndup(lexer->input + lexer->start, lexer->len);
-// 	if (!word)
-// 		return;
-// 	new_token = create_token(word, TOKEN_WORD, QUOTE_NONE);
-// 	free(word);
-// 	if (!new_token)
-// 		return;
-// 	add_to_token_list(list, new_token);
-// }
-
 void add_word_token(t_token_list *list, t_str_pos *lexer)
 {
 	if (use_quotes(lexer))
 	{
 		if (!check_quotes(lexer))
-			return(no_quotes_error(lexer));
-		return (add_quoted_word(list, lexer));
+		{
+			quotes_error(lexer);
+			return;
+		}
+		add_quoted_word(list, lexer);
+		return;
 	}
-	return (add_unquoted_word(list, lexer));
+	add_unquoted_word(list, lexer);
 }
 
-int use_quotes(t_str_pos *lexer)
+static int use_quotes(t_str_pos *lexer)
 {
 	if (lexer->input[lexer->current] == '"' || lexer->input[lexer->current] == '\'')
 	{
@@ -118,7 +96,7 @@ int use_quotes(t_str_pos *lexer)
 	return (0);
 }
 
-int check_quotes(t_str_pos *lexer)
+static int check_quotes(t_str_pos *lexer)
 {
 	int i;
 	char quote;
@@ -134,18 +112,35 @@ int check_quotes(t_str_pos *lexer)
 	}
 	return (0);
 }
-int no_quotes_error(t_str_pos *lexer)
+static int quotes_error(t_str_pos *lexer)
 {
 	printf("Error: No matching quotes found for token starting at index %d\n", lexer->start);
 	return (0);
 }
-t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
+static t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 {
-	// add logic and test
-	return (word_token(list, lexer, type));
+	char quote_char;
+	t_quote_type quote_type;
+	t_token *new_token;
+
+	quote_char = lexer->input[lexer->current];
+	if(quote_char == '"')
+		quote_type = QUOTE_DOUBLE;
+	else
+		quote_type = QUOTE_SINGLE;
+	lexer->current++;
+	lexer ->start = lexer->current;
+	while(lexer->input[lexer->current] && lexer->input[lexer->current] != quote_char)
+	{
+		lexer->current++;
+	}
+	new_token = word_token(list, lexer, quote_type);
+	if (lexer->input[lexer->current] == quote_char)
+		lexer->current++;
+	return (new_token);
 }
 
-t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
+static t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 {
 	lexer->start = lexer->current;
 	while (lexer->input[lexer->current] && !is_whitespace(lexer->input[lexer->current]) &&
@@ -157,18 +152,16 @@ t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 	}
 	return(word_token(list, lexer, QUOTE_NONE));
 }
-t_token * word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote)
+static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type)
 {
 	t_token	*new_token;
 	char	*word;
-	int		start;
 
-	start = lexer->current;
 	lexer->len = lexer->current - lexer->start;
-	word = ft_strndup(lexer->input + start, lexer->len);
+	word = ft_strndup(lexer->input + lexer->start, lexer->len);
 	if (!word)
 		return (NULL);
-	new_token = create_token(word, TOKEN_WORD, QUOTE_NONE);
+	new_token = create_token(word, TOKEN_WORD, quote_type);
 	free(word);
 	if (!new_token)
 		return (NULL);
