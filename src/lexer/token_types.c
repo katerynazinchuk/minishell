@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/30 14:21:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/05 12:00:18 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,66 +30,56 @@ void add_pipe_token(t_token_list *list, t_str_pos *lexer)
 
 void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 {
-	t_token	*new_token;
-	
-	if(lexer->input[lexer->current] == '>' && lexer->input[lexer->current + 1] == '>')
+	if (lexer->input[lexer->current + 1] == '>' && lexer->input[lexer->current] == '>')
 	{
-		new_token = create_token(">>", TOKEN_APPEND, QUOTE_NONE);
-		if (!new_token)
-			return;
-		add_to_token_list(list, new_token);
+		create_redirection_token(list, ">>", TOKEN_APPEND);
 		lexer->current += 2;
 	}
-	else if(lexer->input[lexer->current] == '<' && lexer->input[lexer->current + 1] == '<')
+	else if (lexer->input[lexer->current + 1] == '<' && lexer->input[lexer->current] == '<')
 	{
-		new_token = create_token("<<", TOKEN_HEREDOC, QUOTE_NONE);
-		if (!new_token)
-			return;
-		add_to_token_list(list, new_token);
+		create_redirection_token(list, "<<", TOKEN_HEREDOC);
 		lexer->current += 2;
 	}
-	else if(lexer->input[lexer->current] == '>')
+	else if (lexer->input[lexer->current + 1] == '>')
 	{
-		new_token = create_token(">", TOKEN_REDIRECT_OUT, QUOTE_NONE);
-		if (!new_token)
-			return;
-		add_to_token_list(list, new_token);
+		create_redirection_token(list, ">", TOKEN_REDIRECT_OUT);
 		lexer->current++;
 	}
-	else if(lexer->input[lexer->current] == '<')
+	else if (lexer->input[lexer->current] == '<')
 	{
-		new_token = create_token("<", TOKEN_REDIRECT_IN, QUOTE_NONE);
-		if (!new_token)
-			return;
-		add_to_token_list(list, new_token);
+		create_redirection_token(list, "<", TOKEN_REDIRECT_IN);
+		lexer->current++;
+	}
+	else 
+	{
+		printf("minishell: syntax error near unexpected token `%c`\n", lexer->input[lexer->current]);
 		lexer->current++;
 	}
 }
 
-void add_word_token(t_token_list *list, t_str_pos *lexer)
+void create_redirection_token(t_token_list *list, char *symbol, t_token_type type)
 {
 	t_token	*new_token;
-	char *word;
-	
-	lexer->start = lexer->current;
-	while (lexer->input[lexer->current] &&
-		!is_whitespace(lexer->input[lexer->current]) &&
-		lexer->input[lexer->current] != '|' &&
-		lexer->input[lexer->current] != '>' &&
-		lexer->input[lexer->current] != '<' &&
-		lexer->input[lexer->current] != '"')	
-	{
-		lexer->current++;
-	}
-	lexer->len = lexer->current - lexer->start;
-	if (lexer->len <= 0)
-		return;
-	word = ft_strndup(lexer->input + lexer->start, lexer->len);
-	if (!word)
-		return;
-	new_token = create_token(word, TOKEN_WORD, QUOTE_NONE);
-	free(word);
+
+	new_token = create_token(symbol, type, QUOTE_NONE);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
+}	
+
+void add_word_token(t_token_list *list, t_str_pos *lexer)
+{
+	if (use_quotes(lexer))
+	{
+		if (!check_quotes(lexer))
+		{
+			quotes_error(lexer);
+			return;
+		}
+		add_quoted_word(list, lexer);
+		return;
+	}
+	add_unquoted_word(list, lexer);
 }
+
+//echo "a|b" 'c>d' "<input" >output | grep "hello|world"

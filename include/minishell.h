@@ -21,8 +21,9 @@ w: wait, wait3, wait4, waitpid, write
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "token.h"
+# include "libft.h"
 # include "lexer.h"
+# include "token.h"
 # include "my_signal.h"
 # include "libft.h"
 # include <signal.h>
