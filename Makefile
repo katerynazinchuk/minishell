@@ -18,8 +18,9 @@ EXECUTOR = src/executor/
 LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \
-		src/lexer/tokenization.c \
-		src/lexer/tokenize_utils.c
+		src/lexer/lexer.c \
+		src/lexer/token_word_utils.c \
+		src/lexer/tokenization_utils.c
 PARSER = src/parser/parser.c \
 		src/parser/ 
 SIGNALS = 

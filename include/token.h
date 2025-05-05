@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/02 13:25:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:36:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_token
 //helps you avoid writing token_last() every time you want to add to the end.
 typedef struct s_token_list
 {
-	int 	error;
+	int 	error;// to track errors (not sure yet)
 	t_token		*head;
 	t_token		*tail;
 }	t_token_list;

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/02 13:28:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:47:34 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int main()
 			}
 			add_history(line);
 		}
-		//lexer = init_lexer(line);
 		//token = extract_token(lexer, state);
 		//parse_tokens(token);
 		//execute_command(token);

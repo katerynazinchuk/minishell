@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/04/29 17:37:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:52:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,22 @@ char *ft_strndup(const char *s, size_t n)
     }
     new_str[i] = '\0';
     return (new_str);
+}
+
+void print_tokens(t_token_list *list)
+{
+	t_token	*current;
+
+	current = list->head;
+	while (current)
+	{
+		printf("Token: [type = %d] [value = %s] [quotes = %u]\n", current->type, current->value, current->t_quote_type);
+		current = current->next;
+	}
+}
+
+int quotes_error(t_str_pos *lexer)
+{
+	printf("Error: No matching quotes found for token starting at index %d\n", lexer->start);
+	return (0);
 }
