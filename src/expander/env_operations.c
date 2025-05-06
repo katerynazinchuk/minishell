@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 13:04:14 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:07:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,19 @@ static t_env_list	*init_env_list(void);
 t_env_list	*fill_env_list(char **env)
 {
 	int			i;
-	int			j;
 	t_env_list	*env_list;
 	t_env_type	*node;
 
 	env_list = init_env_list();
+	if (!env_list)
+	{
+		malloc_error();
+		return (NULL);//check where it goes
+	}
 	i = 0;
 	while (env[i] != NULL)
 	{
-		j = 0;
-		while (env[i][j] != '=')
-			j++;
-		node = (t_env_type *)malloc(sizeof(t_env_type));
-		if (!node)
-		{
-			free_env_list(env_list);
-			return (malloc_error());
-		}
-		node->key = ft_substr(env[i], 0, j);
-		if (!node->key)
-		{
-			free_env_list(env_list);
-			malloc_error ();
-			exit (1);
-		}
-		node->value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1);
-		if (!node->key)
-		{
-			free_env_list(env_list);
-			malloc_error ();
-			exit (1);
-		}
-		node->next = NULL;
+		fill_env_node(env[i]);
 		add_env_node(env_list, node);
 		i++;
 	}
@@ -81,29 +62,31 @@ void	add_env_node(t_env_list *env_list, t_env_type *node)
 	}
 }
 
-void	free_env_list(t_env_list *env_list)
+t_env_type	fill_env_node(char *str)
 {
-	t_env_type	*current;
-	t_env_type	*next;
+	t_env_type	*node;
+	int			j;
 
-	if (!env_list)
-		return ();
-	current = env_list->head;
-	while (current)
+	j = 0;
+	while (env[i][j] != '=')
+			j++;
+	node = (t_env_type *)malloc(sizeof(t_env_type));
+	if (!node)
+		return (NULL);//so exit or return
+	node->key = ft_substr(env[i], 0, j);
+	if (!node->key)
 	{
-		next = current->next;
-		if (current->key != NULL)
-			free(current->key);
-		if (current->value != NULL)
-			free(current->value);
-		free(current);
-		current = next;
+		free_env_node(node);
+		malloc_error();
+		exit (1);//we need to clean previous allocate 
 	}
-	free(env_list);
-}
-
-void	malloc_error(void)
-{
-	const char *str = "Cannot allocate memory";
-	ft_putendl_fd(str, stderr);
+	node->value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1);
+	if (!node->value)
+	{
+		free_env_node(node);
+		malloc_error();
+		exit (1);//we need to clean previous allocate
+	}
+	node->next = NULL;
+	return (node);
 }

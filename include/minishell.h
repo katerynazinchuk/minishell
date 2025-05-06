@@ -26,6 +26,7 @@ w: wait, wait3, wait4, waitpid, write
 # include "token.h"
 # include "my_signal.h"
 # include "libft.h"
+# include "expander.h"
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
