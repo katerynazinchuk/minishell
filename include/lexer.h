@@ -6,27 +6,26 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/05 11:59:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:46:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-//only for token process 
+# include "token.h"
 
 //help track the current position in the string, if we have multiple tokens
 typedef struct s_str_pos
 {
 	char	*input;
-	int		start;//beginning of the token
+	int		start;
 	int		current;
 	int		len;
 }	t_str_pos;
 
 
 int		is_whitespace(char c);
-char	*ft_strndup(const char *s, size_t n);
+char	*ft_strndup(const char *s, int n);
 
 t_token *create_token(char *value, t_token_type types, t_quote_type quotes);
 void	add_to_token_list(t_token_list *list, t_token *new_token);
