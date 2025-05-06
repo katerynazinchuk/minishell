@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:31:19 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:46:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_str_pos
 
 
 int		is_whitespace(char c);
-char	*ft_strndup(const char *s, size_t n);
+char	*ft_strndup(const char *s, int n);
 
 t_token *create_token(char *value, t_token_type types, t_quote_type quotes);
 void	add_to_token_list(t_token_list *list, t_token *new_token);
