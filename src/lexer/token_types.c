@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 14:01:38 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:48:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void add_word_token(t_token_list *list, t_str_pos *lexer)
 		if (!check_quotes(lexer))
 		{
 			quotes_error(lexer);
-			exit (1);
-			//lexer->current++;
-			// return;
+			exit (1);//we need return here
+			// lexer->current++;
+			// return ;
 			//figure out what better use return or exit, and on which cases what?
 		}
 		add_quoted_word(list, lexer);

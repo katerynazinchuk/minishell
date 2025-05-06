@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   env_operations.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 14:07:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:09:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,20 @@ t_env_type	fill_env_node(char *str)
 			j++;
 	node = (t_env_type *)malloc(sizeof(t_env_type));
 	if (!node)
-		return (NULL);//so exit or return
+		return (NULL);
 	node->key = ft_substr(env[i], 0, j);
 	if (!node->key)
 	{
 		free_env_node(node);
 		malloc_error();
-		exit (1);//we need to clean previous allocate 
+		return (NULL);
 	}
 	node->value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1);
 	if (!node->value)
 	{
 		free_env_node(node);
 		malloc_error();
-		exit (1);//we need to clean previous allocate
+		return (NULL);
 	}
 	node->next = NULL;
 	return (node);

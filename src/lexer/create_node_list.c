@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:57:43 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 19:03:11 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void free_token(t_token *token)
 	if (token)
 	{
 		free(token->value);
+		if (token->expanded)
+			free(token->expanded);
 		free(token);
 	}
 }

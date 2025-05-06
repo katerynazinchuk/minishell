@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:45:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:58:21 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 	{
 		lexer->current++;
 	}
+	//we need to expand lexer->input
 	new_token = word_token(list, lexer, quote_type);
 	if (lexer->input[lexer->current] == quote_char)
 		lexer->current++;
@@ -72,6 +73,7 @@ t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 	{
 		lexer->current++;
 	}
+	//we need to expand lexer->input
 	return(word_token(list, lexer, QUOTE_NONE));
 }
 

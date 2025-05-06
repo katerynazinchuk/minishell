@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_node.c                                      :+:      :+:    :+:   */
+/*   env_errors_frees.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:20:09 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 13:58:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/06 19:03:42 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	free_env_list(t_env_list *env_list)
 	while (current)
 	{
 		next = current->next;
-		if (current->key != NULL)
+		if (current->key)
 			free(current->key);
-		if (current->value != NULL)
+		if (current->value)
 			free(current->value);
 		free(current);
 		current = next;
@@ -37,6 +37,7 @@ void	malloc_error(void)
 {
 	const char *str = "Cannot allocate memory";
 	ft_putendl_fd(str, stderr);
+
 }
 
 void	free_env_node(t_env_type *node)
