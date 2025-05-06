@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 14:01:38 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:48:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void add_word_token(t_token_list *list, t_str_pos *lexer)
 		if (!check_quotes(lexer))
 		{
 			quotes_error(lexer);
-			exit (1);
-			//lexer->current++;
-			// return;
+			//exit (1);
+			lexer->current++;
+			return;
 			//figure out what better use return or exit, and on which cases what?
 		}
 		add_quoted_word(list, lexer);
