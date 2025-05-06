@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/05 12:00:18 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:01:38 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,17 @@ void create_redirection_token(t_token_list *list, char *symbol, t_token_type typ
 
 void add_word_token(t_token_list *list, t_str_pos *lexer)
 {
+	printf("add word token : check quotes: %s   -> position: %d\n", lexer->input, lexer->current);
+
 	if (use_quotes(lexer))
 	{
 		if (!check_quotes(lexer))
 		{
 			quotes_error(lexer);
-			return;
+			exit (1);
+			//lexer->current++;
+			// return;
+			//figure out what better use return or exit, and on which cases what?
 		}
 		add_quoted_word(list, lexer);
 		return;
