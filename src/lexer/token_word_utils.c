@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 19:11:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:41:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 	else
 		quote_type = QUOTE_SINGLE;
 	lexer->current++;
-	//we need to expand lexer->input
+	//we changed mind cause of heredoc (need to expand lexer->input)
 	lexer ->start = lexer->current;
-	while(lexer->expanded[lexer->current] && lexer->expanded[lexer->current] != quote_char)
+	while(lexer->input[lexer->current] && lexer->input[lexer->current] != quote_char)
 	{
 		lexer->current++;
 	}
 	new_token = word_token(list, lexer, quote_type);
-	if (lexer->expanded[lexer->current] == quote_char)
+	if (lexer->input[lexer->current] == quote_char)
 		lexer->current++;
 	return (new_token);
 }
@@ -73,7 +73,7 @@ t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 	{
 		lexer->current++;
 	}
-	//we need to expand lexer->input this is wrong place!! wrong position quotes
+	//we changed mind cause of heredoc (need to expand lexer->input)
 	return(word_token(list, lexer, QUOTE_NONE));
 }
 
