@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 18:59:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:51:14 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,12 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
-void	*expand_tokens(t_shell_type *shell)
-{
-	t_token_type	*current;
-
-	current = shell->token_list->head;
-	while(!current)
-	{
-		if (ft_strchr(current->value), '$')
-		{
-			if (current->q_type != "QUOTE_SINGLE")
-				{
-					update_value(current->value, shell->env_list);
-				}
-		}
-		current->head->next;
-	}
-}
-
-void	update_value(char *str, t_env_list *env_list)
-{
-	if (*(ft_strchr(str, $) + 1) == '_' || is_alpha())
-}
-
 t_token_list	*lexer(char *line, t_shell_type *shell)
 {
 	shell->token_list = fill_tokens(line);
-	expand_tokens(shell);
+	//expand_tokens(shell);
 	return(shell->token_list);
 }
-
 
 
 //token = extract_token(lexer, state);
