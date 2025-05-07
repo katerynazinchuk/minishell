@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/07 17:24:32 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:09:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,106 @@ void	*expand_tokens(t_shell_type *shell)
 //starts only if we have symbol $ somewhere in line
 char	*expand_value(char *raw, t_shell_type *shell)
 {
-	char	*str;
+	char	*result;
+	char	*var;
+	int		len;
 	int		i;
 	int		j;
 
-	str = ft_calloc(ft_strlen(raw) + 1, sizeof(char));
+	result = ft_calloc(ft_strlen(raw) + 1, sizeof(char));
+	if (!result)
+		return (NULL)//what we need to free ?
 	i = 0;
+	j = 0;
 	while (raw[i])
 	{
 		if (raw[i] == '$')
 		{
-			if (raw[i + 1] && raw[i + 1] == '{' &&
-				ft_strchr(raw + i + 2, '}') != 0)
+			i++;
+			var = extract_var(raw + i, &len);
+			if (!var)
+				return (NULL)//what we need to free?
+			if (is_valid_var(var))
+				//expand_var
+			else
+				//тут ще кейс коли число то треба першу цифру скинути
+
+				
+/* 			if (raw[i] && raw[i] == '{' && ft_strchr(raw + i, '}') != 0)
 			{
-				extract_var(raw + i + 1, i + 1)
+				extract_var(raw + i)
+				expand_var()
 				//cut {} str
 				//is_valid_var()
-				//expand_var
 			}
 			else
 			{
 				//is_valid_var
 				expand_var(raw + 1);
 			}
-			parse_var(raw[i], shell);
+			parse_var(raw[i], shell); */
 		}
+		else
+			result[j] = raw[i];
 		i++;
+		j++;
+	}
+	result[j] = '\0';
+	return (result);
+}
+
+//somethinf after $ {} or just var_name
+char	*extract_var(char *raw, int *len)
+{
+	len = 0;
+	if (*raw && *raw == '{' && ft_strchr(raw, '}') != 0)
+	{
+		len = raw - ft_strchr(raw, '}') + 1;//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
+		return(ft_strndup(raw + 1, len));//щоб переписати на '\0' останній символ }
+	}
+	else
+	{
+		while (*raw && !is_whitespace(*raw))
+			len++;
+		return(ft_strndup(raw, len + 1));
 	}
 }
 
-char	*extract_var(char *raw, int i)
+bool	is_valid_var(char *var)
 {
-	return();
+	if (ft_isalpha(*var) || *var == '_')
+		return (true);
+	return (false);
 }
+
+
+
+/* 	else if (*raw && (ft_isalpha(raw) || *raw == '_'))
+	{
+		while (*raw && !is_whitespace(*raw))
+			len++;
+		return(ft_strndup(raw, len + 1));
+	}
+	else
+		return(ft_strndup());
+
+ */
+
+
+	
+/* 	int	i;
+	int	len;
+
+	i = 0;
+	while (raw[i])
+	{
+		if (raw[i] && raw[i] == '{' && ft_strchr(raw + i, '}') != 0)
+		
+	}
+		
+	len = raw - ft_strchr(raw, '}');
+	return(ft_strndup(raw, len + 1));
+ */
 	
 	while (*str)
 	{
@@ -100,3 +167,6 @@ if (ft_strchr(str, '{') != 0 && ft_strrchr(str, '}') != 0)
 if (*(ft_strchr(str, '$') + 1) == '_' ||
 	ft_isalpha(*(ft_strchr(str, '$') + 1)))
 	
+
+
+
