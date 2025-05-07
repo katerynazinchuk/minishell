@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:50:36 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 18:09:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:22:45 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef struct s_env
 {
 	char		*key;
 	char		*value;
-	t_env_type	*next;
+	struct t_env_type	*next;
 }	t_env_type;
 
 typedef struct s_env_list
