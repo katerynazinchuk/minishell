@@ -6,13 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/07 19:09:51 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:10:05 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* В парсингу ми маємо перевірити чи існує змінна від експорта (?) */
+/* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 
 /* *raw - не оброблені, сирі дані */
 
@@ -42,7 +43,7 @@ char	*expand_value(char *raw, t_shell_type *shell)
 {
 	char	*result;
 	char	*var;
-	int		len;
+	long	len;
 	int		i;
 	int		j;
 
@@ -89,19 +90,19 @@ char	*expand_value(char *raw, t_shell_type *shell)
 }
 
 //somethinf after $ {} or just var_name
-char	*extract_var(char *raw, int *len)
+char	*extract_var(char *raw, long *len)
 {
-	len = 0;
+	*len = 0;
 	if (*raw && *raw == '{' && ft_strchr(raw, '}') != 0)
 	{
-		len = raw - ft_strchr(raw, '}') + 1;//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
-		return(ft_strndup(raw + 1, len));//щоб переписати на '\0' останній символ }
+		*len = raw - ft_strchr(raw, '}') + 1;//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
+		return(ft_strndup(raw + 1, *(len - 1)));//щоб переписати на '\0' останній символ }
 	}
 	else
 	{
 		while (*raw && !is_whitespace(*raw))
-			len++;
-		return(ft_strndup(raw, len + 1));
+			(*len)++;
+		return(ft_strndup(raw, *(len + 1)));
 	}
 }
 
@@ -111,6 +112,7 @@ bool	is_valid_var(char *var)
 		return (true);
 	return (false);
 }
+
 
 
 

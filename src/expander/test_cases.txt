@@ -24,3 +24,46 @@ bhf tchernia nihi
 tchernia@f1r6s7:~$ echo bhf "${{USER}}" nihi
 bash: ${{USER}}: bad substitution
 
+для heredoc окрема логіка розгортання -- ні! буде те саме, то лапки не впливають на розгортання
+
+tchernia@f0r1s4:~$ cat << kat
+nknoi
+> nonio
+> nno
+> "$USER"
+> noi
+> kat
+nknoi
+nonio
+nno
+"tchernia"
+noi
+tchernia@f0r1s4:~$ cat << kat
+> '$USER'
+> noih
+> kat
+'tchernia'
+noih
+tchernia@f0r1s4:~$ cat "erty $USER" 
+cat: 'erty tchernia': No such file or directory
+tchernia@f0r1s4:~$ echo "erhgv $USER"
+erhgv tchernia
+
+
+tchernia@f0r1s4:~$ cat << kat
+> bhjh
+> ${USER}
+> bhk
+> kat
+bhjh
+tchernia
+bhk
+tchernia@f0r1s4:~$ cat << kat
+> huh
+> ${{USER}}
+> nohi
+> kat
+bash: huh
+${{USER}}
+nohi
+: bad substitution
