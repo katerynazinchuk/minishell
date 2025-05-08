@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/08 18:56:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:14:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,37 @@ int is_whitespace(char c)
 		return (1);
 	return (0);
 }
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*new_dest;
+	const unsigned char	*new_src;
+
+	if (n == 0 || dest == src)
+		return (dest);
+	new_dest = (unsigned char *)dest;
+	new_src = (const unsigned char *)src;
+	while (n--)
+	{
+		*new_dest++ = *new_src++;
+	}
+	return (dest);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	src_len;
+
+	src_len = ft_strlen(src);
+	if (size == 0)
+		return (src_len);
+	while (*src && size > 1)
+	{
+		*dst++ = *src++;
+		size--;
+	}
+	*dst = '\0';
+	return (src_len);
+}
 
 
 #include <unistd.h>
@@ -131,7 +162,7 @@ char	*expand_value(char *raw)//, t_shell_type *shell)
 		if (raw[i] == '$')
 		{
 			i++;
-			printf("i: %i\n", i);
+			// printf("i: %i\n", i);
 			// char c = *(raw + i);
 			// write(1, &raw[i], 1);
 			// write(1, "\n", 1);
@@ -139,16 +170,17 @@ char	*expand_value(char *raw)//, t_shell_type *shell)
 			var = extract_var(raw + i, &len);
 			//printf("len variable: %ld \n", len);
 			//printf("%s\n", var);
-			write(1, "this is var: ", 14);
+/* 			write(1, "this is var: ", 14);
 			write(1, var, ft_strlen(var));
-			write(1, "\n", 1);
+			write(1, "\n", 1); */
+			ft_memcpy(result + j, var, len + 1);
 			i+=len;
-			// j+=len;
+			j+=len;
 		}
-		// else
-		// 	result[j] = raw[i];
+		else
+			result[j] = raw[i];
 		i++;
-		// j++;
+		j++;
 	}
 	return (result);
 }
@@ -188,9 +220,11 @@ bool	is_valid_var(char *var)
 
 int	main()
 {
-	expand_value("hello $USER word! ${tyty}");
+	printf("%s\n", expand_value("hello $USER word! ${tyty}"));
+	printf("%s\n", expand_value("Hello $kli word $ttt"));
+
 	// printf("\n\nnext test\n\n");
-	expand_value("Hello ${PATH} word $ooo");
+	// expand_value("Hello ${PATH} word $ooo");
 	// expand_value("Hello $kli word $ttt");
 
 	return (0);
