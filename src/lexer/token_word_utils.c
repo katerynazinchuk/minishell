@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:45:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:44:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,9 @@ t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 {
 	lexer->start = lexer->current;
-	while (lexer->input[lexer->current] && !is_whitespace(lexer->input[lexer->current]) &&
-		lexer->input[lexer->current] != '|' && lexer->input[lexer->current] != '>' &&
-		lexer->input[lexer->current] != '<' && lexer->input[lexer->current] != '"' &&
-		lexer->input[lexer->current] != '\'')
+	while (lexer->input[lexer->current] &&
+		!is_whitespace(lexer->input[lexer->current]) &&
+		!is_special_char(lexer->input[lexer->current]))
 	{
 		lexer->current++;
 	}
@@ -81,7 +80,7 @@ static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type q
 	char	*word;
 
 	lexer->len = lexer->current - lexer->start;
-	word = ft_strndup(lexer->input + lexer->start, lexer->len);
+	word = ft_strndup(lexer->input + lexer->start, lexer->len);//int checged to long
 	if (!word)
 		return (NULL);
 	new_token = create_token(word, TOKEN_WORD, quote_type);

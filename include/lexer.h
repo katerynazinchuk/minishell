@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 16:58:27 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:29:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 typedef struct s_str_pos
 {
 	char	*input;
-	int		start;
-	int		current;
-	int		len;
+	long		start;
+	long		current;
+	long		len;
 }	t_str_pos;
 
 
 int		is_whitespace(char c);
-char	*ft_strndup(const char *s, int n);
+int		is_special_char(char c);
+char	*ft_strndup(const char *s, long n);
 
 t_token *create_token(char *value, t_token_type types, t_quote_type quotes);
 void	add_to_token_list(t_token_list *list, t_token *new_token);

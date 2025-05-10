@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 18:48:20 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/10 08:35:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 		create_redirection_token(list, "<<", TOKEN_HEREDOC);
 		lexer->current += 2;
 	}
-	else if (lexer->input[lexer->current + 1] == '>')
+	else if (lexer->input[lexer->current] == '>')
 	{
 		create_redirection_token(list, ">", TOKEN_REDIRECT_OUT);
 		lexer->current++;
@@ -69,7 +69,7 @@ void create_redirection_token(t_token_list *list, char *symbol, t_token_type typ
 
 void add_word_token(t_token_list *list, t_str_pos *lexer)
 {
-	printf("add word token : check quotes: %s   -> position: %d\n", lexer->input, lexer->current);
+	printf("add word token : check quotes: %s   -> position: %ld\n", lexer->input, lexer->current);
 
 	if (use_quotes(lexer))
 	{

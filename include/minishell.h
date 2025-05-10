@@ -21,11 +21,12 @@ w: wait, wait3, wait4, waitpid, write
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "my_signal.h"
 # include "shell.h"
 # include "libft.h"
 # include "token.h"
 # include "lexer.h"
-# include "my_signal.h"
+# include "parser.h"
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>

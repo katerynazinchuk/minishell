@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 18:00:21 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:29:36 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ typedef enum s_ast_type
 
 //
 
-typedef struct s_ast
+typedef struct s_ast_node
 {
-	t_ast_type	ast_type; 
-	t_ast		*left;
-	t_ast		*rigt;
-}	t_ast;
+	char				**value;
+	t_ast_type			type; 
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
 
 //one node for the ast???
 typedef struct s_command {
@@ -39,6 +40,12 @@ typedef struct s_command {
     struct s_command	*next; // next in pipe chain
 }	t_command;
 
+
+t_ast_node	*create_ast_node(t_ast_type type, char **command);
+t_ast_node	*build_tree(t_token *head, t_token *end);
+char		**tokens_to_argv (t_token *head);
+void		free_ast(t_ast_node *ast);
+void		print_ast(t_ast_node *ast, int level);
 
 #endif
 

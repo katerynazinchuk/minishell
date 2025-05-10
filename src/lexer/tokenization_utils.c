@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:47:00 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:28:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int is_whitespace(char c)
 	return (0);
 }
 
-char *ft_strndup(const char *s, int n)
+char *ft_strndup(const char *s, long n)
 {
     char    *new_str;
-    int  i;
+    long  i;// changed to long for memory operations
 
     new_str = (char *)malloc(sizeof(char) * (n + 1));
     if (!new_str)
@@ -51,6 +51,11 @@ void print_tokens(t_token_list *list)
 
 int quotes_error(t_str_pos *lexer)
 {
-	printf("Error: No matching quotes found for token starting at index %d\n", lexer->start);
+	printf("Error: No matching quotes found for token starting at index %ld\n", lexer->start);
 	return (0);
+}
+
+int is_special_char(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '"' || c == '\'');
 }

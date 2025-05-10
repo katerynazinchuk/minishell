@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 16:33:45 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:44:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
-void	*expand_tokens(t_shell_type *shell)
-{
+// void	*expand_tokens(t_shell_type *shell)
+// {
 	
-}
+// }
 
 
 t_token_list	*lexer(char *line, t_shell_type *shell)
 {
 	shell->token_list = fill_tokens(line);
-	expand_tokens(shell);
+	//expand_tokens(shell);
 	return(shell->token_list);
 }
 

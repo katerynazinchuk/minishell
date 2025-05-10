@@ -1,15 +1,16 @@
 NAME = minishell
-LIBFT_DIR = libft
-LIBFT = libft.a
-
-SRC_DIR = src
-BUILD_DIR = obj
-INCLUDE_DIR = include
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
+
+SRC_DIR = src
+BUILD_DIR = obj
+INCLUDE_DIR = include
+
+LIBFT_DIR = libft
+LIBFT = libft.a
 
 # Define the source files and object files
 BUILD_IN = src/builtins/
@@ -21,31 +22,24 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/lexer.c \
 		src/lexer/token_word_utils.c \
 		src/lexer/tokenization_utils.c
-PARSER = src/parser/parser.c \
-		src/parser/ 
-SIGNALS = 
+PARSER = src/parser/parser.c 
+SIGNALS = src/signals/signal.c
 
-SRC = $(LEXER) main.c signal.c
+SRC = $(LEXER) $(PARSER) $(SRC_DIR)/main.c
 
-OBJ = $(addprefix $(BUILD_DIR)/, $(SRC:%.c=%.o))
+OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
 
 all: $(NAME)
 
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
 	@$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	@echo "Compiling $<.."
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "Object files created."
 
 $(LIBFT_DIR)/$(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
