@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/08 15:10:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:03:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,85 +17,43 @@
 
 /* *raw - не оброблені, сирі дані */
 
-
-
-void	*expand_tokens(t_shell_type *shell)
-{
-	t_token_type	*current;
-
-	current = shell->token_list->head;
-	while(!current)
-	{
-		if (ft_strchr(current->value), '$')///start from here
-		{
-			if (current->q_type != "QUOTE_SINGLE")
-				{
-					update_value(current->value, shell->env_list);
-				}
-		}
-		current->head->next;
-	}
-}
-
 //we know we need to expand value
 //starts only if we have symbol $ somewhere in line
 char	*expand_value(char *raw, t_shell_type *shell)
 {
-	char	*result;
-	char	*var;
-	long	len;
-	int		i;
-	int		j;
+	t_expand_type	exp;
 
-	result = ft_calloc(ft_strlen(raw) + 1, sizeof(char));
-	if (!result)
-		return (NULL)//what we need to free ?
-	i = 0;
-	j = 0;
+	init_exp(&exp, raw);
 	while (raw[i])
 	{
-		if (raw[i] == '$')
+		if (raw[exp->i] == '$')
 		{
-			i++;
-			var = extract_var(raw + i, &len);
-			if (!var)
+			exp->i++;
+			exp->var = extract_var(raw + i, &exp->len_var);
+			if (!exp->var)
 				return (NULL)//what we need to free?
-			if (is_valid_var(var))
-				//expand_var
-			else
-				//тут ще кейс коли число то треба першу цифру скинути
-
-				
-/* 			if (raw[i] && raw[i] == '{' && ft_strchr(raw + i, '}') != 0)
-			{
-				extract_var(raw + i)
-				expand_var()
-				//cut {} str
-				//is_valid_var()
-			}
-			else
-			{
-				//is_valid_var
-				expand_var(raw + 1);
-			}
-			parse_var(raw[i], shell); */
+			exp->str = expand_var(exp->var, exp->len_var, shell);
+			append_exp_str(exp);
+			//тут треба в exp->res покласти exp->str але д тримаємо в умі що там потрібно переалокувати память за потреби
+			exp->i+=exp->len_var;
+			//exp->j+=exp->len_var;
 		}
 		else
-			result[j] = raw[i];
-		i++;
-		j++;
+			result[exp->j] = raw[exp->i];
+		exp->i++;
+		exp->j++;
 	}
-	result[j] = '\0';
-	return (result);
+	result[exp->j] = '\0';
+	free_exp(exp);
+	return (exp->result);
 }
 
 //somethinf after $ {} or just var_name
-char	*extract_var(char *raw, long *len)
+char	*extract_var(char *raw, size_t *len)
 {
-	*len = 0;
 	if (*raw && *raw == '{' && ft_strchr(raw, '}') != 0)
 	{
-		*len = raw - ft_strchr(raw, '}') + 1;//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
+		*len =(size_t)(raw - ft_strchr(raw, '}') + 1);//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
 		return(ft_strndup(raw + 1, *(len - 1)));//щоб переписати на '\0' останній символ }
 	}
 	else
@@ -106,69 +64,29 @@ char	*extract_var(char *raw, long *len)
 	}
 }
 
-bool	is_valid_var(char *var)
+void	append_exp_str(t_expand_type *exp)
 {
-	if (ft_isalpha(*var) || *var == '_')
-		return (true);
-	return (false);
-}
+	size_t	len_str;
+	size_t	new_size;
+	int		k;
 
-
-
-
-/* 	else if (*raw && (ft_isalpha(raw) || *raw == '_'))
+	k = 0;
+	len_str = ft_strlen(exp->str);
+	if (len_str > exp->len_var)
 	{
-		while (*raw && !is_whitespace(*raw))
-			len++;
-		return(ft_strndup(raw, len + 1));
-	}
-	else
-		return(ft_strndup());
-
- */
-
-
-	
-/* 	int	i;
-	int	len;
-
-	i = 0;
-	while (raw[i])
-	{
-		if (raw[i] && raw[i] == '{' && ft_strchr(raw + i, '}') != 0)
-		
-	}
-		
-	len = raw - ft_strchr(raw, '}');
-	return(ft_strndup(raw, len + 1));
- */
-	
-	while (*str)
-	{
-		if (ft_strchr(str, '$') != 0)
+		new_size = ft_strlen(exp->res) - exp->len_var + len_str;
+		exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
+		while(k < len_str)
 		{
-			if (*(str + 1) == '{' && ft_strchr(str + 2, '}') != 0)
-			{
-				//cut {} str
-				//is_valid_var()
-				//expand_var
-			}
-			else
-			{
-				//is_valid_var
-				expand_var(str+1);
-			}
+			exp->res[exp->j] = exp->str[k];
+			exp->j++;
+			k++;
 		}
-		str++;
 	}
-if (ft_strchr(str, '{') != 0 && ft_strrchr(str, '}') != 0)
-{
-	str = 
-	
+	else 
+	{
+		
+	}
 }
-if (*(ft_strchr(str, '$') + 1) == '_' ||
-	ft_isalpha(*(ft_strchr(str, '$') + 1)))
-	
-
 
 
