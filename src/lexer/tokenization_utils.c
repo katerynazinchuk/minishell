@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/08 15:28:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:45:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int is_whitespace(char c)
 	return (0);
 }
 
-char *ft_strndup(const char *s, long n)
+char *ft_strndup(const char *s, size_t n)
 {
     char    *new_str;
-    long  i;// changed to long for memory operations
+    size_t  i;// changed to long for memory operations
 
     new_str = (char *)malloc(sizeof(char) * (n + 1));
     if (!new_str)

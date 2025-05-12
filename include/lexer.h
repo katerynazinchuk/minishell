@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/08 15:29:12 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:45:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 typedef struct s_str_pos
 {
 	char	*input;
-	long		start;
-	long		current;
-	long		len;
+	int		start;
+	int		current;
+	size_t		len;
 }	t_str_pos;
 
 
