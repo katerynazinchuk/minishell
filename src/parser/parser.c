@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/10 09:11:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/10 09:55:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	{
 		char **argv = tokens_to_argv(head);
 		t_ast_node * node = create_ast_node(AST_COMMAND, argv);
+		//add redirect?
 		return (node);
 	}
 
@@ -113,18 +114,14 @@ void print_ast(t_ast_node *ast, int level)
 
     if (!ast)
         return;
-
-    // Indent according to depth level
-    for (i = 0; i < level; i++)
+	i = -1;
+	while(++i < level)
         printf("  ");
-
-    // Print node type
     if (ast->type == AST_PIPE)
         printf("[PIPE]\n");
     else if (ast->type == AST_COMMAND)
     {
         printf("[CMD]: ");
-        // Print command arguments
         i = 0;
         while (ast->value && ast->value[i])
         {
@@ -133,7 +130,6 @@ void print_ast(t_ast_node *ast, int level)
         }
         printf("\n");
     }
-
     // Recursively print left and right children
     print_ast(ast->left, level + 1);
     print_ast(ast->right, level + 1);

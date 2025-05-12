@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/08 20:29:36 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/10 09:46:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ typedef enum s_ast_type
 {
 	AST_PIPE,
 	AST_COMMAND,
+	//AST REDIRECT
 }	t_ast_type;
 
 //
 
 typedef struct s_ast_node
 {
-	char				**value;
+	char				**value;//command
+	//char	*filename?
+
 	t_ast_type			type; 
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
