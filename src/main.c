@@ -6,11 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 17:05:36 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:20:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_env_list(t_env_list *env_list);
+
 
 /* [username@hostname current_working_directory]$ */
 
@@ -38,6 +41,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if(*line)
 		{
+			print_env_list(env_list);
 			tokens = fill_tokens(line);
 			if (tokens)
 			{
@@ -56,4 +60,14 @@ int main(int argc, char **argv, char **env)
 	}
 	return(0);
 }
-//int argc, char **argv, char **env
+void	print_env_list(t_env_list *env_list)
+{
+	t_env_type	*current;
+	
+	current = env_list->head;
+	while (current)
+	{
+		printf("key: %s\n value: %s\n\n", current->key, current->value);
+		current = current->next;
+	}
+}

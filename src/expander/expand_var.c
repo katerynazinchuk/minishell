@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 17:01:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:57:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,13 @@ char	*expand_value(char *raw, t_env_list *env_list)
 			// ??
 			append_exp_str(&exp);
 			exp.i+=exp.len_var;
-			//exp->j+=exp->len_var;
+			exp.j+=ft_strlen(exp.str);
 		}
 		else
+		{
 			exp.res[exp.j] = raw[exp.i];
-		exp.i++;
+			exp.i++;
+		}
 		exp.j++;
 	}
 	exp.res[exp.j] = '\0';
