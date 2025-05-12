@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/02 13:47:34 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:05:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 
 //readline return NULL, so (!line) processing case when we use Ctrl+D
 
-int main()
+int main(int argc, char **argv, char **env)
 {
 	char		*line;
 	const char	*prompt = "minishell> ";
 	t_token_list	*tokens;
-
-	init_signals();
+	t_env_list		*env_list;
+	
+	(void)argc;
+	(void)argv;
+	// init_signals();
+	env_list = fill_env_list(env);
 	while(1)
 	{
 		//update_prompt(prompt);
@@ -34,10 +38,10 @@ int main()
 		}
 		if(*line)
 		{
-			tokens = lexer(line);
+			tokens = fill_tokens(line);
 			if (tokens)
 			{
-				print_tokens(tokens);
+				print_tokens(tokens, env_list);
 				free_token_list(tokens);
 			}
 			add_history(line);

@@ -6,11 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 16:49:06 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:00:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SHELL_H
+# define SHELL_H
+
+// #include "minishell.h"
 
 typedef struct s_shell
 {
@@ -22,3 +25,4 @@ typedef struct s_shell
 	char			*prompt;
 }	t_shell_type;
 
+#endif

@@ -21,6 +21,7 @@ w: wait, wait3, wait4, waitpid, write
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdbool.h>
 # include "env.h"
 # include "token.h"
 # include "shell.h"

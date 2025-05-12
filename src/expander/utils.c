@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/11 16:18:25 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:03:22 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 }
 void	init_exp(t_expand_type *exp, char *raw)
 {
-	exp->len = 0;
-	exp->i = 0;
-	exp->j = 0;
 	exp->res = ft_calloc(ft_strlen(raw) + 1, sizeof(char));
 	if (!exp->res)
-		return (NULL)//what we need to free ?
+		return ;//what we need to free ?
 	exp->var = NULL;
-	exp->expanded = NULL;
+	exp->str = NULL;
+	exp->len_var = 0;
+	exp->i = 0;
+	exp->j = 0;
 }
 
 bool	is_valid_var(char *var)

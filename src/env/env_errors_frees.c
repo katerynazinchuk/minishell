@@ -6,11 +6,11 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:20:09 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 19:03:42 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:10:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell"
+#include "minishell.h"
 
 void	free_env_list(t_env_list *env_list)
 {
@@ -18,7 +18,7 @@ void	free_env_list(t_env_list *env_list)
 	t_env_type	*next;
 
 	if (!env_list)
-		return ();
+		return ;
 	current = env_list->head;
 	while (current)
 	{
@@ -35,8 +35,8 @@ void	free_env_list(t_env_list *env_list)
 
 void	malloc_error(void)
 {
-	const char *str = "Cannot allocate memory";
-	ft_putendl_fd(str, stderr);
+	char *str = "Cannot allocate memory";
+	ft_putendl_fd(str, 2);
 
 }
 
@@ -46,7 +46,7 @@ void	free_env_node(t_env_type *node)
 	{
 		if (node->key)
 			free(node->key);
-		if (node->value);
+		if (node->value)
 			free(node->value);
 		free(node);
 	}

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 14:54:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:01:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,28 @@
 
 /* *raw - не оброблені, сирі дані */
 
+void	expand_tokens(t_token_list *list, t_env_list *env_list)//треба почистити результат від expand_value
+{
+	t_token	*current;
 
-void	*expand_tokens(t_shell_type *shell)//треба почистити результат від expand_value
+	current = list->head;
+	while(!current)
+	{
+		if (ft_strchr(current->value, '$'))///start from here
+		{
+			if (current->q_type != QUOTE_SINGLE)
+			{
+				if (check_subs(current->value))
+					current->bad_subs = 1;
+				else
+					current->expanded = expand_value(current->value, env_list);
+			}
+		}
+		current = current->next;
+	}
+}
+
+/* void	*expand_tokens(t_shell_type *shell)//треба почистити результат від expand_value
 {
 	t_token	*current;
 
@@ -37,7 +57,7 @@ void	*expand_tokens(t_shell_type *shell)//треба почистити резу
 		}
 		current->head->next;
 	}
-}
+} */
 
 bool	check_subs(char *raw)
 {
@@ -51,7 +71,38 @@ bool	check_subs(char *raw)
 
 //we know we need to expand value
 //starts only if we have symbol $ somewhere in line
-char	*expand_value(char *raw, t_shell_type *shell)
+
+char	*expand_value(char *raw, t_env_list *env_list)
+{
+	t_expand_type	exp;
+
+	init_exp(&exp, raw);
+	while (raw[exp.i])
+	{
+		if (raw[exp.i] == '$')
+		{
+			exp.i++;
+			exp.var = extract_var(raw + exp.i, &exp.len_var);
+			if (!exp.var)
+				return (NULL);//what we need to free?
+			exp.str = expand_var(exp.var, exp.len_var, env_list);
+			// if (!exp->str)
+			// ??
+			append_exp_str(&exp);
+			exp.i+=exp.len_var;
+			//exp->j+=exp->len_var;
+		}
+		else
+			exp.res[exp.j] = raw[exp.i];
+		exp.i++;
+		exp.j++;
+	}
+	exp.res[exp.j] = '\0';
+	// free_exp(exp);
+	return (exp.res);
+}
+
+/* char	*expand_value(char *raw, t_shell_type *shell)
 {
 	t_expand_type	exp;
 
@@ -68,7 +119,6 @@ char	*expand_value(char *raw, t_shell_type *shell)
 			// if (!exp->str)
 			// ??
 			append_exp_str(exp);
-			//тут треба в exp->res покласти exp->str але д тримаємо в умі що там потрібно переалокувати память за потреби
 			exp->i+=exp->len_var;
 			//exp->j+=exp->len_var;
 		}
@@ -80,7 +130,7 @@ char	*expand_value(char *raw, t_shell_type *shell)
 	res[exp->j] = '\0';
 	free_exp(exp);
 	return (exp->res);
-}
+} */
 
 //somethinf after $ {} or just var_name
 char	*extract_var(char *raw, size_t *len)
@@ -102,7 +152,7 @@ void	append_exp_str(t_expand_type *exp)
 {
 	size_t	len_str;
 	size_t	new_size;
-	int		k;
+	size_t	k;
 
 	k = 0;
 	len_str = ft_strlen(exp->str);
@@ -116,14 +166,13 @@ void	append_exp_str(t_expand_type *exp)
 	}
 }
 
-
-char	*expand_var(char *var, int len, t_shell_type *shell)
+char	*expand_var(char *var, int len, t_env_list *env_list)
 {
-	t_env_type		current;
+	t_env_type		*current;
 	
 	if (is_valid_var(var))
 	{
-		current = shell->env_list->head;
+		current = env_list->head;
 		while(current)
 		{
 			if (ft_strncmp(current->key, var, len) == 0)
@@ -133,7 +182,7 @@ char	*expand_var(char *var, int len, t_shell_type *shell)
 	}
 	else if (ft_isdigit(*var))
 		return(var + 1);
-	else if (*var == '?')
-		return(ft_itoa(shell->last_exit_status));//це алокейт 0-255 чи треба своє писати?
-	return (ft_strdup(""));//це можуть бути ще одні фігурні дужка або якісь символи
+	// else if (*var == '?')
+	// 	return(ft_itoa(shell->last_exit_status));//це алокейт 0-255 чи треба своє писати?
+	return (ft_strdup(""));//неіснуюча змінна
 }

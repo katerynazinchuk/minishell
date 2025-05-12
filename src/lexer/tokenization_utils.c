@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 15:09:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:53:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int is_whitespace(char c)
 	return (0);
 }
 
-void print_tokens(t_token_list *list)
+void print_tokens(t_token_list *list, t_env_list *env_list)
 {
 	t_token	*current;
 
 	current = list->head;
+	expand_tokens(list, env_list);
 	while (current)
 	{
-		printf("Token: [type = %d] [value = %s] [quotes = %u]\n", current->type, current->value, current->t_quote_type);
+		printf("Token: [type = %d] [value = %s] [expanded = %s][quotes = %u]\n", current->type, current->value, current->expanded, current->q_type);
 		current = current->next;
 	}
 }

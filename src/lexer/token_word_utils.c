@@ -6,13 +6,10 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/05/07 12:41:27 by tchernia         ###   ########.fr       */
-=======
-/*   Updated: 2025/05/12 15:10:30 by tchernia         ###   ########.fr       */
->>>>>>> f29d4fa5aaa02bf53dc85fc63b810e8227954635
+/*   Updated: 2025/05/12 15:53:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
