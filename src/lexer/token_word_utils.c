@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   token_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 13:45:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:10:30 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
 
-int use_quotes(t_str_pos *lexer)
+static t_token	*word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
+
+int	use_quotes(t_str_pos *lexer)
 {
 	if (lexer->input[lexer->current] == '"' || lexer->input[lexer->current] == '\'')
 	{
