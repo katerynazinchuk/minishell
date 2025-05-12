@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/10 09:11:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:00:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	}
 
 }
+
 char **tokens_to_argv (t_token *head)
 {
 	int count;
@@ -76,6 +77,7 @@ char **tokens_to_argv (t_token *head)
 		return(NULL);
 	main = head;
 	count = 0;
+	//we need to find {} and if true call expand_value
 	while(main && main->value != NULL && main->type == TOKEN_PIPE)
 	{
 		argv[count] = ft_strdup(main->value);
@@ -85,6 +87,7 @@ char **tokens_to_argv (t_token *head)
 	argv[count] = NULL;
 	return (argv);
 }
+
 
 void free_ast(t_ast_node *ast)
 {
