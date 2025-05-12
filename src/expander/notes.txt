@@ -12,7 +12,6 @@ bash: ${{USER}}: bad substitution
 
 tchernia@f1r6s7:~$ echo " bubobo ${{USER}} nolnn $USER"
 bash:  bubobo ${{USER}} nolnn $USER: bad substitution
-tchernia@f1r6s7:~$ 
 
 
 tchernia@f1r6s7:~$ echo $USER " bubobo ${{USER}} nolnn $USER"
@@ -26,3 +25,8 @@ bash:  bubobo ${{USER}} nolnn $USER: bad substitution
 
 
 
+додати в токен поле прапор bad_subs, щоб перевіряти чи є ${{}} 
+
+===================================================================
+
+усі подвійні {{ навіть не закрити обробляю як bad substution

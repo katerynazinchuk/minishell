@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/11 13:21:02 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:26:08 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,26 +233,7 @@ int	main()
 	return (0);
 }
 
-char	*expand_var(char *var, int len, t_shell_type *shell)
-{
-	t_env_type		current;
-	
-	if (is_valid_var(var))
-	{
-		current = shell->env_list->head;
-		while(current)
-		{
-			if (ft_strncmp(current->key, var, len) == 0)
-				return (ft_strdup(current->value));
-			current = current->next;
-		}
-	}
-	else if (ft_isdigit(*var))
-		return(var + 1);
-	else if (*var == '?')
-		return(ft_itoa(shell->last_exit_status));//це алокейт 0-255 чи треба своє писати?
-	return (ft_strdup(""));//це можуть бути ще одні фігурні дужка або якісь символи
-}
+
 
 //we didnt support scripts so $567 => 67 as bash do it, when he didnt find correct script
 /* void	*expand_var(char *var, int len, t_shell_type *shell)
