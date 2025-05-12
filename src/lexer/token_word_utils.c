@@ -6,14 +6,19 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/07 12:41:27 by tchernia         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/12 15:10:30 by tchernia         ###   ########.fr       */
+>>>>>>> f29d4fa5aaa02bf53dc85fc63b810e8227954635
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
 
-int use_quotes(t_str_pos *lexer)
+static t_token	*word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
+
+int	use_quotes(t_str_pos *lexer)
 {
 	if (lexer->input[lexer->current] == '"' || lexer->input[lexer->current] == '\'')
 	{

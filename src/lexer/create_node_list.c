@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/07 12:22:11 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:24:25 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_token *create_token(char *value, t_token_type types, t_quote_type quotes)
 		free(new_token);
 		return (NULL);
 	}
+	new_token->bad_subs = 0;
 	new_token->type = types;
 	new_token->q_type = quotes;
 	new_token->next = NULL;

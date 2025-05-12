@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/06 19:02:18 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:24:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef enum e_quote_type
 typedef struct s_token
 {
 	char			*value;
-	char			*expanded;
 	t_token_type	type;
 	t_quote_type	q_type;
 	struct s_token	*next;

@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization_utils.c                               :+:      :+:    :+:   */
+/*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 15:09:13 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/12 15:07:45 by tchernia          #+#    #+#             */
+/*   Updated: 2025/05/12 15:08:19 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_whitespace(char c)
+int quotes_error(t_str_pos *lexer)
 {
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
+	printf("Error: No matching quotes found for token starting at index %d\n", lexer->start);
 	return (0);
-}
-
-void print_tokens(t_token_list *list)
-{
-	t_token	*current;
-
-	current = list->head;
-	while (current)
-	{
-		printf("Token: [type = %d] [value = %s] [quotes = %u]\n", current->type, current->value, current->t_quote_type);
-		current = current->next;
-	}
 }

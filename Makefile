@@ -24,8 +24,10 @@ LEXER = src/lexer/create_node_list.c \
 PARSER = src/parser/parser.c \
 		src/parser/ 
 SIGNALS = 
+UTILS = src/utils/utils.c
+ERRORS = src/errors/lexer_error.c
 
-SRC = $(LEXER) main.c signal.c
+SRC = $(LEXER) $(UTILS) $(ERRORS) main.c signal.c
 
 OBJ = $(addprefix $(BUILD_DIR)/, $(SRC:%.c=%.o))
 
