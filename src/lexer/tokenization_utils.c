@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/13 11:16:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:53:11 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int is_whitespace(char c)
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
 	return (0);
+}
+int	is_special_char(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"');
 }
 
 void print_tokens(t_token_list *list)

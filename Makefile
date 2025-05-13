@@ -22,15 +22,14 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/lexer.c \
 		src/lexer/token_word_utils.c \
 		src/lexer/tokenization_utils.c
-PARSER = src/parser/parser.c \
-		src/parser/ 
-SIGNALS = 
+PARSER = src/parser/parser.c 
+#SIGNALS = 
 UTILS = src/utils/utils.c
 ERRORS = src/errors/lexer_error.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) src/main.c
+SRC := $(shell find src -name '*.c')
 
-OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
+OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
 
 all: $(NAME)
 

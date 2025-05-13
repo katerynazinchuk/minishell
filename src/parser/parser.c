@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 14:43:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:49:25 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ void print_ast(t_ast_node *ast, int level)
     int i;
 
     if (!ast)
-        return;
+	{
+        return ;
+	}
 	i = -1;
 	while(++i < level)
         printf("  ");
