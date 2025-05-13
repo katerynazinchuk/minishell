@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/10 08:23:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:17:07 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token *create_token(char *value, t_token_type types, t_quote_type quotes)
 		free(new_token);
 		return (NULL);
 	}
+	new_token->bad_subs = 0;
 	new_token->type = types;
 	new_token->t_quote_type = quotes;
 	new_token->next = NULL;
