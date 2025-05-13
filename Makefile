@@ -28,7 +28,7 @@ SIGNALS =
 UTILS = src/utils/utils.c
 ERRORS = src/errors/lexer_error.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) main.c signal.c
+SRC = $(LEXER) $(UTILS) $(ERRORS) src/main.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
 

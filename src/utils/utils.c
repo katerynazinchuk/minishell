@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 15:09:28 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:25:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_strndup(const char *s, int n)
+char *ft_strndup(const char *s, size_t n)
 {
 	char	*new_str;
-	int		i;
+	size_t		i;
 
 	new_str = (char *)malloc(sizeof(char) * (n + 1));
 	if (!new_str)
