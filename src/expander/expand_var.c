@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 19:04:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:07:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*expand_value(char *raw, t_env_list *env_list)
 		}
 	}
 	exp.res[exp.j] = '\0';
+	printf("exp.res: %s\n", exp.res);
 	// free_exp(exp);
 	return (exp.res);
 }
