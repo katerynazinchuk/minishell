@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 18:39:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:49:13 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ void	expand_tokens(t_token_list *list, t_env_list *env_list)//треба поч�
 		current->head->next;
 	}
 } */
-
-bool	check_subs(char *raw)
-{
-	while (*raw)
-	{
-		if (*raw && *raw == '{' && *(raw + 1) == '{')
-			return (true);
-	}
-	return (false);
-}
 
 //we know we need to expand value
 //starts only if we have symbol $ somewhere in line
