@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 19:07:33 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:10:28 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@ void	expand_tokens(t_token_list *list, t_env_list *env_list)//треба поч�
 	current = list->head;
 	while(current)
 	{
-		if (ft_strchr(current->value, '$'))///start from here
+		if (ft_strchr(current->value, '$') && current->q_type != QUOTE_SINGLE)///start from here
 		{
-			if (current->q_type != QUOTE_SINGLE)
-			{
-				if (check_subs(current->value))
-					current->bad_subs = 1;
-				else
-					current->expanded = expand_value(current->value, env_list);
-			}
+			if (check_subs(current->value))
+				current->bad_subs = 1;
+			else
+				current->expanded = expand_value(current->value, env_list);
 		}
+		else
+			current->expanded = ft_strdup(current->value);
 		current = current->next;
 	}
 }
@@ -81,7 +80,9 @@ char	*expand_value(char *raw, t_env_list *env_list)
 			exp.str = expand_var(exp.var, exp.len_var, env_list);
 			// if (!exp->str)
 			// ??
+			printf("exp.str: %s\n", exp.str);
 			append_exp_str(&exp);
+			printf("AFTER APPEND exp.res: %s\n", exp.res);
 			exp.i+=exp.len_var;
 			// exp.j+=ft_strlen(exp.str);
 		}
@@ -161,23 +162,6 @@ void	extract_var(char *raw, t_expand_type *exp)
 // 	}
 // }
 
-void	append_exp_str(t_expand_type *exp)
-{
-	size_t	len_str;
-	size_t	new_size;
-	size_t	k;
-
-	k = 0;
-	len_str = ft_strlen(exp->str);
-	new_size = ft_strlen(exp->res) - exp->len_var + len_str;
-	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
-	while(k < len_str)
-	{
-		exp->res[exp->j] = exp->str[k];
-		exp->j++;
-		k++;
-	}
-}
 
 char	*expand_var(char *var, int len, t_env_list *env_list)
 {
@@ -198,4 +182,28 @@ char	*expand_var(char *var, int len, t_env_list *env_list)
 	// else if (*var == '?')
 	// 	return(ft_itoa(shell->last_exit_status));//це алокейт 0-255 чи треба своє писати?
 	return (ft_strdup(""));//неіснуюча змінна
+}
+
+void	append_exp_str(t_expand_type *exp)
+{
+	size_t	len_str;
+	size_t	new_size;
+	size_t	k;
+
+	k = 0;
+	len_str = ft_strlen(exp->str);
+	// new_size = ft_strlen(exp->res) - exp->len_var + len_str;
+	new_size = exp->len_raw + 2 - exp->len_var + len_str;
+	printf("length exp->res: %zu \n", ft_strlen(exp->res));
+	printf("length exp->len_var: %zu \n", exp->len_var);
+	printf("NEW_SIZE: %zu \n", new_size);
+	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
+	exp->res[new_size] = '\0';
+	while(k < len_str)
+	{
+		exp->res[exp->j] = exp->str[k];
+		exp->j++;
+		k++;
+	}
+	// exp->res[exp->j] = '\0';
 }

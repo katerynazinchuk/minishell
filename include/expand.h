@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 19:04:43 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:47:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 
 typedef struct s_expand_type
 {
+	size_t	len_var;
+	size_t	len_raw;
+	int		j;
+	int		i;
 	char	*res;
 	char	*var;
 	char	*str;
-	size_t	len_var;
-	int		j;
-	int		i;
 }	t_expand_type;
 
 // char	*expand_value(char *raw, t_shell_type *shell);
