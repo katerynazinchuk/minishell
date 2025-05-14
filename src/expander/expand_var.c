@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 18:53:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:04:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*expand_value(char *raw, t_env_list *env_list)
 		if (raw[exp.i] == '$')
 		{
 			exp.i++;
-			exp.var = extract_var(raw + exp.i, &exp.len_var);
+			extract_var(raw + exp.i, &exp);
 			if (!exp.var)
 				return (NULL);//what we need to free?
 			printf("exp.var: %s\n", exp.var);
@@ -128,20 +128,37 @@ char	*expand_value(char *raw, t_env_list *env_list)
 } */
 
 //somethinf after $ {} or just var_name
-char	*extract_var(char *raw, size_t *len)
+void	extract_var(char *raw, t_expand_type *exp)
 {
+	exp->len_var = 0;
 	if (*raw == '{' && ft_strchr(raw, '}') != 0)
 	{
-		*len =(size_t)(raw - ft_strchr(raw, '}') + 1);//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
-		return(ft_strndup(raw + 1, *len - 2));//щоб не забрати останній символ '}'
+		exp->len_var = (size_t)(ft_strchr(raw, '}') - raw + 1);//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
+		exp->var = ft_strndup(raw + 1, exp->len_var - 2);//щоб не забрати останній символ '}'
 	}
 	else
 	{
-		while (raw[*len] && !is_whitespace(raw[*len]))
-			(*len)++;
-		return(ft_strndup(raw, *(len + 1)));
+		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var]))
+			exp->len_var++;
+		exp->var = ft_strndup(raw, exp->len_var);
 	}
 }
+
+// char	*extract_var(char *raw, size_t *len)
+// {
+	
+// 	if (*raw == '{' && ft_strchr(raw, '}') != 0)
+// 	{
+// 		*len =(size_t)(raw - ft_strchr(raw, '}') + 1);//щоб урахувати {} бо треба змістити ітератор на всю довжину key_var
+// 		return(ft_strndup(raw + 1, *len - 2));//щоб не забрати останній символ '}'
+// 	}
+// 	else
+// 	{
+// 		while (raw[*len] && !is_whitespace(raw[*len]))
+// 			(*len)++;
+// 		return(ft_strndup(raw, *(len + 1)));
+// 	}
+// }
 
 void	append_exp_str(t_expand_type *exp)
 {
