@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 18:49:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:53:26 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expand_tokens(t_token_list *list, t_env_list *env_list)//треба поч�
 	t_token	*current;
 
 	current = list->head;
-	while(!current)
+	while(current)
 	{
 		if (ft_strchr(current->value, '$'))///start from here
 		{
@@ -75,19 +75,22 @@ char	*expand_value(char *raw, t_env_list *env_list)
 			exp.var = extract_var(raw + exp.i, &exp.len_var);
 			if (!exp.var)
 				return (NULL);//what we need to free?
+			printf("exp.var: %s\n", exp.var);
+			printf("exp.len_var: %zu\n", exp.len_var);
+			printf("exp.res: %s\n", exp.res);
 			exp.str = expand_var(exp.var, exp.len_var, env_list);
 			// if (!exp->str)
 			// ??
 			append_exp_str(&exp);
 			exp.i+=exp.len_var;
-			exp.j+=ft_strlen(exp.str);
+			// exp.j+=ft_strlen(exp.str);
 		}
 		else
 		{
 			exp.res[exp.j] = raw[exp.i];
 			exp.i++;
+			exp.j++;
 		}
-		exp.j++;
 	}
 	exp.res[exp.j] = '\0';
 	// free_exp(exp);
