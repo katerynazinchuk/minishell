@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 17:20:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:38:14 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if(*line)
 		{
-			print_env_list(env_list);
+			// print_env_list(env_list);
 			tokens = fill_tokens(line);
 			if (tokens)
 			{

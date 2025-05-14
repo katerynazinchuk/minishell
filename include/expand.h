@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 17:03:14 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:41:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool	check_subs(char *raw);
 char	*expand_value(char *raw, t_env_list *env_list);
 void	append_exp_str(t_expand_type *exp);
 char	*expand_var(char *var, int len, t_env_list *env_list);
-
+void	free_exp(t_expand_type *exp);
+bool	check_subs(char *raw);
 
 #endif

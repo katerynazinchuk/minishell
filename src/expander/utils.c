@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 17:03:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:40:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,27 @@ bool	is_valid_var(char *var)
 	return (false);
 }
 
-/* //echo $? shows 0-255 with overflow
-char	exit_status_to_char(int n)
+void	free_exp(t_expand_type *exp)
 {
-	char str[4];
-
-	while (n >= 0)
+	if (exp->var)
 	{
-		
+		free(exp->var);
+		exp->var = NULL;
 	}
-} */
+	if (exp->str)
+	{
+		free(exp->str);
+		exp->str = NULL;
+	}
+}
+
+bool	check_subs(char *raw)
+{
+	while (*raw)
+	{
+		if (*raw == '{' && *(raw + 1) == '{')
+			return (true);
+		raw++;
+	}
+	return (false);
+}
