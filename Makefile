@@ -23,9 +23,9 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/token_word_utils.c \
 		src/lexer/tokenization_utils.c
 EXPANDER = src/expander/expand_var.c \
-			src/expander/utils.c
+			src/expander/utils.c \
+			src/expander/free_exp.c
 PARSER = src/parser/parser.c \
-		src/parser/ 
 # SIGNALS = 
 UTILS = src/utils/utils.c
 ERRORS = src/errors/lexer_error.c

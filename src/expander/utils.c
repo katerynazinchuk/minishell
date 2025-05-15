@@ -6,11 +6,42 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 19:48:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:16:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	check_subs(char *raw)
+{
+	while (*raw)
+	{
+		if (*raw == '{' && *(raw + 1) == '{')
+			return (true);
+		raw++;
+	}
+	return (false);
+}
+
+void	init_exp(t_expand_type *exp, char *raw)
+{
+	exp->len_var = 0;
+	exp->len_raw = ft_strlen(raw);
+	exp->i = 0;
+	exp->j = 0;
+	exp->res = ft_calloc(exp->len_raw + 1, sizeof(char));
+	if (!exp->res)
+		return ;//what we need to free ?
+	exp->var = NULL;
+	exp->str = NULL;
+}
+
+bool	is_valid_var(char *var)
+{
+	if (ft_isalpha(*var) || *var == '_')
+		return (true);
+	return (false);
+}
 
 void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 {
@@ -40,50 +71,8 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	return (new_ptr);
 }
 
-void	init_exp(t_expand_type *exp, char *raw)
-{
-	exp->len_var = 0;
-	exp->len_raw = ft_strlen(raw);
-	exp->i = 0;
-	exp->j = 0;
-	exp->res = ft_calloc(exp->len_raw + 1, sizeof(char));
-	if (!exp->res)
-		return ;//what we need to free ?
-	exp->var = NULL;
-	exp->str = NULL;
-}
 
-bool	is_valid_var(char *var)
-{
-	if (ft_isalpha(*var) || *var == '_')
-		return (true);
-	return (false);
-}
 
-void	free_exp(t_expand_type *exp)
-{
-	if (exp->var)
-	{
-		free(exp->var);
-		exp->var = NULL;
-	}
-	if (exp->str)
-	{
-		free(exp->str);
-		exp->str = NULL;
-	}
-}
-
-bool	check_subs(char *raw)
-{
-	while (*raw)
-	{
-		if (*raw == '{' && *(raw + 1) == '{')
-			return (true);
-		raw++;
-	}
-	return (false);
-}
 
 /* before changes
 void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
