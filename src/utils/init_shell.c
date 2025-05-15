@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 18:29:28 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
+/*   Updated: 2025/05/15 18:30:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#include "minishell.h"
 
-// #include "minishell.h"
-
-typedef struct s_shell
+void	init_shell(t_shell *shell, char **env)
 {
-	t_env_list		*env_list;
-	t_token_list	*token_list;
-	//t_ast			*ast;
-	char			*line;
-	int				last_exit_status;
-	char			*prompt;
-}	t_shell;
-
-#endif
+	env_list = fill_env_list(env);
+	token_list = NULL;
+	// *ast;
+	line = NULL;
+	last_exit_status = 0;
+	prompt = "minishell> ";
+}

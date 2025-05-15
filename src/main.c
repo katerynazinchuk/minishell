@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:59:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:30:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@ void	print_env_list(t_env_list *env_list);
 
 int main(int argc, char **argv, char **env)
 {
-	char		*line;
-	const char	*prompt = "minishell> ";
-	t_token_list	*tokens;
-	t_env_list		*env_list;
+	// char			*line;
+	// const char		*prompt = "minishell> ";
+	// t_token_list	*tokens;
+	// t_env_list		*env_list;
+	// t_ast_node		*ast;
+	t_shell	*shell;
 	
+	init_shell(&shell, env);
 	(void)argc;
 	(void)argv;
 	// init_signals();
-	env_list = fill_env_list(env);
-	t_ast_node *ast;
+	// shell->env_list = fill_env_list(env);
 
-	//init_signals();
 	while(1)
 	{
 		//update_prompt(prompt);
