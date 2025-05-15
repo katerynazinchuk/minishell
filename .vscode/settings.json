@@ -1,6 +1,10 @@
 {
+<<<<<<< HEAD
+	"C_Cpp.errorSquiggles": "disabled"
+=======
 	"files.associations": {
 		"libft.h": "c",
 		"minishell.h": "c"
 	}
+>>>>>>> 6e08f5485dab275c4440022cdfa79ce58351584d
 }

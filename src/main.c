@@ -3,24 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/08 20:31:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:59:22 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_env_list(t_env_list *env_list);
+
+
 /* [username@hostname current_working_directory]$ */
 
 //readline return NULL, so (!line) processing case when we use Ctrl+D
 
-int main()
+int main(int argc, char **argv, char **env)
 {
 	char		*line;
 	const char	*prompt = "minishell> ";
 	t_token_list	*tokens;
+	t_env_list		*env_list;
+	
+	(void)argc;
+	(void)argv;
+	// init_signals();
+	env_list = fill_env_list(env);
 	t_ast_node *ast;
 
 	//init_signals();
@@ -35,9 +44,12 @@ int main()
 		}
 		if(*line)
 		{
+			// print_env_list(env_list);
+			tokens = fill_tokens(line);
 			tokens = fill_tokens(line);
 			if (tokens)
 			{
+				print_tokens(tokens, env_list);
 				print_tokens(tokens);
 				ast = build_tree(tokens->head, tokens->tail);
 				if(ast)
@@ -59,4 +71,14 @@ int main()
 	}
 	return(0);
 }
-//int argc, char **argv, char **env
+void	print_env_list(t_env_list *env_list)
+{
+	t_env_type	*current;
+	
+	current = env_list->head;
+	while (current)
+	{
+		printf("key: %s\n value: %s\n\n", current->key, current->value);
+		current = current->next;
+	}
+}
