@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 15:17:19 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:18:39 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum e_token_type
+typedef enum e_tok_type
 {
-	TOKEN_WORD,//argc, argv
-	TOKEN_PIPE,//|
-	TOKEN_REDIRECT_IN,//<
-	TOKEN_REDIRECT_OUT,//>
-	TOKEN_APPEND,//>>
-	TOKEN_HEREDOC,//<<
-}	t_token_type;
+	T_WORD,//argc, argv
+	T_PIPE,//|
+	T_IN,//<
+	T_OUT,//>
+	T_APPEND,//>>
+	T_HEREDOC,//<<
+}	t_tok_type;
 
 //Tracks whether you're inside single quotes, double quotes
-typedef enum e_quote_type
+typedef enum e_q_type
 {
-	QUOTE_NONE,
-	QUOTE_SINGLE,
-	QUOTE_DOUBLE,
-}	t_quote_type;
+	Q_NONE,
+	Q_SINGLE,
+	Q_DOUBLE,
+}	t_q_type;
 
 typedef struct s_token
 {
 	char			*value;
 	int				bad_subs;
-	t_token_type	type;
-	t_quote_type	t_quote_type;
+	t_tok_type	type;
+	t_q_type	t_quote_type;
 	struct s_token	*next;
 }	t_token;
 

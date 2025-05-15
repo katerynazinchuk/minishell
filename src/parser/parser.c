@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/13 12:49:25 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:09:03 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ t_ast_node *create_ast_node(t_ast_type type, char **command)
 	t_ast_node *ast_node;
 
 	ast_node = (t_ast_node *)malloc(sizeof(t_ast_node));
-	ast_node->value = command;
 	ast_node->type = type;
+	ast_node->value = command;
+	ast_node->redir = NULL;
 	ast_node->left = NULL;
 	ast_node->right = NULL;
 	return (ast_node);
@@ -35,40 +36,47 @@ t_ast_node *create_ast_node(t_ast_type type, char **command)
 
 t_ast_node *build_tree(t_token *head, t_token *end)
 {
-	t_token *main = head;
-	t_token *last_pipe = NULL;
+	t_token *current;
+	t_token *last_pipe;
+	t_ast_node *node;
+	t_redir *redirect;
+	char **argv;
 
-	while(main && main != end)
+	current = head;
+	last_pipe = NULL;
+	while(current && current != end)
 	{
-		if(main->type == TOKEN_PIPE)
-			last_pipe = main;
-		main = main->next;
+		if(current->type == TOKEN_PIPE)
+			last_pipe = current;
+		current = current->next;
 	}
 	if(last_pipe)
 	{
-		t_ast_node * node = create_ast_node(AST_PIPE, NULL);
+		node = create_ast_node(AST_PIPE, NULL);
 		node->left = build_tree(head, last_pipe);
 		node->right = build_tree(last_pipe->next, end);
 		return (node);
 	}
 	else
 	{
-		char **argv = tokens_to_argv(head);
-		t_ast_node * node = create_ast_node(AST_COMMAND, argv);
-		//add redirect?
+		current = head;
+		node = create_ast_node(AST_COMMAND, NULL);
+		extract_redirect(&current, end, node);
+		argv = tokens_to_argv(head);
+		node->value = argv;
 		return (node);
 	}
 
 }
 
-char **tokens_to_argv (t_token *head)
+char	**tokens_to_argv(t_token *head)
 {
 	int count;
 	t_token *main;
 
 	main = head;
 	count = 0;
-	while(main && main->value != NULL && main->type == TOKEN_PIPE)
+	while(main && main->value != NULL && main->type == TOKEN_WORD)
 	{
 		count++;
 		main = main->next;
@@ -78,8 +86,7 @@ char **tokens_to_argv (t_token *head)
 		return(NULL);
 	main = head;
 	count = 0;
-	//we need to find {} and if true call expand_value
-	while(main && main->value != NULL && main->type == TOKEN_PIPE)
+	while(main && main->value != NULL && main->type == TOKEN_WORD)
 	{
 		argv[count] = ft_strdup(main->value);
 		count++;
@@ -88,7 +95,6 @@ char **tokens_to_argv (t_token *head)
 	argv[count] = NULL;
 	return (argv);
 }
-
 
 void free_ast(t_ast_node *ast)
 {

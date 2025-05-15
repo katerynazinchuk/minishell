@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/10 09:46:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:27:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,26 @@ typedef enum s_ast_type
 	//AST REDIRECT
 }	t_ast_type;
 
-//
+typedef enum e_red_type
+{
+	RED_IN,//<
+	RED_OUT,//>
+	RED_APPEND,//>>
+	RED_HEREDOC,//<<
+}	 t_red_type;
+
+typedef struct s_redir
+{
+	t_red_type type;
+	char *connection;//filename or heredoc delimetr
+	struct s_red *next;
+}	t_redir;
 
 typedef struct s_ast_node
 {
-	char				**value;//command
-	//char	*filename?
-
 	t_ast_type			type; 
+	char				**value;//command
+	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }	t_ast_node;
