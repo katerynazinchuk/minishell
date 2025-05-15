@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/08 15:44:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:53:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token_list *fill_tokens(char *line)
 	if (!list)
 		return (NULL);
 	init_lexer_state(&lexer, line);
-	while (lexer.input[lexer.current])
+	while (lexer.input[lexer.current])//str[i]
 	{
 		if (is_whitespace(lexer.input[lexer.current]))
 			skip_whitespace(&lexer);
@@ -45,9 +45,9 @@ t_token_list	*lexer(char *line, t_shell_type *shell)
 {
 	shell->token_list = fill_tokens(line);
 	//expand_tokens(shell);
+	//expand_tokens(shell);
 	return(shell->token_list);
 }
-
 
 
 //token = extract_token(lexer, state);

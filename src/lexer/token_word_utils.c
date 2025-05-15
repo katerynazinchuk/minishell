@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   token_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/13 11:16:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:54:08 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -52,6 +53,7 @@ t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 	else
 		quote_type = QUOTE_SINGLE;
 	lexer->current++;
+	//we changed mind cause of heredoc (need to expand lexer->input)
 	lexer ->start = lexer->current;
 	while(lexer->input[lexer->current] && lexer->input[lexer->current] != quote_char)
 	{
@@ -72,6 +74,7 @@ t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 	{
 		lexer->current++;
 	}
+	//we changed mind cause of heredoc (need to expand lexer->input)
 	return(word_token(list, lexer, QUOTE_NONE));
 }
 

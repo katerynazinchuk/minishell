@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/08 15:10:38 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:44:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-# include "token.h"
+#ifndef SHELL_H
+# define SHELL_H
 
-
+// #include "minishell.h"
 
 typedef struct s_shell
 {
@@ -23,5 +23,6 @@ typedef struct s_shell
 	char			*line;
 	int				last_exit_status;
 	char			*prompt;
-
 }	t_shell_type;
+
+#endif
