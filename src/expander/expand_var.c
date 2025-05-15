@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/14 20:10:28 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:26:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,18 +192,17 @@ void	append_exp_str(t_expand_type *exp)
 
 	k = 0;
 	len_str = ft_strlen(exp->str);
-	// new_size = ft_strlen(exp->res) - exp->len_var + len_str;
-	new_size = exp->len_raw + 2 - exp->len_var + len_str;
+	new_size = exp->len_raw - 1 - exp->len_var + len_str;// + 1; we need to check place for \0
 	printf("length exp->res: %zu \n", ft_strlen(exp->res));
 	printf("length exp->len_var: %zu \n", exp->len_var);
 	printf("NEW_SIZE: %zu \n", new_size);
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
-	exp->res[new_size] = '\0';
+	// exp->res[new_size] = '\0';
 	while(k < len_str)
 	{
 		exp->res[exp->j] = exp->str[k];
 		exp->j++;
 		k++;
 	}
-	// exp->res[exp->j] = '\0';
+	exp->res[exp->j] = '\0';
 }
