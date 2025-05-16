@@ -6,16 +6,16 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:35:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/06 16:48:59 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:56:26 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	init_shell(t_shell_type *shell)
+// void	init_shell(t_shell_type *shell)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell_type	shell;
+	t_shell	shell;
 
 	init_shell(&shell);
 	shell.env_list = fill_env_list(env);
@@ -53,15 +53,6 @@ void	run_shell(t_shell_type	*shell)
 	}
 }
 
-void	init_shell(t_shell_type *shell)
-{
-	shell->env_list = NULL;
-	shell->token_list = NULL;
-	// shell->ast = NULL;
-	shell->line = NULL;
-	shell->last_exit_status = 0;
-	shell->prompt = "minishell> ";
-}
 
 void	cleanup_cycle(t_shell_type *shell)
 {

@@ -31,7 +31,8 @@ PARSER = src/parser/parser.c \
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c
 
-ERRORS = src/errors/lexer_error.c
+ERRORS = src/errors/lexer_error.c \
+		src/errors/common_errors.c
 
 SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) src/main.c 
 #signal.c

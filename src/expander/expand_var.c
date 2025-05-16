@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 13:20:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:23:31 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 			cur = cur->next;
 		}
 		if (!exp->str)
-			exp->str = ft_strdup("");
+			exp->str = ft_strdup("");//обов'язково if бо інакше завжди ""
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);

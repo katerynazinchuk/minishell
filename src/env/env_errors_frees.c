@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:20:09 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 16:10:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:30:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,7 @@ void	free_env_list(t_env_list *env_list)
 	free(env_list);
 }
 
-void	malloc_error(void)
-{
-	char *str = "Cannot allocate memory";
-	ft_putendl_fd(str, 2);
 
-}
 
 void	free_env_node(t_env_type *node)
 {
