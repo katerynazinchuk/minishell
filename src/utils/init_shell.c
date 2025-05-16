@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 18:30:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:49:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	init_shell(t_shell *shell, char **env)
 {
-	env_list = fill_env_list(env);
-	token_list = NULL;
+	shell->env_list = fill_env_list(env);
+	shell->tokens = NULL;
 	// *ast;
-	line = NULL;
-	last_exit_status = 0;
-	prompt = "minishell> ";
+	shell->line = NULL;
+	shell->last_exit_status = 0;
+	shell->prompt = "minishell> ";
 }

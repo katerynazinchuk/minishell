@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 17:37:15 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:20:09 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /* змінна від експорта запишеться в env_list */
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 
-void	expand_tokens(t_shell_type *shell)//треба почистити результат від expand_value
+void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
 {
 	t_token	*current;
 
-	current = shell->token_list->head;
+	current = shell->tokens->head;
 	while (current)
 	{
 		if (ft_strchr(current->value, '$') && current->q_type != QUOTE_SINGLE)///start from here
@@ -35,7 +35,7 @@ void	expand_tokens(t_shell_type *shell)//треба почистити резу�
 	}
 }
 
-char	*expand_value(char *raw, t_shell_type *shell)
+char	*expand_value(char *raw, t_shell *shell)
 {
 	t_expand_type	exp;
 
@@ -48,7 +48,7 @@ char	*expand_value(char *raw, t_shell_type *shell)
 			extract_var(raw + exp.i, &exp);
 			if (!exp.var)
 				return (error_free(&exp));
-			expand_var(&exp, shell->env_list);
+			expand_var(&exp, shell);
 			if (!exp.str)
 				return (error_free(&exp));
 			append_exp_str(&exp);
@@ -81,13 +81,13 @@ void	extract_var(char *raw, t_expand_type *exp)
 	}
 }
 
-void	expand_var(t_expand_type *exp, t_env_list *env_list)
+void	expand_var(t_expand_type *exp, t_shell *shell)
 {
 	t_env_type		*cur;
 
 	if (is_valid_var(exp->var))
 	{
-		cur = env_list->head;
+		cur = shell->env_list->head;
 		while(cur)
 		{
 			if (ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
@@ -97,6 +97,8 @@ void	expand_var(t_expand_type *exp, t_env_list *env_list)
 			}
 			cur = cur->next;
 		}
+		if (!exp->str)
+			exp->str = ft_strdup("");
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);

@@ -28,10 +28,12 @@ EXPANDER = src/expander/expand_var.c \
 			src/expander/free_exp.c
 PARSER = src/parser/parser.c \
 # SIGNALS = 
-UTILS = src/utils/utils.c
+UTILS = src/utils/utils.c \
+		src/utils/init_shell.c
+
 ERRORS = src/errors/lexer_error.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

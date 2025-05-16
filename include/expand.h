@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 17:18:10 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:12:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ typedef struct s_expand_type
 	char	*str;
 }	t_expand_type;
 
-// char	*expand_value(char *raw, t_shell_type *shell);
-void	expand_tokens(t_token_list *list, t_env_list *env_list);
-char	*expand_value(char *raw, t_env_list *env_list);
+void	expand_tokens(t_shell *shell);
+char	*expand_value(char *raw, t_shell *shell);
 void	extract_var(char *raw, t_expand_type *exp);
-void	expand_var(t_expand_type *exp, t_env_list *env_list);
+void	expand_var(t_expand_type *exp, t_shell *shell);
 void	append_exp_str(t_expand_type *exp);
 
 /* Utils */
