@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 13:37:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:25:26 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,20 @@ void	init_shell(t_shell *shell, char **env)
 void	free_shell(t_shell	*shell)
 {
 	if (shell->env_list)
+	{
 		free_env_list(shell->env_list);
+		shell->env_list = NULL;
+	}
 	if (shell->tokens)
+	{
 		free_token_list(shell->tokens);
+		shell->tokens = NULL;
+	}
 	// if (shell->ast)
 	// 	free_ast(shell->ast);
 	if (shell->line)
+	{
 		free(shell->line);
+		shell->line = NULL;
+	}
 }
