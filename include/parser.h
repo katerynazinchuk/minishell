@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/14 15:27:47 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:24:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ typedef struct s_redir
 	struct s_red *next;
 }	t_redir;
 
+typedef struct s_com_tokens//for dereferenses words for argv
+{
+	char				*word;
+	struct s_com_tokens	*next;
+}	t_com_tokens;
+
 typedef struct s_ast_node
 {
 	t_ast_type			type; 
@@ -54,6 +60,13 @@ typedef struct s_command {
     char				*heredoc_delim;    // heredoc delimiter
     struct s_command	*next; // next in pipe chain
 }	t_command;
+
+typedef struct s_command_parsing
+{
+	t_redir *redirect;
+	t_com_tokens *referens;
+} t_command_parsing;
+
 
 
 t_ast_node	*create_ast_node(t_ast_type type, char **command);

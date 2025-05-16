@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 18:05:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:20:39 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,138 @@ void add_to_redirect(t_ast_node *node, t_redir *new)
 	}
 }
 
-void exract_redirection_list(t_token **head, t_token *end, t_ast_node *node)
+t_com_tokens *extract_referens(t_token *current)
 {
-	t_token *prev;
-	t_token *current;
-	t_token *next;//for target
-	t_token *new_head;
-	t_token *last_word;
-	t_redir *redirect;
-	t_red_type type;
+	t_com_tokens *new_ref;
 
-	prev = NULL;
+	new_ref = malloc(sizeof(t_com_tokens));
+	if(!new_ref)
+		return (NULL);
+	new_ref->word = current;
+	new_ref->next = NULL;
+	return (new_ref);
+}
+
+t_redir *extract_redirect(t_token *current)
+{
+	t_token *next;
+	t_redir *new_redir;
+	
+	next = current->next;
+	if(!next || next->type != T_WORD)
+		return (NULL);
+	new_redir = create_redirect_node(define_redirection(current->type), next->value);
+	if(!new_redir)
+		return (NULL);
+	return(new_redir);
+}
+t_command_parsing *extract_red_and_ref(t_token *head)
+{
+	t_command_parsing *structure;
+	t_token *current;
+	t_redir *redirects;
+	t_com_tokens *referens;
+	
+	if(!head)
+		return (NULL);
+	structure = malloc(sizeof(t_command_parsing));
+	if(!structure)
+		return (NULL);
+	structure->redirect = NULL;
+	structure->referens = NULL;
+	
 	current = head;
-	next = NULL;
-	new_head = NULL;
-	last_word = NULL;
-	while(current && current != end)
+	while(current)
 	{
-		if(current->type == T_IN || current->type == T_OUT || current->type == T_APPEND || current->type == T_HEREDOC) 
-		{
-			next = current->next;
-			if(!next || next->type != T_WORD)
+		if(current->type == T_APPEND || current->type == T_HEREDOC ||\
+			current->type == T_IN || current->type == T_OUT)
 			{
-				return ;
+				
+				if (append_red(current, &structure))
+					//free structure before & NULL
+				
+				}
+					//append node to list
+					//free(tem_ref)
+				return (free_structure(structure), NULL);//catch error end show msg allocate fail
 			}
-			type = define_redirection(current->type);
-			redirect = create_redirect_node(type, next->value);
-			add_to_redirect(node, redirect);
-			current = next->next;
-			continue;
+		else
+		{
+			tmp_ref = extract_referens(current);
+			//appendnode to list
 		}
-		if(current->value)
 		current = current->next;
 	}
+	
+	return (structure);
 }
+
+
+int	append_red(t_token *current, t_command_parsing *structure)
+{
+	extract_redirect(current));
+	if(tmp_red)
+	{
+		if(!structure->redirect)
+			structure->redirect = tmp_red;
+		else
+			{
+				while(structure->
+			}
+
+	}
+	return (1);//success
+}
+
+
+// void exract_redirection_list(t_token **head, t_token *end, t_ast_node *node)
+// {
+// 	t_token *prev;
+// 	t_token *current;//current pointer in this function
+// 	t_token *next;//for target
+// 	t_token *new_head;
+// 	t_token *last_word;// to reate new linked list only with words for argv
+// 	t_redir *redirect;
+// 	t_red_type type;
+
+// 	prev = NULL;
+// 	current = head;
+// 	next = NULL;
+// 	new_head = NULL;
+// 	last_word = NULL;
+// 	while(current && current != end)
+// 	{
+// 		if(current->type == T_IN || current->type == T_OUT || current->type == T_APPEND || current->type == T_HEREDOC) 
+// 		{
+// 			next = current->next;
+// 			if(!next || next->type != T_WORD)
+// 			{
+// 				return ;
+// 			}
+// 			type = define_redirection(current->type);
+// 			redirect = create_redirect_node(type, next->value);
+// 			add_to_redirect(node, redirect);
+// 			current = next->next;
+// 			continue;
+// 		}
+// 		if(current->type == T_WORD)
+// 		{
+// 			if(!new_head)
+// 			{
+// 				new_head = current;
+// 				last_word = current;
+// 			}
+// 			else
+// 			{
+// 				last_word->next = current;
+// 				last_word = current
+
+// 			}
+// 		}
+// 		current = current->next;
+// 	}
+// 	if(last_word)
+// 		last_word->next = NULL;
+// 	*head = new_head;
+// }
 

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 18:09:21 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:10:40 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct s_token
 	char			*value;
 	char			*expanded;
 	int				bad_subs;
-	t_token_type	type;
-	t_quote_type	q_type;
+	t_tok_type	type;
+	t_q_type	q_type;
 	struct s_token	*next;
 }	t_token;
 

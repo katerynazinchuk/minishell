@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 16:09:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:20:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,23 @@ t_ast_node *create_ast_node(t_ast_type type, char **command)
 	ast_node->right = NULL;
 	return (ast_node);
 }
+typedef struct command_parsing
+{
+	t_redir *redirect;
+	t_com_tokens *referens;
+} command_parsing;
+
 
 t_ast_node *build_tree(t_token *head, t_token *end)
 {
 	t_token *current;
 	t_token *last_pipe;
 	t_ast_node *node;
-	t_redir *redirect;
+	command_parsing *structure;
 	char **argv;
+
+	structure->redirect = NULL;
+	structure->referens = NULL;
 
 	current = head;
 	last_pipe = NULL;
@@ -61,13 +70,13 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	{
 		current = head;
 		node = create_ast_node(AST_COMMAND, NULL);
-		extract_redirect(&current, end, node);
-		argv = tokens_to_argv(head);
+		structure = extract_red_and_ref(current, end);
+		argv = tokens_to_argv(structure->referens);
 		node->value = argv;
 		return (node);
 	}
-
 }
+
 
 char	**tokens_to_argv(t_token *head)
 {
