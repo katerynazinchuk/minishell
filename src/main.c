@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/16 14:17:29 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 12:26:08 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int main(int argc, char **argv, char **env)
 			{
 				expand_tokens(&shell);//move it to fill_tokens
 				print_tokens(&shell);
-				// shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
-				// if(shell.ast)
-				// {
-				// 	print_ast(shell.ast, 0);
-				// 	free_ast(shell.ast);
-				// }
+				shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
+				if(shell.ast)
+				{
+					print_ast(shell.ast, 0);
+					free_ast(shell.ast);
+				}
 				free_token_list(shell.tokens);
 			}
 			add_history(shell.line);
