@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:53:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:00:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,14 @@ t_token_list *fill_tokens(char *line)
 			skip_whitespace(&lexer);
 		else if (lexer.input[lexer.current] == '|')
 			add_pipe_token(list, &lexer);
-		else if (lexer.input[lexer.current] == '<' || lexer.input[lexer.current] == '>')
+		else if (lexer.input[lexer.current] == '<' \
+			|| lexer.input[lexer.current] == '>')
 			add_redirection_token(list, &lexer);
 		else
 			add_word_token(list, &lexer);
 	}
 	return (list);
 }
-
-// void	*expand_tokens(t_shell_type *shell)
-// {
-	
-// }
-
 
 t_token_list	*lexer(char *line, t_shell_type *shell)
 {

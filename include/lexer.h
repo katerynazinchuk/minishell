@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:45:43 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:02:52 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		is_whitespace(char c);
 int		is_special_char(char c);
 char	*ft_strndup(const char *s, size_t n);
 
-t_token *create_token(char *value, t_token_type types, t_quote_type quotes);
+t_token *create_token(char *value, t_tok_type types, t_q_type quotes);
 void	add_to_token_list(t_token_list *list, t_token *new_token);
 void	free_token(t_token *token);
 void	free_token_list(t_token_list *list);
@@ -39,7 +39,7 @@ t_token_list	*init_token_list(void);
 void	skip_whitespace(t_str_pos *lexer);
 void	add_pipe_token(t_token_list *list, t_str_pos *lexer);
 void	add_redirection_token(t_token_list *list, t_str_pos *lexer);
-void create_redirection_token(t_token_list *list, char *symbol, t_token_type type);
+void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
 void	add_word_token(t_token_list *list, t_str_pos *lexer);
 
 t_token_list *fill_tokens(char *line);

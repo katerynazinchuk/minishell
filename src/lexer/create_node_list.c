@@ -6,13 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 18:08:28 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:00:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *create_token(char *value, t_token_type types, t_quote_type quotes)
+t_token *create_token(char *value, t_tok_type types, t_q_type quotes)
 {
 	t_token	*new_token;
 

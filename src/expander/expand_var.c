@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 17:37:15 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:03:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expand_tokens(t_shell_type *shell)//треба почистити резу�
 	current = shell->token_list->head;
 	while (current)
 	{
-		if (ft_strchr(current->value, '$') && current->q_type != QUOTE_SINGLE)///start from here
+		if (ft_strchr(current->value, '$') && current->q_type != Q_SINGLE)///start from here
 		{
 			if (check_subs(current->value))
 				current->bad_subs = 1;

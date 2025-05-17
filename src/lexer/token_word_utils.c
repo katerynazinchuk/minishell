@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   token_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:54:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:00:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-static t_token	*word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type);
+static t_token	*word_token (t_token_list *list, t_str_pos *lexer, t_q_type quote_type);
 
 int	use_quotes(t_str_pos *lexer)
 {
@@ -44,14 +44,14 @@ int check_quotes(t_str_pos *lexer)
 t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 {
 	char quote_char;
-	t_quote_type quote_type;
+	t_q_type quote_type;
 	t_token *new_token;
 
 	quote_char = lexer->input[lexer->current];
 	if(quote_char == '"')
-		quote_type = QUOTE_DOUBLE;
+		quote_type = Q_DOUBLE;
 	else
-		quote_type = QUOTE_SINGLE;
+		quote_type = Q_SINGLE;
 	lexer->current++;
 	//we changed mind cause of heredoc (need to expand lexer->input)
 	lexer ->start = lexer->current;
@@ -75,10 +75,10 @@ t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
 		lexer->current++;
 	}
 	//we changed mind cause of heredoc (need to expand lexer->input)
-	return(word_token(list, lexer, QUOTE_NONE));
+	return(word_token(list, lexer, Q_NONE));
 }
 
-static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type quote_type)
+static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_q_type quote_type)
 {
 	t_token	*new_token;
 	char	*word;
@@ -87,7 +87,7 @@ static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_quote_type q
 	word = ft_strndup(lexer->input + lexer->start, lexer->len);//int checged to long
 	if (!word)
 		return (NULL);
-	new_token = create_token(word, TOKEN_WORD, quote_type);
+	new_token = create_token(word, T_WORD, quote_type);
 	free(word);
 	if (!new_token)
 		return (NULL);

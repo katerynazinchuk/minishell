@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/16 17:20:39 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 10:34:40 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,48 @@ t_redir *extract_redirect(t_token *current)
 		return (NULL);
 	return(new_redir);
 }
+int	append_red(t_token *current, t_command_parsing *structure)
+{
+	t_redir *new_red;
+	t_redir *tmp;
+
+	new_red = extract_redirect(current);
+	if(!new_red)
+		return (1);
+	
+	if(!structure->redirect)
+		structure->redirect = new_red;
+	else
+	{
+		tmp = structure->redirect;
+		while(tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_red;
+	}
+	return (0);
+}
+	
+int	append_ref(t_token *current, t_command_parsing *structure)
+{
+	t_redir *new_ref;
+	t_redir *tmp;
+
+	new_ref = extract_referens(current);
+	if(!new_ref)
+		return (1);
+	
+	if(!structure->referens)
+		structure->referens = new_ref;
+	else
+	{
+		tmp = structure->referens;
+		while(tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_ref;
+	}
+	return (0);
+}
+
 t_command_parsing *extract_red_and_ref(t_token *head)
 {
 	t_command_parsing *structure;
@@ -101,43 +143,31 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 	{
 		if(current->type == T_APPEND || current->type == T_HEREDOC ||\
 			current->type == T_IN || current->type == T_OUT)
+		{
+			if (append_red(current, &structure))
 			{
-				
-				if (append_red(current, &structure))
-					//free structure before & NULL
-				
-				}
-					//append node to list
-					//free(tem_ref)
-				return (free_structure(structure), NULL);//catch error end show msg allocate fail
+				free_command_parsing(structure); //before & NULL
+				return (NULL);
+			
 			}
+			//return (free_structure(structure), NULL);//catch error end show msg allocate fail
+		}
 		else
 		{
-			tmp_ref = extract_referens(current);
+			if(append_ref(current, &structure))
+			{
+				free_command_parsing(structure);
+				return (NULL);
+			}
+			// tmp_ref = extract_referens(current);
 			//appendnode to list
 		}
 		current = current->next;
 	}
-	
 	return (structure);
 }
 
 
-int	append_red(t_token *current, t_command_parsing *structure)
-{
-	extract_redirect(current));
-	if(tmp_red)
-	{
-		if(!structure->redirect)
-			structure->redirect = tmp_red;
-		else
-			{
-				while(structure->
-			}
-
-	}
-	return (1);//success
-}
 
 
 // void exract_redirection_list(t_token **head, t_token *end, t_ast_node *node)

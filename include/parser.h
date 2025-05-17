@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/16 16:24:05 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:02:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ t_ast_node	*build_tree(t_token *head, t_token *end);
 char		**tokens_to_argv (t_token *head);
 void		free_ast(t_ast_node *ast);
 void		print_ast(t_ast_node *ast, int level);
+
+t_red_type define_redirection(t_tok_type token_type);
+t_redir *create_redirect_node(t_red_type red, char *connection);
+void add_to_redirect(t_ast_node *node, t_redir *new);
+t_com_tokens *extract_referens(t_token *current);
+t_redir *extract_redirect(t_token *current);
+int	append_red(t_token *current, t_command_parsing *structure);
+int	append_ref(t_token *current, t_command_parsing *structure);
+t_command_parsing *extract_red_and_ref(t_token *head);
 
 #endif
 

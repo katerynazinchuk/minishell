@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:53:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:00:13 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void skip_whitespace(t_str_pos *lexer)
 void add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token	*new_token;
-	new_token = create_token("|", TOKEN_PIPE, QUOTE_NONE);
+	new_token = create_token("|", T_PIPE, Q_NONE);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
@@ -32,22 +32,22 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 {
 	if (lexer->input[lexer->current + 1] == '>' && lexer->input[lexer->current] == '>')
 	{
-		create_redirection_token(list, ">>", TOKEN_APPEND);
+		create_redirection_token(list, ">>", T_APPEND);
 		lexer->current += 2;
 	}
 	else if (lexer->input[lexer->current + 1] == '<' && lexer->input[lexer->current] == '<')
 	{
-		create_redirection_token(list, "<<", TOKEN_HEREDOC);
+		create_redirection_token(list, "<<", T_HEREDOC);
 		lexer->current += 2;
 	}
 	else if (lexer->input[lexer->current] == '>')
 	{
-		create_redirection_token(list, ">", TOKEN_REDIRECT_OUT);
+		create_redirection_token(list, ">", T_OUT);
 		lexer->current++;
 	}
 	else if (lexer->input[lexer->current] == '<')
 	{
-		create_redirection_token(list, "<", TOKEN_REDIRECT_IN);
+		create_redirection_token(list, "<", T_IN);
 		lexer->current++;
 	}
 	else 
@@ -57,11 +57,11 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 }
 
-void create_redirection_token(t_token_list *list, char *symbol, t_token_type type)
+void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type)
 {
 	t_token	*new_token;
 
-	new_token = create_token(symbol, type, QUOTE_NONE);
+	new_token = create_token(symbol, type, Q_NONE);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
