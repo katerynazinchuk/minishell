@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 12:03:12 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:52:29 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_redir *extract_redirect(t_token *current)
 	next = current->next;
 	if(!next || next->type != T_WORD)
 		return (NULL);
-	new_redir = create_redirect_node(define_redirection(current->type), next->value);
+	new_redir = create_redirect_node(define_redirection(current->type), next->expanded);
 	if(!new_redir)
 		return (NULL);
 	return(new_redir);
@@ -104,8 +104,8 @@ int	append_red(t_token *current, t_command_parsing *structure)
 	
 int	append_ref(t_token *current, t_command_parsing *structure)
 {
-	t_redir *new_ref;
-	t_redir *tmp;
+	t_com_tokens *new_ref;
+	t_com_tokens *tmp;
 
 	new_ref = extract_referens(current);
 	if(!new_ref)
@@ -123,7 +123,7 @@ int	append_ref(t_token *current, t_command_parsing *structure)
 	return (0);
 }
 
-t_command_parsing *extract_red_and_ref(t_token *head)
+t_command_parsing *extract_red_and_ref(t_token *head, t_token *end)
 {
 	t_command_parsing *structure;
 	t_token *current;
@@ -137,14 +137,14 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 	structure->referens = NULL;
 	
 	current = head;
-	while(current)
+	while(current && current != end)
 	{
-		if(current->type == T_APPEND || current->type == T_HEREDOC ||\
-			current->type == T_IN || current->type == T_OUT)
+		if((current->type == T_APPEND || current->type == T_HEREDOC ||\
+			current->type == T_IN || current->type == T_OUT) && current->q_type == Q_NONE)
 		{
-			if (append_red(current, &structure))
+			if (append_red(current, structure))
 			{
-				free_command_parsing(structure); //before & NULL
+				//free_command_parsing(structure); //before & NULL
 				return (NULL);
 			
 			}
@@ -152,9 +152,9 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 		}
 		else
 		{
-			if(append_ref(current, &structure))
+			if(append_ref(current, structure))
 			{
-				free_command_parsing(structure);
+				//free_command_parsing(structure);
 				return (NULL);
 			}
 		}
@@ -163,57 +163,7 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 	return (structure);
 }
 
-
-
-
-// void exract_redirection_list(t_token **head, t_token *end, t_ast_node *node)
+// void free_command_parsing(t_command_parsing *structure)
 // {
-// 	t_token *prev;
-// 	t_token *current;//current pointer in this function
-// 	t_token *next;//for target
-// 	t_token *new_head;
-// 	t_token *last_word;// to reate new linked list only with words for argv
-// 	t_redir *redirect;
-// 	t_red_type type;
-
-// 	prev = NULL;
-// 	current = head;
-// 	next = NULL;
-// 	new_head = NULL;
-// 	last_word = NULL;
-// 	while(current && current != end)
-// 	{
-// 		if(current->type == T_IN || current->type == T_OUT || current->type == T_APPEND || current->type == T_HEREDOC) 
-// 		{
-// 			next = current->next;
-// 			if(!next || next->type != T_WORD)
-// 			{
-// 				return ;
-// 			}
-// 			type = define_redirection(current->type);
-// 			redirect = create_redirect_node(type, next->value);
-// 			add_to_redirect(node, redirect);
-// 			current = next->next;
-// 			continue;
-// 		}
-// 		if(current->type == T_WORD)
-// 		{
-// 			if(!new_head)
-// 			{
-// 				new_head = current;
-// 				last_word = current;
-// 			}
-// 			else
-// 			{
-// 				last_word->next = current;
-// 				last_word = current
-
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// 	if(last_word)
-// 		last_word->next = NULL;
-// 	*head = new_head;
+	
 // }
-

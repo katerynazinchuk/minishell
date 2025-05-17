@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 12:28:08 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:52:01 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef struct s_redir
 {
 	t_red_type type;
 	char *connection;//filename or heredoc delimetr
-	struct s_red *next;
+	struct s_redir *next;
 }	t_redir;
 
 typedef struct s_com_tokens//for dereferenses words for argv
 {
-	char				*word;
+	t_token				*word;
 	struct s_com_tokens	*next;
 }	t_com_tokens;
 
@@ -71,10 +71,9 @@ typedef struct s_command_parsing
 
 t_ast_node	*create_ast_node(t_ast_type type, char **command);
 t_ast_node	*build_tree(t_token *head, t_token *end);
-char		**tokens_to_argv (t_token *head);
+char		**tokens_to_argv (t_com_tokens *head);
 void		free_ast(t_ast_node *ast);
 void		print_ast(t_ast_node *ast, int level);
-
 t_red_type define_redirection(t_tok_type token_type);
 t_redir *create_redirect_node(t_red_type red, char *connection);
 void add_to_redirect(t_ast_node *node, t_redir *new);
@@ -82,7 +81,10 @@ t_com_tokens *extract_referens(t_token *current);
 t_redir *extract_redirect(t_token *current);
 int	append_red(t_token *current, t_command_parsing *structure);
 int	append_ref(t_token *current, t_command_parsing *structure);
-t_command_parsing *extract_red_and_ref(t_token *head);
+t_command_parsing *extract_red_and_ref(t_token *head, t_token *end);
+
+void print_redir_node(t_redir *redirect);
+void print_redir_tree(t_ast_node *node);
 
 #endif
 

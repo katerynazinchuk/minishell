@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 12:26:08 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:47:28 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int main(int argc, char **argv, char **env)
 				if(shell.ast)
 				{
 					print_ast(shell.ast, 0);
+					print_redir_tree(shell.ast);
 					free_ast(shell.ast);
 				}
 				free_token_list(shell.tokens);

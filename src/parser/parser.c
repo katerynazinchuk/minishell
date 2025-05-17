@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 12:28:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:08:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,15 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	t_token *current;
 	t_token *last_pipe;
 	t_ast_node *node;
-	command_parsing *structure;
+	t_command_parsing *structure;
 	char **argv;
-
-	structure->redirect = NULL;
-	structure->referens = NULL;
 
 	current = head;
 	last_pipe = NULL;
 	while(current && current != end)
 	{
-		if(current->type == TOKEN_PIPE)
-			last_pipe = current;
+		if(current->type == T_PIPE)
+		last_pipe = current;
 		current = current->next;
 	}
 	if(last_pipe)
@@ -70,34 +67,43 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	{
 		current = head;
 		node = create_ast_node(AST_COMMAND, NULL);
-		structure = extract_red_and_ref(current, end);
+		structure = extract_red_and_ref(head, last_pipe);
 		argv = tokens_to_argv(structure->referens);
 		node->value = argv;
+		node->redir = structure->redirect;
 		return (node);
 	}
 }
 
 
-char	**tokens_to_argv(t_token *head)
+char	**tokens_to_argv(t_com_tokens *head)
 {
 	int count;
-	t_token *main;
+	t_com_tokens *main;
+	char **argv;
 
 	main = head;
 	count = 0;
-	while(main && main->value != NULL && main->type == TOKEN_WORD)
+	while(main && main->word != NULL && main->word->type == T_WORD)
 	{
 		count++;
 		main = main->next;
 	}
-	char **argv = malloc(sizeof(char *) * (count + 1));
+	argv = malloc(sizeof(char *) * (count + 1));
 	if(!argv)
 		return(NULL);
 	main = head;
 	count = 0;
-	while(main && main->value != NULL && main->type == TOKEN_WORD)
+	while(main && main->word != NULL && main->word->type == T_WORD)
 	{
-		argv[count] = ft_strdup(main->value);
+		argv[count] = ft_strdup(main->word->expanded);
+		if(!argv[count])
+		{
+			while(--count >= 0)
+				free(argv[count]);
+			free(argv);
+			return (NULL);
+		}
 		count++;
 		main = main->next;
 	}
@@ -153,6 +159,25 @@ void print_ast(t_ast_node *ast, int level)
     // Recursively print left and right children
     print_ast(ast->left, level + 1);
     print_ast(ast->right, level + 1);
+}
+
+void print_redir_node(t_redir *redirect)
+{
+	while(redirect)
+	{
+		printf("[type: %u] [connection: %s]\n", redirect->type, redirect->connection);
+		redirect= redirect->next;
+	}
+
+}
+void print_redir_tree(t_ast_node *node)
+{
+	if(!node)
+		return ; 
+	if(node->type == AST_COMMAND)
+		print_redir_node(node->redir);
+	print_redir_tree(node->left);
+	print_redir_tree(node->right);
 }
 
 
