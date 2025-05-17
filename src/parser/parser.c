@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/13 12:49:25 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 12:21:46 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char **tokens_to_argv (t_token *head)
 	argv[count] = NULL;
 	return (argv);
 }
-
 
 void free_ast(t_ast_node *ast)
 {

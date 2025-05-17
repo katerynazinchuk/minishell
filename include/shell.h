@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 14:18:01 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 12:20:50 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
+# include "parser.h"
 
 typedef struct s_shell
 {
 	t_env_list		*env_list;
 	t_token_list	*tokens;
-	//t_ast			*ast;
+	t_ast_node			*ast;
 	char			*line;
 	int				last_exit_status;
 	char			*prompt;
