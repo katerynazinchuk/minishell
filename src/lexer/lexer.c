@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:00:14 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:08:27 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
-t_token_list	*lexer(char *line, t_shell_type *shell)
+
+t_token_list	*lexer(t_shell *shell)
 {
-	shell->token_list = fill_tokens(line);
-	//expand_tokens(shell);
-	//expand_tokens(shell);
-	return(shell->token_list);
+	shell->tokens = fill_tokens(shell->line);
+	return(shell->tokens);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:02:52 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:09:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	add_redirection_token(t_token_list *list, t_str_pos *lexer);
 void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
 void	add_word_token(t_token_list *list, t_str_pos *lexer);
 
-t_token_list *fill_tokens(char *line);
-t_token_list	*lexer(char *line, t_shell_type *shell);
-void	print_tokens(t_token_list *list, t_env_list *env_list);
+t_token_list	*fill_tokens(char *line);
+//t_token_list	*lexer(t_shell *shell);
+void	print_tokens(t_shell *shell);
 
 int use_quotes(t_str_pos *lexer);
 int check_quotes(t_str_pos *lexer);

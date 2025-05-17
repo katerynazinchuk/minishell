@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/15 17:40:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:38:11 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,3 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	return (new_ptr);
 }
 
-/* before changes
-void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
-{
-	void	*new_ptr;
-
-	if (!ptr && new_size == 0)
-		return (NULL);
-	else if (new_size == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	new_ptr = malloc(new_size);
-	if (!new_ptr)
-	{
-		if (ptr)
-			free(ptr);
-		return (NULL);
-	}
-	if (ptr)
-	{
-		if (old_size > new_size)
-			memcpy(new_ptr, ptr, new_size);
-		else
-			memcpy(new_ptr, ptr, old_size);
-		free(ptr);
-	}
-	return(new_ptr);
-} */

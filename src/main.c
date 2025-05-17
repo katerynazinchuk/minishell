@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:59:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:17:29 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,56 +21,51 @@ void	print_env_list(t_env_list *env_list);
 
 int main(int argc, char **argv, char **env)
 {
-	char		*line;
-	const char	*prompt = "minishell> ";
-	t_token_list	*tokens;
-	t_env_list		*env_list;
+	t_shell	shell;
 	
+	init_shell(&shell, env);
 	(void)argc;
 	(void)argv;
 	// init_signals();
-	env_list = fill_env_list(env);
-	t_ast_node *ast;
 
-	//init_signals();
 	while(1)
 	{
 		//update_prompt(prompt);
-		line = readline(prompt);
-		if (!line)
+		shell.line = readline(shell.prompt);
+		if (!shell.line)
 		{
 			write(1, "exit\n", 4);
 			exit (0);
 		}
-		if(*line)
+		if(*shell.line)
 		{
-			// print_env_list(env_list);
-			tokens = fill_tokens(line);
-			tokens = fill_tokens(line);
-			if (tokens)
+			shell.tokens = fill_tokens(shell.line);
+			if (shell.tokens)
 			{
-				print_tokens(tokens, env_list);
-				print_tokens(tokens);
-				ast = build_tree(tokens->head, tokens->tail);
-				if(ast)
-				{
-					print_ast(ast, 0);
-					free_ast(ast);
-				}
-				free_token_list(tokens);
+				expand_tokens(&shell);//move it to fill_tokens
+				print_tokens(&shell);
+				// shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
+				// if(shell.ast)
+				// {
+				// 	print_ast(shell.ast, 0);
+				// 	free_ast(shell.ast);
+				// }
+				free_token_list(shell.tokens);
 			}
-			add_history(line);
+			add_history(shell.line);
 		}
 		//token = extract_token(lexer, state);
 		//parse_tokens(token);
 		//execute_command(token);
 		// if (*line)
 		// 	add_history(line);
-		printf("command: %s\n", line);
-		free(line);
+		printf("command: %s\n", shell.line);
+		free(shell.line);
 	}
+	free_shell(&shell);
 	return(0);
 }
+
 void	print_env_list(t_env_list *env_list)
 {
 	t_env_type	*current;
