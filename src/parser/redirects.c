@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 10:34:40 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/17 12:03:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 {
 	t_command_parsing *structure;
 	t_token *current;
-	t_redir *redirects;
-	t_com_tokens *referens;
 	
 	if(!head)
 		return (NULL);
@@ -159,8 +157,6 @@ t_command_parsing *extract_red_and_ref(t_token *head)
 				free_command_parsing(structure);
 				return (NULL);
 			}
-			// tmp_ref = extract_referens(current);
-			//appendnode to list
 		}
 		current = current->next;
 	}
