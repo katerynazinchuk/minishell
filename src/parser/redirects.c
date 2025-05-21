@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 18:52:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:05:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ t_command_parsing *extract_red_and_ref(t_token *head, t_token *end)
 				return (NULL);
 			
 			}
+			current = current->next;
 			//return (free_structure(structure), NULL);//catch error end show msg allocate fail
 		}
 		else

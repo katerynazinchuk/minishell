@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 18:08:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:20:35 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_ast_node *build_tree(t_token *head, t_token *end)
 	}
 	else
 	{
+		
 		current = head;
 		node = create_ast_node(AST_COMMAND, NULL);
 		structure = extract_red_and_ref(head, last_pipe);
@@ -179,7 +180,25 @@ void print_redir_tree(t_ast_node *node)
 	print_redir_tree(node->left);
 	print_redir_tree(node->right);
 }
+void print_argv(char **argv)
+{
+	int i = 0;
+	while(argv[i])
+	{
+		printf("%s", argv[i]);
+		i++;
+	}
+}
 
+void print_argv_tree(t_ast_node *node)
+{
+	if(!node)
+		return ; 
+	if(node->value)
+		print_argv(node->value);
+	print_argv_tree(node->left);
+	print_argv_tree(node->right);
+}
 
 // Print errors:
 // if string starts with |

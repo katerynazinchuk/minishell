@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 18:10:40 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:56:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef enum e_tok_type
 	T_OUT,//>
 	T_APPEND,//>>
 	T_HEREDOC,//<<
+	T_SPACE,
 }	t_tok_type;
 
 //Tracks whether you're inside single quotes, double quotes

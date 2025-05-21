@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 18:52:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:09:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ t_command_parsing *extract_red_and_ref(t_token *head, t_token *end);
 
 void print_redir_node(t_redir *redirect);
 void print_redir_tree(t_ast_node *node);
+void print_argv_tree(t_ast_node *node);
+void print_argv(char **argv);
+
 
 #endif
 

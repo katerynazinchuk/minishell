@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:00:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:03:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type)
 
 void add_word_token(t_token_list *list, t_str_pos *lexer)
 {
-	printf("add word token : check quotes: %s   -> position: %d\n", lexer->input, lexer->current);
+	// printf("add word token : check quotes: %s   -> position: %d\n", lexer->input, lexer->current);
 
-	if (use_quotes(lexer))
+	if (use_quotes(lexer))// && previous char is not a space)
 	{
 		if (!check_quotes(lexer))
 		{
