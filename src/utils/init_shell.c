@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 14:25:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:56:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,4 @@ void	free_shell(t_shell	*shell)
 		shell->line = NULL;
 	}
 }
+

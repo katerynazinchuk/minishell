@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/17 11:09:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:31:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,10 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		cur = shell->env_list->head;
 		while(cur)
 		{
-			if (ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
+			if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
 			{
 				exp->str = ft_strdup(cur->value);
+				
 				break ;
 			}
 			cur = cur->next;
@@ -115,6 +116,7 @@ void	append_exp_str(t_expand_type *exp)
 	size_t	k;
 
 	k = 0;
+	printf("append_exp_str: %s\n", exp->str);
 	len_str = ft_strlen(exp->str);
 	new_size = exp->j + ft_strlen(exp->str) + (exp->len_raw - exp->i) + 1;
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);

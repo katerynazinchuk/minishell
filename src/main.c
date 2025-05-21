@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 15:03:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:01:30 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 // void	print_env_list(t_env_list *env_list);
 /* [username@hostname current_working_directory]$ */
 //readline return NULL, so (!line) processing case when we use Ctrl+D
+
+/* --leak-check=full
+valgrind --leak-check=full --show-leak-kinds=all ./minishell
+*/
 
 int	main(int argc, char **argv, char **env)
 {
@@ -56,25 +60,18 @@ int	main(int argc, char **argv, char **env)
 				}
 				free_token_list(shell.tokens);
 			}
-			add_history(shell.line);
+			// add_history(shell.line);
 		}
 		// if (*line)
 		// 	add_history(line);
 		// printf("command: %s\n", shell.line);
 		free(shell.line);
 	}
+	print_shell(&shell);
 	free_shell(&shell);
+	print_shell(&shell);
+	
 	return(0);
 }
 
-// void	print_env_list(t_env_list *env_list)
-// {
-// 	t_env_type	*current;
-	
-// 	current = env_list->head;
-// 	while (current)
-// 	{
-// 		printf("key: %s\n value: %s\n\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// }
+

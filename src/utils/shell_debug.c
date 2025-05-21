@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   shell_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/21 19:00:15 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
+/*   Updated: 2025/05/21 19:00:50 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "parser.h"
+#include "minishell.h"
 
-typedef struct s_shell
+void	print_shell(t_shell *shell)
 {
-	t_env_list		*env_list;
-	t_token_list	*tokens;
-	t_ast_node			*ast;
-	char			*line;
-	int				last_exit_status;
-	char			*prompt;
-}	t_shell;
+	if (shell->env_list)
+		print_env_list(shell->env_list);
+	// if (shell->tokens)
+		
+	// if (shell->line)
+	
 
-void	init_shell(t_shell *shell, char **env);
-void	free_shell(t_shell	*shell);
+}
 
-
-/* debug */
-void	print_shell(t_shell *shell);
-
-#endif
+static void	print_env_list(t_env_list *env_list)
+{
+	t_env_type	*current;
+	
+	current = env_list->head;
+	while (current)
+	{
+		printf("key: %s\n value: %s\n\n", current->key, current->value);
+		current = current->next;
+	}
+}

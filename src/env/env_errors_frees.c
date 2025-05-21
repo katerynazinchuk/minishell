@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:20:09 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 14:40:29 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:04:15 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ void	free_env_list(t_env_list *env_list)
 	while (current)
 	{
 		next = current->next;
-		if (current->key)
-			free(current->key);
-		if (current->value)
-			free(current->value);
-		free(current);
+		free_env_node(current);
+		// if (current->key)
+		// 	free(current->key);
+		// if (current->value)
+		// 	free(current->value);
+		// free(current);
 		current = next;
 	}
 	free(env_list);
