@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/20 15:56:47 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:02:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ typedef struct s_token
 	char			*value;
 	char			*expanded;
 	int				bad_subs;
-	t_tok_type	type;
-	t_q_type	q_type;
+	t_tok_type		type;
+	t_q_type		q_type;
 	struct s_token	*next;
 }	t_token;
 
-//helps you avoid writing token_last() every time you want to add to the end.
+//helps to avoid writing token_last() every time you want to add to the end.
 typedef struct s_token_list
 {
-	int 	error;// to track errors (not sure yet)
+	int 		error;// to track errors (not sure yet)
 	t_token		*head;
 	t_token		*tail;
 }	t_token_list;
