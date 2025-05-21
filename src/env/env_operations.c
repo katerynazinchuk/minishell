@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/12 16:23:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:33:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_env_list	*fill_env_list(char **env)
 	while (env[i] != NULL)
 	{
 		node = fill_env_node(env[i]);
+		// if (!node)
+			///;
+		// printf("1.:%p\n", node);
 		add_env_node(env_list, node);
 		i++;
 	}
@@ -50,6 +53,7 @@ static t_env_list	*init_env_list(void)
 
 void	add_env_node(t_env_list *env_list, t_env_type *node)
 {
+	// printf("2.:%p\n", node);
 	if (!env_list->head)
 	{
 		env_list->head = node;
