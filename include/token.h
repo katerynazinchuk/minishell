@@ -3,48 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/12 15:40:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:02:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum e_token_type
+typedef enum e_tok_type
 {
-	TOKEN_WORD,//argc, argv
-	TOKEN_PIPE,//|
-	TOKEN_REDIRECT_IN,//<
-	TOKEN_REDIRECT_OUT,//>
-	TOKEN_APPEND,//>>
-	TOKEN_HEREDOC,//<<
-}	t_token_type;
+	T_WORD,//argc, argv
+	T_PIPE,//|
+	T_IN,//<
+	T_OUT,//>
+	T_APPEND,//>>
+	T_HEREDOC,//<<
+	T_SPACE,
+}	t_tok_type;
 
 //Tracks whether you're inside single quotes, double quotes
-typedef enum e_quote_type
+typedef enum e_q_type
 {
-	QUOTE_NONE,
-	QUOTE_SINGLE,
-	QUOTE_DOUBLE,
-}	t_quote_type;
+	Q_NONE,
+	Q_SINGLE,
+	Q_DOUBLE,
+}	t_q_type;
 
 typedef struct s_token
 {
 	char			*value;
 	char			*expanded;
 	int				bad_subs;
-	t_token_type	type;
-	t_quote_type	q_type;
+	t_tok_type		type;
+	t_q_type		q_type;
 	struct s_token	*next;
 }	t_token;
 
-//helps you avoid writing token_last() every time you want to add to the end.
+//helps to avoid writing token_last() every time you want to add to the end.
 typedef struct s_token_list
 {
-	int 	error;// to track errors (not sure yet)
+	int 		error;// to track errors (not sure yet)
 	t_token		*head;
 	t_token		*tail;
 }	t_token_list;

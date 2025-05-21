@@ -27,6 +27,9 @@ EXPANDER = src/expander/expand_var.c \
 			src/expander/utils.c \
 			src/expander/free_exp.c
 PARSER = src/parser/parser.c \
+			src/parser/redirects.c \
+			src/parser/parser_debug.c
+
 # SIGNALS = 
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c
@@ -34,7 +37,7 @@ UTILS = src/utils/utils.c \
 ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) src/main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

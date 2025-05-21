@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   create_node_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/15 17:51:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:00:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *create_token(char *value, t_token_type types, t_quote_type quotes)
+t_token *create_token(char *value, t_tok_type types, t_q_type quotes)
 {
 	t_token	*new_token;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if(!new_token)
-	return (NULL);
+		return (NULL);
 	new_token->value = ft_strdup(value);
 	if(!new_token->value)
 	{
@@ -35,7 +35,7 @@ t_token *create_token(char *value, t_token_type types, t_quote_type quotes)
 void add_to_token_list(t_token_list *list, t_token *new_token)
 {
 	if (!list || !new_token)
-	return;
+		return;
 	if (!list->head)
 	list->head = new_token;
 	else

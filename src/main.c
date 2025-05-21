@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/16 14:17:29 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:03:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env_list(t_env_list *env_list);
-
-
+// void	print_env_list(t_env_list *env_list);
 /* [username@hostname current_working_directory]$ */
-
 //readline return NULL, so (!line) processing case when we use Ctrl+D
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 	
@@ -43,37 +40,41 @@ int main(int argc, char **argv, char **env)
 			if (shell.tokens)
 			{
 				expand_tokens(&shell);//move it to fill_tokens
-				print_tokens(&shell);
-				// shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
-				// if(shell.ast)
-				// {
-				// 	print_ast(shell.ast, 0);
-				// 	free_ast(shell.ast);
-				// }
+				// print_tokens(&shell);
+				shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
+				
+				if(shell.ast)
+				{
+					//heredoc expand if not commanf  call left and right. -> rewrite 
+					//execute
+					printf("\n");
+					print_node(shell.ast, 0);
+					// print_ast(shell.ast, 0);
+					// print_redir_tree(shell.ast);
+					// print_argv(shell.ast->value);
+					free_ast(shell.ast);
+				}
 				free_token_list(shell.tokens);
 			}
 			add_history(shell.line);
 		}
-		//token = extract_token(lexer, state);
-		//parse_tokens(token);
-		//execute_command(token);
 		// if (*line)
 		// 	add_history(line);
-		printf("command: %s\n", shell.line);
+		// printf("command: %s\n", shell.line);
 		free(shell.line);
 	}
 	free_shell(&shell);
 	return(0);
 }
 
-void	print_env_list(t_env_list *env_list)
-{
-	t_env_type	*current;
+// void	print_env_list(t_env_list *env_list)
+// {
+// 	t_env_type	*current;
 	
-	current = env_list->head;
-	while (current)
-	{
-		printf("key: %s\n value: %s\n\n", current->key, current->value);
-		current = current->next;
-	}
-}
+// 	current = env_list->head;
+// 	while (current)
+// 	{
+// 		printf("key: %s\n value: %s\n\n", current->key, current->value);
+// 		current = current->next;
+// 	}
+// }
