@@ -33,7 +33,7 @@ PARSER = src/parser/parser.c \
 # SIGNALS = 
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
-		src/shell_debug.c
+		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c

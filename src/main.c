@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 19:01:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:37:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 /* --leak-check=full
 valgrind --leak-check=full --show-leak-kinds=all ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
 */
 
 int	main(int argc, char **argv, char **env)
@@ -35,6 +38,7 @@ int	main(int argc, char **argv, char **env)
 		shell.line = readline(shell.prompt);
 		if (!shell.line)
 		{
+			free_shell(&shell);
 			write(1, "exit\n", 4);
 			exit (0);
 		}
@@ -67,10 +71,11 @@ int	main(int argc, char **argv, char **env)
 		// printf("command: %s\n", shell.line);
 		free(shell.line);
 	}
-	print_shell(&shell);
+	write(1, "here\n", 5);
+	print_env_list(shell.env_list);
+	// print_shell(&shell);
 	free_shell(&shell);
-	print_shell(&shell);
-	
+	// print_shell(&shell);
 	return(0);
 }
 
