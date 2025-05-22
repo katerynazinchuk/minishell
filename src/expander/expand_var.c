@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/21 17:31:33 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:08:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*expand_value(char *raw, t_shell *shell)
 			expand_var(&exp, shell);
 			if (!exp.str)
 				return (error_free(&exp));
+			printf("exp.str: %s\n", exp.str);
 			append_exp_str(&exp);
 			if (!exp.res)
 				return (error_free(&exp));
@@ -118,6 +119,7 @@ void	append_exp_str(t_expand_type *exp)
 	k = 0;
 	printf("append_exp_str: %s\n", exp->str);
 	len_str = ft_strlen(exp->str);
+	printf("len_str = %zu", len_str);
 	new_size = exp->j + ft_strlen(exp->str) + (exp->len_raw - exp->i) + 1;
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
 	while (k < len_str)

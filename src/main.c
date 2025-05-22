@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/22 14:45:19 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:14:05 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 /* [username@hostname current_working_directory]$ */
 //readline return NULL, so (!line) processing case when we use Ctrl+D
 
-/* --leak-check=full
+/*
+--leak-check=full
+--track-origins=yes
+
 valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell
 
 */
 
@@ -40,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			free_shell(&shell);
 			write(1, "exit\n", 4);
-			exit (0);
+			exit (shell.last_exit_status);
 		}
 		if(*shell.line)
 		{
@@ -64,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 				}
 				free_token_list(shell.tokens);
 			}
-			// add_history(shell.line);
+			add_history(shell.line);
 		}
 		// if (*line)
 		// 	add_history(line);
@@ -77,3 +82,18 @@ int	main(int argc, char **argv, char **env)
 }
 
 
+// void	run_shell(t_shell *shell)
+// {
+// 	(void)shell;
+// }
+
+// void	cleanup_cycle(t_shell_type *shell)
+// {
+// 	free(shell->line);
+// 	free_token_list(shell->tokens);
+// 	// free_ast(shell->ast);
+// 	shell->line = NULL;
+// 	shell->tokens = NULL;
+// 	shell->ast = NULL;
+// 	//what we need to do with last_exit_status
+// }

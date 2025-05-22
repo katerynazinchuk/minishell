@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
