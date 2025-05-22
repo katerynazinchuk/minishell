@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/22 13:37:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:45:19 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,8 @@ int	main(int argc, char **argv, char **env)
 		// printf("command: %s\n", shell.line);
 		free(shell.line);
 	}
-	write(1, "here\n", 5);
-	print_env_list(shell.env_list);
-	// print_shell(&shell);
-	free_shell(&shell);
-	// print_shell(&shell);
+	// write(1, "here\n", 5);
+	// free_shell(&shell);
 	return(0);
 }
 
