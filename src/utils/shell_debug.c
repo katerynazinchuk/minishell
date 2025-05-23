@@ -6,12 +6,11 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/22 13:27:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:23:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	print_shell(t_shell *shell)
 {

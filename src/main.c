@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/22 17:14:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:08:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 	
 	init_shell(&shell, env);
+	if (!shell.env_list)
+	{
+		malloc_error();
+		return (1);//TODO check logic
+	}
 	(void)argc;
 	(void)argv;
 	// init_signals();
@@ -41,6 +46,11 @@ int	main(int argc, char **argv, char **env)
 	{
 		//update_prompt(prompt);
 		shell.line = readline(shell.prompt);
+		// if (!shell.line)
+		// {
+		// 	write(1, "exit\n", 4);
+		// 	break ;
+		// }
 		if (!shell.line)
 		{
 			free_shell(&shell);

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/22 13:28:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:23:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_shell
 
 void	init_shell(t_shell *shell, char **env);
 void	free_shell(t_shell	*shell);
-
 
 /* debug */
 void	print_shell(t_shell *shell);

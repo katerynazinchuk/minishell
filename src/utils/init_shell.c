@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/22 17:05:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:33:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,6 @@ void	free_shell(t_shell	*shell)
 	// 	shell->line = NULL;
 	// }
 }
-//TODO if uncomment previous if statement we have code dump. Why?
+//TODO if uncomment previous if statement we have code dump.
+//Why? -> cause pointer after previuos free didnt set up for NULL
+

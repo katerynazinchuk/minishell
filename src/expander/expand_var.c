@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/22 17:08:33 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	expand_tokens(t_shell *shell)//треба почистити результ
 			if (check_subs(current->value))
 				current->bad_subs = 1;
 			else
-				current->expanded = expand_value(current->value, shell);
+				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
 		}
 		else
 			current->expanded = ft_strdup(current->value);
@@ -51,7 +51,6 @@ char	*expand_value(char *raw, t_shell *shell)
 			expand_var(&exp, shell);
 			if (!exp.str)
 				return (error_free(&exp));
-			printf("exp.str: %s\n", exp.str);
 			append_exp_str(&exp);
 			if (!exp.res)
 				return (error_free(&exp));
@@ -100,12 +99,12 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 			cur = cur->next;
 		}
 		if (!exp->str)
-			exp->str = ft_strdup("");//обов'язково if бо інакше завжди ""
+			exp->str = ft_strdup("");
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);//це теж алокейт, need to check with s_shell
+		exp->str = ft_itoa(shell->last_exit_status);
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }
@@ -117,9 +116,7 @@ void	append_exp_str(t_expand_type *exp)
 	size_t	k;
 
 	k = 0;
-	printf("append_exp_str: %s\n", exp->str);
 	len_str = ft_strlen(exp->str);
-	printf("len_str = %zu", len_str);
 	new_size = exp->j + ft_strlen(exp->str) + (exp->len_raw - exp->i) + 1;
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
 	while (k < len_str)
