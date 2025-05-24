@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/22 13:10:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:53:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_shell(t_shell *shell)
 
 }
 
-static void	print_env_list(t_env_list *env_list)
+void	print_env_list(t_env_list *env_list)
 {
 	t_env_type	*current;
 	

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/21 17:31:33 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:16:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* змінна від експорта запишеться в env_list */
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
+/* set flag need to clean - better to change from void to return like write */
 
 void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
 {
@@ -27,7 +28,7 @@ void	expand_tokens(t_shell *shell)//треба почистити результ
 			if (check_subs(current->value))
 				current->bad_subs = 1;
 			else
-				current->expanded = expand_value(current->value, shell);
+				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
 		}
 		else
 			current->expanded = ft_strdup(current->value);
@@ -99,12 +100,12 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 			cur = cur->next;
 		}
 		if (!exp->str)
-			exp->str = ft_strdup("");//обов'язково if бо інакше завжди ""
+			exp->str = ft_strdup("");
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);//це теж алокейт, need to check with s_shell
+		exp->str = ft_itoa(shell->last_exit_status);
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }
@@ -116,7 +117,6 @@ void	append_exp_str(t_expand_type *exp)
 	size_t	k;
 
 	k = 0;
-	printf("append_exp_str: %s\n", exp->str);
 	len_str = ft_strlen(exp->str);
 	new_size = exp->j + ft_strlen(exp->str) + (exp->len_raw - exp->i) + 1;
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);

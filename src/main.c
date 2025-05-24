@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 19:01:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:46:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,16 @@
 /* [username@hostname current_working_directory]$ */
 //readline return NULL, so (!line) processing case when we use Ctrl+D
 
-/* --leak-check=full
+/*
+--leak-check=full
+--track-origins=yes
+
 valgrind --leak-check=full --show-leak-kinds=all ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell
+
 */
 
 int	main(int argc, char **argv, char **env)
@@ -25,6 +33,11 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 	
 	init_shell(&shell, env);
+	if (!shell.env_list)
+	{
+		malloc_error();
+		return (1);//TODO check logic
+	}
 	(void)argc;
 	(void)argv;
 	// init_signals();
@@ -32,11 +45,17 @@ int	main(int argc, char **argv, char **env)
 	while(1)
 	{
 		//update_prompt(prompt);
-		shell.line = readline(shell.prompt);
+		shell.line = readline(shell.prompt); 
+		// if (!shell.line)
+		// {
+		// 	write(1, "exit\n", 4);
+		// 	break ;
+		// }
 		if (!shell.line)
 		{
+			free_shell(&shell);
 			write(1, "exit\n", 4);
-			exit (0);
+			exit (shell.last_exit_status);
 		}
 		if(*shell.line)
 		{
@@ -46,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 				expand_tokens(&shell);//move it to fill_tokens
 				// print_tokens(&shell);
 				shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
-				
+
 				if(shell.ast)
 				{
 					//heredoc expand if not commanf  call left and right. -> rewrite 
@@ -57,21 +76,37 @@ int	main(int argc, char **argv, char **env)
 					// print_redir_tree(shell.ast);
 					// print_argv(shell.ast->value);
 					free_ast(shell.ast);
+					shell.ast = NULL;
 				}
 				free_token_list(shell.tokens);
+				shell.tokens = NULL;
 			}
-			// add_history(shell.line);
+			add_history(shell.line);
 		}
 		// if (*line)
 		// 	add_history(line);
 		// printf("command: %s\n", shell.line);
 		free(shell.line);
+		shell.line = NULL;
 	}
-	print_shell(&shell);
-	free_shell(&shell);
-	print_shell(&shell);
-	
+	// write(1, "here\n", 5);
+	// free_shell(&shell);
 	return(0);
 }
 
 
+// void	run_shell(t_shell *shell)
+// {
+// 	(void)shell;
+// }
+
+// void	cleanup_cycle(t_shell_type *shell)
+// {
+// 	free(shell->line);
+// 	free_token_list(shell->tokens);
+// 	// free_ast(shell->ast);
+// 	shell->line = NULL;
+// 	shell->tokens = NULL;
+// 	shell->ast = NULL;
+// 	//what we need to do with last_exit_status
+// }

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:35:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 13:56:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:24:31 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,4 @@ void	run_shell(t_shell_type	*shell)
 }
 
 
-void	cleanup_cycle(t_shell_type *shell)
-{
-	free(shell->line);
-	free_token_list(shell->tokens);
-	// free_ast(shell->ast);
-	shell->line = NULL;
-	shell->tokens = NULL;
-	shell->ast = NULL;
-	//what we need to do with last_exit_status
-}
+

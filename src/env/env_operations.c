@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/21 18:46:57 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:06:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env_list	*fill_env_list(char **env)
 	if (!env_list)
 	{
 		malloc_error();
-		return (NULL);//check where it goes
+		return (NULL);
 	}
 	i = 0;
 	while (env[i] != NULL)
@@ -33,7 +33,7 @@ t_env_list	*fill_env_list(char **env)
 		if (!node)
 		{
 			free_env_list(env_list);
-			return (NULL);//check where it goes
+			return (NULL);
 		}
 		add_env_node(env_list, node);
 		i++;
@@ -92,8 +92,6 @@ t_env_type	*fill_env_node(char *str)
 		malloc_error();
 		return (NULL);
 	}
-	if (node->value && node->value[0] == '\0')
-    printf("Warning: empty value in fill_env_node for key %s\n", node->key);
 	node->next = NULL;
 	return (node);
 }
