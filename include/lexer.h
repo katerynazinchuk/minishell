@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 15:01:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:07:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			create_redirection_token(t_token_list *list, char *symbol, t_tok_type typ
 void			add_word_token(t_token_list *list, t_str_pos *lexer);
 
 t_token_list	*fill_tokens(char *line);
-//t_token_list	*lexer(t_shell *shell);
+bool			lexer(t_shell *shell);
 void			print_tokens(t_shell *shell);
 
 int 			use_quotes(t_str_pos *lexer);
@@ -51,6 +51,7 @@ int 			check_quotes(t_str_pos *lexer);
 int 			quotes_error(t_str_pos *lexer);
 t_token 		*add_quoted_word(t_token_list *list, t_str_pos *lexer);
 t_token 		*add_unquoted_word(t_token_list *list, t_str_pos *lexer);
+
 
 
 #endif

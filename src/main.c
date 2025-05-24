@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/24 16:00:10 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:02:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,34 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	// init_signals();
 	run_shell(&shell);
-	
+	free_env_list(shell.env_list);
+	shell.env_list = NULL;
 	// write(1, "here\n", 5);
 	// free_shell(&shell);
-	return(0);
+	return(shell.last_exit_status);
 }
 
-void	run_shell(t_shell *shell)
+/* void	run_shell(t_shell *shell)
 {
 	while(1)
 	{
 		//update_prompt(prompt);
 		shell->line = readline(shell->prompt); 
-		// if (!shell.line)
-		// {
-		// 	write(1, "exit\n", 4);
-		// 	break ;
-		// }
 		if (!shell->line)
 		{
-			free_shell(shell);
-			write(1, "exit\n", 4);
-			exit (shell->last_exit_status);
+			write(1, "exit\n", 5);//TODO do we need clean here or cleanup enough?
+			break ;
 		}
 		if(shell->line)
 		{
-			shell->tokens = fill_tokens(shell->line);
+			if(!lexer(shell))
+			{
+				
+			}
+			// shell->tokens = lexer(shell);
+			// print_tokens(&shell);
 			if (shell->tokens)
 			{
-				expand_tokens(shell);//move it to fill_tokens
-				// print_tokens(&shell);
 				shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
 				if(shell->ast)
 				{
@@ -82,35 +80,59 @@ void	run_shell(t_shell *shell)
 					// print_ast(shell->ast, 0);
 					// print_redir_tree(shell->ast);
 					// print_argv(shell->ast->value);
-					free_ast(shell->ast);
-					shell->ast = NULL;
+					// free_ast(shell->ast);
+					// shell->ast = NULL;
 				}
-				free_token_list(shell->tokens);
-				shell->tokens = NULL;
+				// free_token_list(shell->tokens);
+				// shell->tokens = NULL;
 			}
 			add_history(shell->line);
 		}
-		// if (*line)
-		// 	add_history(line);
+		cleanup_cycle(shell);
 		// printf("command: %s\n", shell->line);
-		free(shell->line);
-		shell->line = NULL;
+	}
+} */
+
+
+void	run_shell(t_shell *shell)
+{
+	while(1)
+	{
+		//update_prompt(prompt);
+		shell->line = readline(shell->prompt); 
+		if (!shell->line)
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
+		if (!process_line(shell))
+		{
+			cleanup_cycle(shell);
+			continue ;
+		}
+		cleanup_cycle(shell);
 	}
 }
 
-
-// void	run_shell(t_shell *shell)
-// {
-// 	(void)shell;
-// }
-
-// void	cleanup_cycle(t_shell_type *shell)
-// {
-// 	free(shell->line);
-// 	free_token_list(shell->tokens);
-// 	// free_ast(shell->ast);
-// 	shell->line = NULL;
-// 	shell->tokens = NULL;
-// 	shell->ast = NULL;
-// 	//what we need to do with last_exit_status
-// }
+bool	process_line(t_shell *shell)
+{
+	if(!lexer(shell))
+	{
+		malloc_error();
+		// shell->last_exit_status = 1; TODO 1add this into malloc_error
+		return (false);
+	}
+	shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
+	if(!shell->ast)
+	{
+		// TODO need to manage errors, maybe do it with return like write 
+		// shell->last_exit_status = 1;  TODO 2add this into malloc_error
+		return (false);
+	}
+	//heredoc expand if not commanf  call left and right. -> rewrite 
+	//execute
+	printf("\n");
+	print_node(shell->ast, 0);
+	add_history(shell->line);
+	return (true);
+}

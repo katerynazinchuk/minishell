@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/24 13:16:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:33:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,31 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
+bool	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
+{
+	t_token	*current;
+
+	current = shell->tokens->head;
+	while (current)
+	{
+		if (ft_strchr(current->value, '$') && current->q_type != Q_SINGLE)///start from here
+		{
+			if (check_subs(current->value))
+				current->bad_subs = 1;
+			else
+				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
+		}
+		else
+			current->expanded = ft_strdup(current->value);
+		if (!current->expanded)
+			return (false);
+		current = current->next;
+	}
+	return (true);
+}
+
+
+/* void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
 {
 	t_token	*current;
 
@@ -34,7 +58,7 @@ void	expand_tokens(t_shell *shell)//треба почистити результ
 			current->expanded = ft_strdup(current->value);
 		current = current->next;
 	}
-}
+} */
 
 char	*expand_value(char *raw, t_shell *shell)
 {

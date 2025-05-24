@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/24 13:49:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:07:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,23 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
-
-t_token_list	*lexer(t_shell *shell)
+bool	lexer(t_shell *shell)
 {
 	shell->tokens = fill_tokens(shell->line);
-	return(shell->tokens);
+	if (!shell->tokens)
+		return (false);
+	if (!expand_tokens(shell))
+		return (false);
+	return (true);
 }
+
+/* t_token_list	*lexer(t_shell *shell)
+{
+	shell->tokens = fill_tokens(shell->line);
+	expand_tokens(shell);//move it to fill_tokens
+	return(shell->tokens);
+} */
+
 
 
 //token = extract_token(lexer, state);

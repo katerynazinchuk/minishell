@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/24 15:29:41 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:12:57 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,24 @@ void	init_shell(t_shell *shell, char **env)
 	shell->prompt = "minishell> ";
 }
 
-void	free_shell(t_shell	*shell)
+void	cleanup_cycle(t_shell	*shell)
 {
-	if (shell->env_list)
+	if (shell->tokens)
 	{
-		free_env_list(shell->env_list);
-		shell->env_list = NULL;
+		free_token_list(shell->tokens);
+		shell->tokens = NULL;
 	}
-	// if (shell->tokens)
-	// {
-	// 	free_token_list(shell->tokens);
-	// 	shell->tokens = NULL;
-	// }
-	// if (shell->ast)
-	// {
-	// 	free_ast(shell->ast);
-	// 	shell->ast = NULL;
-	// }
-	// if (shell->line)
-	// {
-	// 	free(shell->line);
-	// 	shell->line = NULL;
-	// }
+	if (shell->ast)
+	{
+		free_ast(shell->ast);
+		shell->ast = NULL;
+	}
+	if (shell->line)
+	{
+		free(shell->line);
+		shell->line = NULL;
+	}
 }
-//TODO if uncomment previous if statement we have code dump.
+// TODO if uncomment previous if statement we have code dump.
 //Why? -> cause pointer after previuos free didnt set up for NULL
 
