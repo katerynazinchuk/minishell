@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/24 14:46:27 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:00:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,57 +41,61 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	// init_signals();
+	run_shell(&shell);
+	
+	// write(1, "here\n", 5);
+	// free_shell(&shell);
+	return(0);
+}
 
+void	run_shell(t_shell *shell)
+{
 	while(1)
 	{
 		//update_prompt(prompt);
-		shell.line = readline(shell.prompt); 
+		shell->line = readline(shell->prompt); 
 		// if (!shell.line)
 		// {
 		// 	write(1, "exit\n", 4);
 		// 	break ;
 		// }
-		if (!shell.line)
+		if (!shell->line)
 		{
-			free_shell(&shell);
+			free_shell(shell);
 			write(1, "exit\n", 4);
-			exit (shell.last_exit_status);
+			exit (shell->last_exit_status);
 		}
-		if(*shell.line)
+		if(shell->line)
 		{
-			shell.tokens = fill_tokens(shell.line);
-			if (shell.tokens)
+			shell->tokens = fill_tokens(shell->line);
+			if (shell->tokens)
 			{
-				expand_tokens(&shell);//move it to fill_tokens
+				expand_tokens(shell);//move it to fill_tokens
 				// print_tokens(&shell);
-				shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
-
-				if(shell.ast)
+				shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
+				if(shell->ast)
 				{
 					//heredoc expand if not commanf  call left and right. -> rewrite 
 					//execute
 					printf("\n");
-					print_node(shell.ast, 0);
-					// print_ast(shell.ast, 0);
-					// print_redir_tree(shell.ast);
-					// print_argv(shell.ast->value);
-					free_ast(shell.ast);
-					shell.ast = NULL;
+					print_node(shell->ast, 0);
+					// print_ast(shell->ast, 0);
+					// print_redir_tree(shell->ast);
+					// print_argv(shell->ast->value);
+					free_ast(shell->ast);
+					shell->ast = NULL;
 				}
-				free_token_list(shell.tokens);
-				shell.tokens = NULL;
+				free_token_list(shell->tokens);
+				shell->tokens = NULL;
 			}
-			add_history(shell.line);
+			add_history(shell->line);
 		}
 		// if (*line)
 		// 	add_history(line);
-		// printf("command: %s\n", shell.line);
-		free(shell.line);
-		shell.line = NULL;
+		// printf("command: %s\n", shell->line);
+		free(shell->line);
+		shell->line = NULL;
 	}
-	// write(1, "here\n", 5);
-	// free_shell(&shell);
-	return(0);
 }
 
 

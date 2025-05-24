@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/23 17:06:39 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:34:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ t_env_list	*fill_env_list(char **env)
 
 	env_list = init_env_list();
 	if (!env_list)
-	{
-		malloc_error();
 		return (NULL);
-	}
 	i = 0;
 	while (env[i] != NULL)
 	{
@@ -82,14 +79,12 @@ t_env_type	*fill_env_node(char *str)
 	if (!node->key)
 	{
 		free_env_node(node);
-		malloc_error();
 		return (NULL);
 	}
 	node->value = ft_substr(str, j + 1, ft_strlen(str) - j - 1);
 	if (!node->value)
 	{
 		free_env_node(node);
-		malloc_error();
 		return (NULL);
 	}
 	node->next = NULL;
