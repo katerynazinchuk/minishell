@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/24 13:48:51 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:46:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 	while(1)
 	{
 		//update_prompt(prompt);
-		shell.line = readline(shell.prompt);
+		shell.line = readline(shell.prompt); 
 		// if (!shell.line)
 		// {
 		// 	write(1, "exit\n", 4);
