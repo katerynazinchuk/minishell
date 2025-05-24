@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/23 17:08:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:48:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 				expand_tokens(&shell);//move it to fill_tokens
 				// print_tokens(&shell);
 				shell.ast = build_tree(shell.tokens->head, shell.tokens->tail);
-				
+
 				if(shell.ast)
 				{
 					//heredoc expand if not commanf  call left and right. -> rewrite 
@@ -76,8 +76,10 @@ int	main(int argc, char **argv, char **env)
 					// print_redir_tree(shell.ast);
 					// print_argv(shell.ast->value);
 					free_ast(shell.ast);
+					shell.ast = NULL;
 				}
 				free_token_list(shell.tokens);
+				shell.tokens = NULL;
 			}
 			add_history(shell.line);
 		}
@@ -85,6 +87,7 @@ int	main(int argc, char **argv, char **env)
 		// 	add_history(line);
 		// printf("command: %s\n", shell.line);
 		free(shell.line);
+		shell.line = NULL;
 	}
 	// write(1, "here\n", 5);
 	// free_shell(&shell);

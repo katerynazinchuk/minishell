@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/23 16:39:41 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:16:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* змінна від експорта запишеться в env_list */
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
+/* set flag need to clean - better to change from void to return like write */
 
 void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
 {
