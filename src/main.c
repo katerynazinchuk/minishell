@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 13:24:36 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:08:22 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,45 +49,49 @@ int	main(int argc, char **argv, char **env)
 
 void	run_shell(t_shell *shell)
 {
+	t_session	session;
+
+	init_session(&session, shell);
 	while(1)
 	{
 		//update_prompt(prompt);
-		shell->line = readline(shell->prompt); 
-		if (!shell->line)
+		session.line = readline(session.prompt); 
+		if (!session.line)
 		{
 			write(1, "exit\n", 5);
+			cleanup_cycle(&session);
 			break ;
 		}
-		if (!process_line(shell))
+		if (!process_line(&session))
 		{
-			cleanup_cycle(shell);
+			cleanup_cycle(&session);
 			continue ;
 		}
-		cleanup_cycle(shell);
+		cleanup_cycle(&session);
 	}
 }
 
-bool	process_line(t_shell *shell)
+bool	process_line(t_session *session)
 {
-	if (!parser(shell))
+	if (!parser(session))
 		return (false);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
 	printf("\n");
-	print_node(shell->ast, 0);
-	add_history(shell->line);
+	print_node(session->ast, 0);
+	add_history(session->line);
 	return (true);
 }
 
-bool	parser(t_shell *shell)
+bool	parser(t_session *session)
 {
-	if(!lexer(shell))
+	if(!lexer(session))
 	{
-		malloc_error(&shell->last_exit_status);
+		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
-	shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
-	if(!shell->ast)
+	session->ast = build_tree(session->tokens->head, session->tokens->tail);
+	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 
 		return (false);

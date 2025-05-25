@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/24 17:33:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:39:43 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-bool	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
+bool	expand_tokens(t_session *session)//треба почистити результат від expand_value
 {
-	t_token	*current;
+	t_token	*cur;
 
-	current = shell->tokens->head;
-	while (current)
+	cur = session->tokens->head;
+	while (cur)
 	{
-		if (ft_strchr(current->value, '$') && current->q_type != Q_SINGLE)///start from here
+		if (ft_strchr(cur->value, '$') && cur->q_type != Q_SINGLE)///start from here
 		{
-			if (check_subs(current->value))
-				current->bad_subs = 1;
+			if (check_subs(cur->value))
+				cur->bad_subs = 1;
 			else
-				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
+				cur->expanded = expand_value(cur->value, session->shell);//TODO what happens if there will be NULL?
 		}
 		else
-			current->expanded = ft_strdup(current->value);
-		if (!current->expanded)
+			cur->expanded = ft_strdup(cur->value);
+		if (!cur->expanded)
 			return (false);
-		current = current->next;
+		cur = cur->next;
 	}
 	return (true);
 }

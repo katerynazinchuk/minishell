@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/16 13:00:55 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:45:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	is_special_char(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"');
 }
 
-void print_tokens(t_shell *shell)
+void print_tokens(t_session *session)
 {
 	t_token	*current;
 
-	current = shell->tokens->head;
+	current = session->tokens->head;
 	while (current)
 	{
 		printf("Token: [type = %d] [value = %s] [expanded = %s][quotes = %u]\n", current->type, current->value, current->expanded, current->q_type);
