@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:30:48 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:54:13 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	init_shell(t_shell *shell, char **env)
 
 void	cleanup_cycle(t_session *session)
 {
+	if (session->prompt)
+	{
+		free(session->prompt);
+		session->prompt = NULL;
+	}
 	if (session->tokens)
 	{
 		free_token_list(session->tokens);
@@ -40,25 +45,6 @@ void	cleanup_cycle(t_session *session)
 		session->line = NULL;
 	}
 }
-// TODO if uncomment previous if statement we have code dump.
-//Why? -> cause pointer after previuos free didnt set up for NULL
-
-
-/* typedef struct s_shell
-{
-	t_env_list		*env_list;
-	int				last_exit_status;
-}	t_shell;
-
-typedef struct s_session
-{
-	t_shell			*shell;
-	t_token_list	*tokens;
-	t_ast_node		*ast;
-	char			*line;
-	char			*prompt;
-}	t_session
- */
 
 void	init_session(t_session *session, t_shell *shell)
 {
@@ -66,5 +52,23 @@ void	init_session(t_session *session, t_shell *shell)
 	session->tokens = NULL;
 	session->ast = NULL;
 	session->line = NULL;
-	session->prompt = "minishell> ";
+	session->prompt = NULL;
+}
+
+void	update_prompt(char **prompt)
+{
+	char	*log_name;
+	char	*new_prompt;
+
+	log_name = ft_strdup(getenv("LOGNAME"));
+	if (!log_name)
+		log_name = ft_strdup("unknown");
+	if (!log_name)
+		return ;//TODO set malloc_error
+	new_prompt = ft_strjoin(log_name, ":~$ ");
+	free(log_name);
+	if (!new_prompt)
+		return ;//TODO set malloc_error
+	free(*prompt);
+	*prompt = new_prompt;
 }

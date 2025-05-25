@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 17:08:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:40:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void	run_shell(t_shell *shell)
 	t_session	session;
 
 	init_session(&session, shell);
+
 	while(1)
 	{
-		//update_prompt(prompt);
+		update_prompt(&session.prompt);
 		session.line = readline(session.prompt); 
 		if (!session.line)
 		{

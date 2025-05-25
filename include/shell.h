@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:46:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:39:37 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	run_shell(t_shell *shell);
 void	init_session(t_session *session, t_shell *shell);
 bool	process_line(t_session *session);
 bool	parser(t_session *session);
+void	update_prompt(char **prompt);
 
 // void	free_shell(t_shell *shell);
 void	cleanup_cycle(t_session *session);
