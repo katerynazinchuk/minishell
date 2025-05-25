@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:40:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:05:08 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	executor(t_session *session)
 
 void	run_ast(t_ast_node *node, t_shell *shell)
 {
-	t_ast_node	*current;
-
-	while(current)
+	if (!node)
+		return ;
+	if (node->type == AST_PIPE)
 	{
-		if (current->type == AST_PIPE)
-		{
-			run_ast(current, shell);
-		}
+		run_ast(node->left, shell);
+		run_ast(node->right, shell);
+	}
+	else
+	{
+		run_cmd(node, shell);
 	}
 }
