@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:08:27 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:33:31 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,23 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
+bool	lexer(t_session *session)
+{
+	session->tokens = fill_tokens(session->line);
+	if (!session->tokens)
+		return (false);
+	if (!expand_tokens(session))
+		return (false);
+	return (true);
+}
 
-t_token_list	*lexer(t_shell *shell)
+/* t_token_list	*lexer(t_shell *shell)
 {
 	shell->tokens = fill_tokens(shell->line);
+	expand_tokens(shell);//move it to fill_tokens
 	return(shell->tokens);
-}
+} */
+
 
 
 //token = extract_token(lexer, state);

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/16 17:33:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:34:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ t_env_list	*fill_env_list(char **env)
 
 	env_list = init_env_list();
 	if (!env_list)
-	{
-		malloc_error();
-		return (NULL);//check where it goes
-	}
+		return (NULL);
 	i = 0;
 	while (env[i] != NULL)
 	{
 		node = fill_env_node(env[i]);
-		// if (!node)
-			///;
-		// printf("1.:%p\n", node);
+		if (!node)
+		{
+			free_env_list(env_list);
+			return (NULL);
+		}
 		add_env_node(env_list, node);
 		i++;
 	}
@@ -53,7 +52,6 @@ static t_env_list	*init_env_list(void)
 
 void	add_env_node(t_env_list *env_list, t_env_type *node)
 {
-	// printf("2.:%p\n", node);
 	if (!env_list->head)
 	{
 		env_list->head = node;
@@ -81,14 +79,12 @@ t_env_type	*fill_env_node(char *str)
 	if (!node->key)
 	{
 		free_env_node(node);
-		malloc_error();
 		return (NULL);
 	}
 	node->value = ft_substr(str, j + 1, ft_strlen(str) - j - 1);
 	if (!node->value)
 	{
 		free_env_node(node);
-		malloc_error();
 		return (NULL);
 	}
 	node->next = NULL;

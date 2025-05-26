@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/17 11:09:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:39:43 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,33 @@
 
 /* змінна від експорта запишеться в env_list */
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
+/* set flag need to clean - better to change from void to return like write */
 
-void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
+bool	expand_tokens(t_session *session)//треба почистити результат від expand_value
+{
+	t_token	*cur;
+
+	cur = session->tokens->head;
+	while (cur)
+	{
+		if (ft_strchr(cur->value, '$') && cur->q_type != Q_SINGLE)///start from here
+		{
+			if (check_subs(cur->value))
+				cur->bad_subs = 1;
+			else
+				cur->expanded = expand_value(cur->value, session->shell);//TODO what happens if there will be NULL?
+		}
+		else
+			cur->expanded = ft_strdup(cur->value);
+		if (!cur->expanded)
+			return (false);
+		cur = cur->next;
+	}
+	return (true);
+}
+
+
+/* void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
 {
 	t_token	*current;
 
@@ -27,13 +52,13 @@ void	expand_tokens(t_shell *shell)//треба почистити результ
 			if (check_subs(current->value))
 				current->bad_subs = 1;
 			else
-				current->expanded = expand_value(current->value, shell);
+				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
 		}
 		else
 			current->expanded = ft_strdup(current->value);
 		current = current->next;
 	}
-}
+} */
 
 char	*expand_value(char *raw, t_shell *shell)
 {
@@ -90,20 +115,21 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		cur = shell->env_list->head;
 		while(cur)
 		{
-			if (ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
+			if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
 			{
 				exp->str = ft_strdup(cur->value);
+				
 				break ;
 			}
 			cur = cur->next;
 		}
 		if (!exp->str)
-			exp->str = ft_strdup("");//обов'язково if бо інакше завжди ""
+			exp->str = ft_strdup("");
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);//це теж алокейт, need to check with s_shell
+		exp->str = ft_itoa(shell->last_exit_status);
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }

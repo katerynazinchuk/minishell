@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
@@ -32,7 +32,8 @@ PARSER = src/parser/parser.c \
 
 # SIGNALS = 
 UTILS = src/utils/utils.c \
-		src/utils/init_shell.c
+		src/utils/init_shell.c \
+		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c
