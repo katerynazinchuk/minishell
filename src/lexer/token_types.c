@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/20 15:03:12 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:39:29 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,3 +88,4 @@ void add_word_token(t_token_list *list, t_str_pos *lexer)
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"
+//echo  a | b c>d "<input" >output | grep "hello|world"$USER'$PWD'

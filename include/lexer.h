@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 15:01:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:32:25 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			free_token_list(t_token_list *list);
 
 void			init_lexer_state(t_str_pos *lexer, char *line);
 t_token_list	*init_token_list(void);
+t_segment		*init_segment(char *value, t_q_type q_type);
 
 void			skip_whitespace(t_str_pos *lexer);
 void			add_pipe_token(t_token_list *list, t_str_pos *lexer);
