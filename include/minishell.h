@@ -22,7 +22,9 @@ w: wait, wait3, wait4, waitpid, write
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include <unistd.h>
 # include "env.h"
+# include "utils.h"
 # include "token.h"
 # include "shell.h"
 # include "libft.h"
@@ -34,7 +36,6 @@ w: wait, wait3, wait4, waitpid, write
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <unistd.h>
 # include <pwd.h>
 # include <sys/types.h>
 

@@ -21,6 +21,7 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \
 		src/lexer/lexer.c \
+		src/lexer/segment.c \
 		src/lexer/token_word_utils.c \
 		src/lexer/tokenization_utils.c
 EXPANDER = src/expander/expand_var.c \

@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_structs.c                               :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 14:49:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/26 17:00:02 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/05/27 15:03:54 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/05/27 15:14:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-void init_lexer_state(t_str_pos *lexer, char *line)
-{
-	lexer->input = line;
-	lexer->start = 0;
-	lexer->current = 0;
-	lexer->len = 0;
-}
+char *ft_strndup(const char *s, size_t n);
+int	is_whitespace(char c);
 
-t_token_list *init_token_list(void)
-{
-	t_token_list	*list;
-	
-	list = (t_token_list *)malloc(sizeof(t_token_list));
-	if (!list)
-	return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	return (list);
-}
-
+#endif

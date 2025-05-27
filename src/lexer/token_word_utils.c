@@ -6,14 +6,12 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:00:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:12:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-
-static t_token	*word_token (t_token_list *list, t_str_pos *lexer, t_q_type quote_type);
 
 int	use_quotes(t_str_pos *lexer)
 {
@@ -41,11 +39,12 @@ int check_quotes(t_str_pos *lexer)
 	return (0);
 }
 
-t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
+t_segment *add_quoted_segment(t_str_pos *lexer)
 {
 	char quote_char;
 	t_q_type quote_type;
-	t_token *new_token;
+	char *new_seg;
+	int len;
 
 	quote_char = lexer->input[lexer->current];
 	if(quote_char == '"')
@@ -53,44 +52,31 @@ t_token *add_quoted_word(t_token_list *list, t_str_pos *lexer)
 	else
 		quote_type = Q_SINGLE;
 	lexer->current++;
-	//we changed mind cause of heredoc (need to expand lexer->input)
 	lexer ->start = lexer->current;
 	while(lexer->input[lexer->current] && lexer->input[lexer->current] != quote_char)
-	{
 		lexer->current++;
-	}
-	new_token = word_token(list, lexer, quote_type);
+	len = lexer->current - lexer->start;
+	new_seg = ft_strndup(lexer->input + lexer->start, len);
 	if (lexer->input[lexer->current] == quote_char)
 		lexer->current++;
-	return (new_token);
+	return (create_segment(new_seg, quote_type));
 }
 
-t_token *add_unquoted_word(t_token_list *list, t_str_pos *lexer)
+t_segment *add_unquoted_segment(t_str_pos *lexer)
 {
+	int len;
+	char *new_seg;
+	
 	lexer->start = lexer->current;
 	while (lexer->input[lexer->current] &&
 		!is_whitespace(lexer->input[lexer->current]) &&
-		!is_special_char(lexer->input[lexer->current]))
+		!is_special_char(lexer->input[lexer->current]) &&
+		!use_quotes(lexer))
 	{
 		lexer->current++;
 	}
+	len = lexer->current - lexer->start;
+	new_seg = ft_strndup(lexer->input + lexer->start, len);
 	//we changed mind cause of heredoc (need to expand lexer->input)
-	return(word_token(list, lexer, Q_NONE));
-}
-
-static t_token *word_token (t_token_list *list, t_str_pos *lexer, t_q_type quote_type)
-{
-	t_token	*new_token;
-	char	*word;
-
-	lexer->len = lexer->current - lexer->start;
-	word = ft_strndup(lexer->input + lexer->start, lexer->len);//int checged to long
-	if (!word)
-		return (NULL);
-	new_token = create_token(word, T_WORD, quote_type);
-	free(word);
-	if (!new_token)
-		return (NULL);
-	add_to_token_list(list, new_token);
-	return (new_token);
+	return(create_segment(new_seg, Q_NONE));
 }

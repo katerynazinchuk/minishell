@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/26 13:34:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:58:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_token
 	char			*expanded;
 	int				bad_subs;
 	t_tok_type		type;
-	struct s_segment	segment;
+	struct s_segment	*segment;
 	// t_q_type		q_type;
 	struct s_token	*next;
 }	t_token;

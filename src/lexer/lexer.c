@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 16:33:31 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:09:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,26 @@ bool	lexer(t_session *session)
 		return (false);
 	if (!expand_tokens(session))
 		return (false);
+	if(!move_to_token_expand(session->tokens))
+		return (false);
 	return (true);
 }
+
+bool	move_to_token_expand(t_token_list *list)
+{
+	t_token *current;
+
+	current = list->head;
+	while(current)
+	{
+		current->expanded = join_segments(current->segment);
+		if(!current->expanded)
+			return (false);
+		current = current->next;
+	}
+	return (true);
+}
+
 
 /* t_token_list	*lexer(t_shell *shell)
 {

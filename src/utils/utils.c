@@ -6,11 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/13 11:25:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:20:41 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+// #include <stdlib.h>
+// #include <unistd.h>
 
 char *ft_strndup(const char *s, size_t n)
 {
@@ -28,4 +30,11 @@ char *ft_strndup(const char *s, size_t n)
 	}
 	new_str[i] = '\0';
 	return (new_str);
+}
+
+int	is_whitespace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
+	return (0);
 }

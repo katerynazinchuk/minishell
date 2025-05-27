@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:39:43 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:22:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,27 @@
 bool	expand_tokens(t_session *session)//треба почистити результат від expand_value
 {
 	t_token	*cur;
+	t_segment *seg;
 
 	cur = session->tokens->head;
 	while (cur)
 	{
-		if (ft_strchr(cur->value, '$') && cur->q_type != Q_SINGLE)///start from here
+		seg = cur->segment;
+		while(seg)
 		{
-			if (check_subs(cur->value))
-				cur->bad_subs = 1;
+			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
+			{
+				if (check_subs(seg->value))
+					cur->bad_subs = 1;
+				else
+					seg->expanded = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
+			}
 			else
-				cur->expanded = expand_value(cur->value, session->shell);//TODO what happens if there will be NULL?
+				seg->expanded = ft_strdup(seg->value);
+			if (!seg->expanded)
+				return (false);
+			seg = seg->next;
 		}
-		else
-			cur->expanded = ft_strdup(cur->value);
-		if (!cur->expanded)
-			return (false);
 		cur = cur->next;
 	}
 	return (true);

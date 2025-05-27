@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 14:56:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:24:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_command_parsing *extract_red_and_ref(t_token *head, t_token *end)
 	while(current && current != end)
 	{
 		if((current->type == T_APPEND || current->type == T_HEREDOC ||\
-			current->type == T_IN || current->type == T_OUT) && current->q_type == Q_NONE)
+			current->type == T_IN || current->type == T_OUT) && current->type == Q_NONE)
 		{
 			if (append_red(current, structure))
 			{

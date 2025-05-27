@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 16:45:10 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:14:36 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
-	return (0);
-}
 
 int	is_special_char(char c)
 {
@@ -31,7 +24,7 @@ void print_tokens(t_session *session)
 	current = session->tokens->head;
 	while (current)
 	{
-		printf("Token: [type = %d] [value = %s] [expanded = %s][quotes = %u]\n", current->type, current->value, current->expanded, current->q_type);
+		printf("Token: [type = %d] [value = %s] [expanded = %s]\n", current->type, current->value, current->expanded);
 		current = current->next;
 	}
 }
