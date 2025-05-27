@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 18:40:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:31:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ bool	process_line(t_session *session)
 {
 	if (!parser(session))
 		return (false);
-	//heredoc expand if not commanf  call left and right. -> rewrite 
-	//execute
+	//(переїхав в executor) heredoc expand if not commanf  call left and right. -> rewrite 
+	//executor
 	printf("\n");
 	print_node(session->ast, 0);
 	add_history(session->line);

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 19:05:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:59:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@
 
 void	executor(t_session *session)
 {
-	run_ast(session->ast, session->shell);
+	t_execute	exe;
+
+	init_execute(&exe, session);
+	//run_heredoc
+	run_ast(exe.ast_node, &exe);
 	// Відновили стандартні дескриптори
     // dup2(saved_stdin,  STDIN_FILENO);
     // dup2(saved_stdout, STDOUT_FILENO);
@@ -31,17 +35,31 @@ void	executor(t_session *session)
     // close(saved_stdout);
 }
 
-void	run_ast(t_ast_node *node, t_shell *shell)
+void	run_ast(t_ast_node *ast, t_execute *exe)
 {
-	if (!node)
+	if (!ast)
 		return ;
-	if (node->type == AST_PIPE)
+	if (ast->type == AST_PIPE)
 	{
-		run_ast(node->left, shell);
-		run_ast(node->right, shell);
+		run_ast(ast->left, exe);
+		run_ast(ast->right, exe);
 	}
 	else
 	{
-		run_cmd(node, shell);
+		run_cmd(ast, exe);
 	}
 }
+
+void	run_cmd(t_ast_node *node, t_execute *exe)
+{
+	t_cmd_info	cmd_info;
+	//redirect_validation
+	//init_cmd_info
+	if (builtin(cmd_info, exe))
+		run_builtin(cmd_info, exe);
+	else
+		run_external(cmd_info, exe);
+}
+
+
+
