@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 17:58:55 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:30:54 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
+
+# include <fcntl.h>
 
 typedef struct s_execute
 {
@@ -33,6 +35,9 @@ typedef struct	s_cmd_info
 	char				*heredoc_delim;    // heredoc delimiter
 	struct s_command	*next; // next in pipe chain
 }	t_cmd_info;
+
+typedef bool (*t_redir_handler)(t_redir *redir_list);
+
 /*____________________________________________________________________________*/
 void	executor(t_session *session);
 void	init_execute(t_execute *exe, t_session *session);
