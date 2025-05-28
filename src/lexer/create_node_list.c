@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 15:15:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:11:36 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_token *create_token(char *value, t_tok_type types)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if(!new_token)
 		return (NULL);
-	new_token->value = ft_strdup(value);
-	if(!new_token->value)
+	new_token->expanded = value ? ft_strdup(value) : NULL;//rewrite for if or while cant use ternary
+	if (!new_token->expanded && value)
 	{
 		free(new_token);
 		return (NULL);
@@ -37,19 +37,33 @@ void add_to_token_list(t_token_list *list, t_token *new_token)
 	if (!list || !new_token)
 		return;
 	if (!list->head)
-	list->head = new_token;
+		list->head = new_token;
 	else
-	list->tail->next = new_token;
+		list->tail->next = new_token;
 	list->tail = new_token;
 }
+void free_segment_list(t_segment *head)
+{
+	t_segment *current;
+	t_segment *next;
+	current = head;
 
+	while(current)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
+	}
+}
 void free_token(t_token *token)
 {
 	if (token)
 	{
-		free(token->value);
 		if (token->expanded)
 			free(token->expanded);
+		if(token->segment)
+			free_segment_list(token->segment);
 		free(token);
 	}
 }

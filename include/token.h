@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/26 16:58:44 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:59:51 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,16 @@ typedef enum e_q_type
 
 typedef struct s_token
 {
-	char			*value;
 	char			*expanded;
 	int				bad_subs;
 	t_tok_type		type;
 	struct s_segment	*segment;
-	// t_q_type		q_type;
 	struct s_token	*next;
 }	t_token;
 
 typedef struct s_segment
 {
 	char				*value;
-	char				*expanded;
 	t_q_type			q_type;
 	struct s_segment	*next;
 }	t_segment;

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 15:02:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:13:29 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_ast_node	*build_tree(t_token *head, t_token *end)
 		return (node);
 	}
 }
-
 
 char	**tokens_to_argv(t_com_tokens *head)
 {

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/26 17:22:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:00:37 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	expand_tokens(t_session *session)//треба почистити резул
 {
 	t_token	*cur;
 	t_segment *seg;
+	char *tmp;
 
 	cur = session->tokens->head;
 	while (cur)
@@ -32,12 +33,14 @@ bool	expand_tokens(t_session *session)//треба почистити резул
 				if (check_subs(seg->value))
 					cur->bad_subs = 1;
 				else
-					seg->expanded = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
+					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
 			}
 			else
-				seg->expanded = ft_strdup(seg->value);
-			if (!seg->expanded)
+				tmp = ft_strdup(seg->value);
+			if (!tmp)
 				return (false);
+			free(seg->value);
+			seg->value = tmp;
 			seg = seg->next;
 		}
 		cur = cur->next;

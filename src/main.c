@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 18:40:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:39:55 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ bool	parser(t_session *session)
 		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
+	//printf all tokens theis tyes and expanded values
+	//print_tokens(session);
 	session->ast = build_tree(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{

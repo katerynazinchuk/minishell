@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 15:16:06 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:53:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void add_pipe_token(t_token_list *list, t_str_pos *lexer)
 	new_token = create_token("|", T_PIPE);
 	if (!new_token)
 		return;
+	// printf("DEBUG: Adding pipe token at position %d\n", lexer->current);
 	add_to_token_list(list, new_token);
 	lexer->current++;
 }
@@ -57,7 +58,7 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 }
 
-void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type)
+void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type)
 {
 	t_token	*new_token;
 
@@ -75,7 +76,13 @@ void add_word_token(t_token_list *list, t_str_pos *lexer)
 	if(!token)
 		return ; 
 	token->segment = build_segment_list(lexer);
+	if(!token->segment)
+	{
+		free(token);
+		return ;
+	}
 	add_to_token_list(list, token);
+	lexer->current++;
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/26 17:12:21 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:23:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_segment *add_quoted_segment(t_str_pos *lexer)
 	else
 		quote_type = Q_SINGLE;
 	lexer->current++;
-	lexer ->start = lexer->current;
+	lexer->start = lexer->current;
 	while(lexer->input[lexer->current] && lexer->input[lexer->current] != quote_char)
 		lexer->current++;
 	len = lexer->current - lexer->start;
@@ -78,5 +78,6 @@ t_segment *add_unquoted_segment(t_str_pos *lexer)
 	len = lexer->current - lexer->start;
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
 	//we changed mind cause of heredoc (need to expand lexer->input)
+	// lexer->current++;
 	return(create_segment(new_seg, Q_NONE));
 }

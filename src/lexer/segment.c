@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 15:23:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:09:01 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ t_segment *create_segment(char *value, t_q_type q_type)
 	t_segment *segment = malloc(sizeof(t_segment));
 	if(!segment)
 		return (NULL);
-	segment->value = value;
-	segment->expanded = NULL;
+	segment->value = ft_strdup(value);
 	segment->q_type = q_type;
 	segment->next = NULL;
 	return (segment);
@@ -47,14 +46,13 @@ t_segment *build_segment_list(t_str_pos *lexer)
 	head = NULL;	
 	while(lexer->input[lexer->current] &&
 		!is_whitespace(lexer->input[lexer->current]) &&
-		!is_special_char(lexer->input[lexer->current]))
+		!ft_strchr("|<>", lexer->input[lexer->current]))
 	{
 		if(use_quotes(lexer))
 		{
 			if(!check_quotes(lexer))
 			{
 				quotes_error(lexer);
-				// lexer->current++;
 				break;
 			}
 			new_seg = add_quoted_segment(lexer);
@@ -75,8 +73,8 @@ size_t total_length(t_segment *segments)
 	len = 0;
 	while(segments)
 	{
-		if(segments->expanded)
-			len +=ft_strlen(segments->expanded);
+		if(segments->value)
+			len += ft_strlen(segments->value);
 		segments = segments->next;
 	}
 	return (len);
@@ -85,27 +83,29 @@ size_t total_length(t_segment *segments)
 char *join_segments(t_segment *segment)
 {
 	size_t total_len;
-	size_t seg_len;
-	t_segment *cur;
 	char *result;
-	char *write_ptr;
+
+	// char *write_ptr;
 
 	total_len = total_length(segment);
+	if(total_len == 0)
+		return(ft_strdup(""));
 	result = malloc(total_len + 1);
 	if(!result)
 		return (NULL);
-	write_ptr = result;
-	cur = segment;
-	while(cur)
+	result[0] = '\0'; // Initialize the result string to an empty string
+	// write_ptr = result;
+	while(segment)
 	{
-		if(cur->expanded)
+		if(segment->value)
 		{
-			seg_len = ft_strlen(cur->expanded);
-			ft_memcpy(write_ptr, cur->expanded, seg_len);
-			write_ptr += seg_len;
+			ft_strlcat(result, segment->value, total_len + 1);
+			// seg_len = ft_strlen(cur->value);
+			// ft_memcpy(write_ptr, cur->value, seg_len);
+			// write_ptr += seg_len;
 		}
-		cur = cur->next;
+		segment = segment->next;
 	}
-	*write_ptr = '\0';
-	return(result);
+	// *write_ptr = '\0';
+	return (result);
 }

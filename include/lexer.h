@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 15:24:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:45:43 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ int				is_special_char(char c);
 
 /* -------------------------------------------------------------------------- */
 
-t_token 		*create_token(char *value, t_tok_type types);
+t_token 		*create_token(char *value, t_tok_type types); // Updated function signature
+
 void			add_to_token_list(t_token_list *list, t_token *new_token);
 void			free_token(t_token *token);
 void			free_token_list(t_token_list *list);
+void			free_segment_list(t_segment *head);
 
 /* -------------------------------------------------------------------------- */
 
@@ -60,7 +62,7 @@ void			add_word_token(t_token_list *list, t_str_pos *lexer);
 t_token_list	*fill_tokens(char *line);
 bool			lexer(t_session *session);
 bool			move_to_token_expand(t_token_list *list);
-void			print_tokens(t_session *session);
+// void			print_tokens(t_session *session);
 
 /* -------------------------------------------------------------------------- */
 
