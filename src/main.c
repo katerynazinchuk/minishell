@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/27 16:31:34 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:39:14 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char **env)
 	return(shell.last_exit_status);
 }
 
+/* maybe better to move *shell from structure session or not */
 void	run_shell(t_shell *shell)
 {
 	t_session	session;
@@ -77,10 +78,11 @@ bool	process_line(t_session *session)
 	if (!parser(session))
 		return (false);
 	//(переїхав в executor) heredoc expand if not commanf  call left and right. -> rewrite 
-	//executor
+	add_history(session->line);
+	
+	executor(session->ast, session->shell);
 	printf("\n");
 	print_node(session->ast, 0);
-	add_history(session->line);
 	return (true);
 }
 

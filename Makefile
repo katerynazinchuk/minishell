@@ -15,8 +15,13 @@ LIBFT = libft.a
 # Define the source files and object files
 BUILD_IN = src/builtins/
 ENV = src/env/env_errors_frees.c \
-		src/env/env_operations.c
-EXECUTOR = src/executor/
+		src/env/env_operations.c \
+		src/env/env_utils.c
+EXECUTOR = src/executor/executor.c \
+		src/executor/exe_utils.c \
+		src/executor/redir_dispatch.c \
+		src/executor/run_builtin.c \
+		src/executor/run_external.c
 LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \
@@ -38,7 +43,7 @@ UTILS = src/utils/utils.c \
 ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) src/main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(EXECUTOR) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

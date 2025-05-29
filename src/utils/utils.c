@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/13 11:25:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:02:19 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,14 @@ char *ft_strndup(const char *s, size_t n)
 	}
 	new_str[i] = '\0';
 	return (new_str);
+}
+
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	while (*str1 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return ((unsigned char)*str1 - (unsigned char)*str2);
 }

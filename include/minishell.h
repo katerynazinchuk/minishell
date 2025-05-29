@@ -30,6 +30,8 @@ w: wait, wait3, wait4, waitpid, write
 # include "lexer.h"
 # include "parser.h"
 # include "executor.h"
+# include <limits.h>
+# include <sys/wait.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -38,5 +40,7 @@ w: wait, wait3, wait4, waitpid, write
 # include <unistd.h>
 # include <pwd.h>
 # include <sys/types.h>
+
+int	ft_strcmp(const char *str1, const char *str2);
 
 #endif

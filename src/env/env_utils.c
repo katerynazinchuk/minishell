@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_builtin.c                                      :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/29 14:13:56 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
+/*   Updated: 2025/05/29 18:05:02 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_builtin(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe)
+bool	get_env_value(const char *var, t_env_list *env_list, char **result)
 {
-	(void)cmd_info;
-	(void)shell;
-	(void)exe;
+	t_env_type	*cur;
+
+	cur = env_list->head;
+	while(cur)
+	{
+		if (ft_strcmp(var, cur->key) == 0)
+		{
+			*result = ft_strdup(cur->value);
+			if (!*result)
+				return (false);
+			return (true);
+		}
+		cur = cur->next;
+	}
+	return (false);
 }

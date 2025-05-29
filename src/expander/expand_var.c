@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:39:43 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:49:15 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,24 @@ void	extract_var(char *raw, t_expand_type *exp)
 
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
-	t_env_type		*cur;
+	// t_env_type		*cur;
 
 	if (is_valid_var(exp->var))
 	{
-		cur = shell->env_list->head;
-		while(cur)
-		{
-			if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
-			{
-				exp->str = ft_strdup(cur->value);
-				
-				break ;
-			}
-			cur = cur->next;
-		}
-		if (!exp->str)
-			exp->str = ft_strdup("");
+		// cur = shell->env_list->head;
+		// while(cur)
+		// {
+		// 	if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
+		// 	{
+		// 		exp->str = ft_strdup(cur->value);
+		// 		break ;
+		// 	}
+		// 	cur = cur->next;
+		// }
+		if (!get_env_value(exp->var, shell->env_list, &exp->str))
+			return ;
+		// if (!exp->str)
+		// 	exp->str = NULL;
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);

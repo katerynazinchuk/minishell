@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 14:30:54 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:00:47 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 typedef struct s_execute
 {
-	t_shell		*shell;
-	t_ast_node	*ast;
+	// t_shell		*shell;
+	// t_ast_node	*ast;
 	int			fd[2];
 	// int			prev_fd;
 	// t_list		*pid_list;
 	// t_list		*heredoc_fds;
-} t_execute;
+}	t_execute;
 
-typedef struct	s_cmd_info
+typedef struct s_cmd_info
 {
 	char				**argv;            // command + arguments
 	char				*infile;           // for `<`
@@ -36,14 +36,23 @@ typedef struct	s_cmd_info
 	struct s_command	*next; // next in pipe chain
 }	t_cmd_info;
 
-typedef bool (*t_redir_handler)(t_redir *redir_list);
+typedef bool	(*t_redir_handler)(t_redir *redir_list);
 
 /*____________________________________________________________________________*/
-void	executor(t_session *session);
-void	init_execute(t_execute *exe, t_session *session);
-void	run_ast(t_ast_node *ast_node, t_execute *exe);
-void	run_cmd(t_ast_node *node, t_execute *exe);
-void	run_builtin(t_cmd_info *cmd_info, t_execute *exe);
-void	run_external(t_cmd_info *cmd_info, t_execute *exe)
+void	executor(t_ast_node *ast, t_shell *shell);
+void	init_execute(t_execute *exe);
+// void	run_ast(t_ast_node *ast_node, t_shell *shell, t_execute *exe);
+// void	run_cmd(t_ast_node *node, t_shell *shell, t_execute *exe);
+void	run_builtin(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe);
+void	run_external(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe);
+void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe);
+bool	validate_redir(t_redir *redir_list);
+bool	is_builtin(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe);
+
+/* ___________________________________________________________________________*/
+
+int		run_cmd(t_ast_node *node, t_shell *shell);
+void	run_ast(t_ast_node *ast, t_shell *shell);
+char	**env_to_arr(t_env_list *env_list);
 
 #endif
