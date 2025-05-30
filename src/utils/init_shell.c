@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 18:54:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:21:47 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	cleanup_cycle(t_session *session)
 		free_token_list(session->tokens);
 		session->tokens = NULL;
 	}
-	if (session->ast)
-	{
-		free_ast(session->ast);
-		session->ast = NULL;
-	}
+	// if (session->ast)
+	// {
+	// 	free_ast(session->ast);
+	// 	session->ast = NULL;
+	// }
 	if (session->line)
 	{
 		free(session->line);

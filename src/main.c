@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/29 17:39:14 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:23:21 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **env)
 }
 
 /* maybe better to move *shell from structure session or not */
+//TODO fork() тягне алоковані структури в свої процеси, тому до них завжди має бути доступ, щоб почистити перед execve
 void	run_shell(t_shell *shell)
 {
 	t_session	session;
@@ -64,12 +65,14 @@ void	run_shell(t_shell *shell)
 			cleanup_cycle(&session);
 			break ;
 		}
+		cleanup_cycle(&session);
 		if (!process_line(&session))
 		{
 			cleanup_cycle(&session);
+			free_ast(session.ast);//TODO воно тут точно існує?
 			continue ;
 		}
-		cleanup_cycle(&session);
+		free_ast(session.ast);
 	}
 }
 

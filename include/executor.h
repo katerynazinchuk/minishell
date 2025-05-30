@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/29 17:00:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:30:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include <fcntl.h>
 
-typedef struct s_execute
-{
-	// t_shell		*shell;
-	// t_ast_node	*ast;
-	int			fd[2];
-	// int			prev_fd;
-	// t_list		*pid_list;
-	// t_list		*heredoc_fds;
-}	t_execute;
+// typedef struct s_execute
+// {
+// 	// t_shell		*shell;
+// 	// t_ast_node	*ast;
+// 	int			fd[2];
+// 	// int			prev_fd;
+// 	// t_list		*pid_list;
+// 	// t_list		*heredoc_fds;
+// }	t_execute;
 
 typedef struct s_cmd_info
 {
@@ -37,6 +37,13 @@ typedef struct s_cmd_info
 }	t_cmd_info;
 
 typedef bool	(*t_redir_handler)(t_redir *redir_list);
+typedef int		(*t_builtin_fn)(char **argv, t_env_list *env_list);
+
+typedef struct s_builtin
+{
+	char			*name;
+	t_builtin_fn	func;
+}	t_builtin;
 
 /*____________________________________________________________________________*/
 void	executor(t_ast_node *ast, t_shell *shell);
