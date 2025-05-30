@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:25:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:37:46 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 	
 	current = head;
 	last_pipe = NULL;
-
 	while(current && current != end)
 	{
 		if(current->type == T_PIPE)
@@ -72,10 +71,7 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 	{
 		new_ast_node = create_ast_node(AST_PIPE, NULL);
 		if(!new_ast_node)
-		{
-			printf("minishell: memory allocation error\n");
 			return (NULL);
-		}
 		new_ast_node->left = parse_pipe(head, last_pipe);
 		if (!new_ast_node->left)
 		{
@@ -91,7 +87,6 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 		return (new_ast_node);
 	}
 	return (parse_command(head, end));
-	
 }
 
 char	**tokens_to_argv(t_com_tokens *head)

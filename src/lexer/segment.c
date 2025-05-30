@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:21:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:32:19 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_segment *build_segment_list(t_str_pos *lexer)
 			if(!check_quotes(lexer))
 			{
 				quotes_error(lexer);
-				break;
+				return (NULL);
 			}
 			new_seg = add_quoted_segment(lexer);
 		}

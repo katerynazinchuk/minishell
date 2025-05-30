@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 17:45:43 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:40:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ typedef struct s_str_pos
 	size_t		len;
 }	t_str_pos;
 
-
-int				is_whitespace(char c);
-int				is_special_char(char c);
 
 /* -------------------------------------------------------------------------- */
 
@@ -55,7 +52,7 @@ void			skip_whitespace(t_str_pos *lexer);
 void			add_pipe_token(t_token_list *list, t_str_pos *lexer);
 void			add_redirection_token(t_token_list *list, t_str_pos *lexer);
 void			create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
-void			add_word_token(t_token_list *list, t_str_pos *lexer);
+bool			add_word_token(t_token_list *list, t_str_pos *lexer);
 
 /* -------------------------------------------------------------------------- */
 

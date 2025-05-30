@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:12:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:38:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,21 @@ void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type
 	add_to_token_list(list, new_token);
 }	
 
-void add_word_token(t_token_list *list, t_str_pos *lexer)
+bool add_word_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token *token;
 
 	token = create_token(NULL, T_WORD);
 	if(!token)
-		return ; 
+		return (false);
 	token->segment = build_segment_list(lexer);
 	if(!token->segment)
 	{
 		free(token);
-		return ;
+		return (false);
 	}
 	add_to_token_list(list, token);
+	return (true);
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"
