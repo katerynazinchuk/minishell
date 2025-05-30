@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/27 15:20:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:25:11 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char *ft_strndup(const char *s, size_t n)
 
 int	is_whitespace(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n')
+	if (c == ' ' || (c >= '\t' && c <= '\r'))
 		return (1);
 	return (0);
 }

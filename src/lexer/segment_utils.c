@@ -1,17 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_word_utils.c                                 :+:      :+:    :+:   */
+/*   segment_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 17:23:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:21:25 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+size_t total_length(t_segment *segments)
+{
+	size_t len;
+
+	len = 0;
+	while(segments)
+	{
+		if(segments->value)
+			len += ft_strlen(segments->value);
+		segments = segments->next;
+	}
+	return (len);
+}
 
 int	use_quotes(t_str_pos *lexer)
 {
@@ -77,7 +91,5 @@ t_segment *add_unquoted_segment(t_str_pos *lexer)
 	}
 	len = lexer->current - lexer->start;
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
-	//we changed mind cause of heredoc (need to expand lexer->input)
-	// lexer->current++;
 	return(create_segment(new_seg, Q_NONE));
 }

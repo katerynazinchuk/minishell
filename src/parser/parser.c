@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 18:13:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:25:35 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,73 @@ t_ast_node	*create_ast_node(t_ast_type type, char **command)
 	return (ast_node);
 }
 
-t_ast_node	*build_tree(t_token *head, t_token *end)
+
+t_ast_node *parse_command(t_token *head, t_token *end)
 {
 	t_token *current;
-	t_token *last_pipe;
-	t_ast_node *node;
+	t_ast_node *new_ast_node;
 	t_command_parsing *structure;
 	char **argv;
 
 	current = head;
+	new_ast_node = create_ast_node(AST_COMMAND, NULL);
+	if (!new_ast_node)
+	{
+		printf("minishell: memory allocation error\n");
+		return (NULL);
+	}
+	structure = extract_red_and_args(head, end);
+	if (!structure)
+	{
+		printf("minishell: syntax error near unexpected token `%s`\n", head->expanded);
+		free_ast(new_ast_node);
+		return (NULL);
+	}
+	argv = tokens_to_argv(structure->args);
+	new_ast_node->value = argv;
+	new_ast_node->redir = structure->redirect;
+	return (new_ast_node);
+}
+
+t_ast_node *parse_pipe(t_token *head, t_token *end)
+{
+	t_token *current;
+	t_token *last_pipe;
+	t_ast_node *new_ast_node;
+	
+	current = head;
 	last_pipe = NULL;
+
 	while(current && current != end)
 	{
 		if(current->type == T_PIPE)
-		last_pipe = current;
+			last_pipe = current;
 		current = current->next;
 	}
 	if(last_pipe)
 	{
-		node = create_ast_node(AST_PIPE, NULL);
-		node->left = build_tree(head, last_pipe);
-		node->right = build_tree(last_pipe->next, end);
-		return (node);
+		new_ast_node = create_ast_node(AST_PIPE, NULL);
+		if(!new_ast_node)
+		{
+			printf("minishell: memory allocation error\n");
+			return (NULL);
+		}
+		new_ast_node->left = parse_pipe(head, last_pipe);
+		if (!new_ast_node->left)
+		{
+			free_ast(new_ast_node);
+			return (NULL);
+		}
+		new_ast_node->right = parse_command(last_pipe->next, end);
+		if (!new_ast_node->right)
+		{
+			free_ast(new_ast_node);
+			return (NULL);
+		}
+		return (new_ast_node);
 	}
-	else
-	{
-		
-		current = head;
-		node = create_ast_node(AST_COMMAND, NULL);
-		structure = extract_red_and_ref(head, last_pipe);
-		argv = tokens_to_argv(structure->referens);
-		node->value = argv;
-		node->redir = structure->redirect;
-		return (node);
-	}
+	return (parse_command(head, end));
+	
 }
 
 char	**tokens_to_argv(t_com_tokens *head)

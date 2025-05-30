@@ -6,13 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 18:13:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:17:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//static void debug_print_tokens(t_token_list *list);
-
 
 void print_segments(t_segment *segment)
 {
@@ -32,7 +30,7 @@ void print_segments(t_segment *segment)
 void print_tokens(t_token_list *list)
 {
 	t_token *current;
-	char *map[6] = {"T_WORD", "T_PIPE", "T_IN", "T_OUT", "T_APPEND", "T_HEREDOC"};
+	char *map[7] = {"T_WORD", "T_PIPE", "T_IN", "T_OUT", "T_APPEND", "T_HEREDOC", "T_EOF"};
 
 	if (!list || !list->head)
 	{
@@ -49,12 +47,10 @@ void print_tokens(t_token_list *list)
 	}
 }
 
-
-///
-
 t_token_list *fill_tokens(char *line)
 {
 	t_token_list	*list;
+	t_token			*eof;
 	t_str_pos		lexer;
 	
 	list = init_token_list();
@@ -63,7 +59,6 @@ t_token_list *fill_tokens(char *line)
 	init_lexer_state(&lexer, line);
 	while (lexer.input[lexer.current])//str[i]
 	{
-		// printf("DEBUG: Current char: '%c' at position %d\n", lexer.input[lexer.current], lexer.current);
 		if (is_whitespace(lexer.input[lexer.current]))
 			skip_whitespace(&lexer);
 		else if (lexer.input[lexer.current] == '|')
@@ -75,6 +70,14 @@ t_token_list *fill_tokens(char *line)
 			add_word_token(list, &lexer);
 		
 	}
+	printf("DEBUG: Lexer finished processing input.\n");
+	eof = create_token("eof", T_EOF);
+	if (!eof)
+	{
+		free_token_list(list);
+		return (NULL);
+	}
+	add_to_token_list(list, eof);
 	return (list);
 }
 
@@ -86,7 +89,6 @@ bool	lexer(t_session *session)
 	
 	if (!expand_tokens(session))
 		return (false);
-	// //debug_print_tokens(session->tokens);
 	if(!move_to_token_expand(session->tokens))
 		return (false);
 	print_tokens(session->tokens);
@@ -113,35 +115,6 @@ bool	move_to_token_expand(t_token_list *list)
 	}
 	return (true);
 }
-
-// static void debug_print_tokens(t_token_list *list)
-// {
-//     int tok_idx = 0;
-//     for (t_token *tok = list->head; tok; tok = tok->next, tok_idx++)
-//     {
-//         printf("DEBUG: Token[%d] type=%d\n", tok_idx, tok->type);
-
-//         int seg_idx = 0;
-//         for (t_segment *seg = tok->segment; seg; seg = seg->next, seg_idx++)
-//         {
-//             printf("          Segment[%d]: value=\"%s\", expanded=\"%s\", q_type=%d\n",
-//                    seg_idx,
-//                    seg->value     ? seg->value     : "(null)",
-//                    seg->expanded ? seg->expanded : "(null)",
-//                    seg->q_type);
-//         }
-//         if (!tok->segment)
-//         {
-//             printf("          (no segments)\n");
-//         }
-//     }
-// }
-/* t_token_list	*lexer(t_shell *shell)
-{
-	shell->tokens = fill_tokens(shell->line);
-	expand_tokens(shell);//move it to fill_tokens
-	return(shell->tokens);
-} */
 
 
 

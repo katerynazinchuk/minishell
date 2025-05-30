@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 17:39:55 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:22:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ bool	parser(t_session *session)
 	}
 	//printf all tokens theis tyes and expanded values
 	//print_tokens(session);
-	session->ast = build_tree(session->tokens->head, session->tokens->tail);
+	printf("HEAD: %i TAIL: %i\n", session->tokens->head->type, session->tokens->tail->type);
+	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 

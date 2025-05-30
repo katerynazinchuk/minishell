@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/21 15:03:58 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:25:35 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct	s_com_tokens//for dereferenses words for argv
 typedef struct	s_command_parsing
 {
 	t_redir			*redirect;
-	t_com_tokens	*referens;
+	t_com_tokens	*args;
 }	t_command_parsing;
 
 typedef struct	s_ast_node
@@ -60,18 +60,18 @@ typedef struct	s_ast_node
 /* ----------------------------------------------------------------------------- */
 
 t_ast_node			*create_ast_node(t_ast_type type, char **command);
-t_ast_node			*build_tree(t_token *head, t_token *end);
+t_ast_node			 *parse_pipe(t_token *head, t_token *end);
 char				**tokens_to_argv (t_com_tokens *head);
 void				free_ast(t_ast_node *ast);
 
 t_red_type			define_redirection(t_tok_type token_type);
 t_redir				*create_redirect_node(t_red_type red, char *connection);
 
-t_command_parsing	*extract_red_and_ref(t_token *head, t_token *end);
-t_com_tokens		*extract_referens(t_token *current);
+t_command_parsing	*extract_red_and_args(t_token *head, t_token *end);
+t_com_tokens		*extract_args(t_token *current);
 t_redir				*extract_redirect(t_token *current);
-int					append_red(t_token *current, t_command_parsing *structure);
-int					append_ref(t_token *current, t_command_parsing *structure);
+int					append_redirect(t_token *current, t_command_parsing *structure);
+int					append_args(t_token *current, t_command_parsing *structure);
 
 /* ----------------------------------------------------------------------------- */
 

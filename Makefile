@@ -1,10 +1,10 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 LFLAGS += -lreadline -lncurses
-
+#-fsanitize=address,undefined
 SRC_DIR = src
 BUILD_DIR = obj
 INCLUDE_DIR = include
@@ -22,7 +22,7 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/token_types.c \
 		src/lexer/lexer.c \
 		src/lexer/segment.c \
-		src/lexer/token_word_utils.c \
+		src/lexer/segment_utils.c \
 		src/lexer/tokenization_utils.c
 EXPANDER = src/expander/expand_var.c \
 			src/expander/utils.c \
@@ -54,7 +54,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
-	@$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)
 
 $(LIBFT_DIR)/$(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)

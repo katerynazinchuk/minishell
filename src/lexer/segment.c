@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 18:09:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:21:29 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,10 @@ t_segment *build_segment_list(t_str_pos *lexer)
 	return (head);
 }
 
-size_t total_length(t_segment *segments)
-{
-	size_t len;
-
-	len = 0;
-	while(segments)
-	{
-		if(segments->value)
-			len += ft_strlen(segments->value);
-		segments = segments->next;
-	}
-	return (len);
-}
-
 char *join_segments(t_segment *segment)
 {
 	size_t total_len;
 	char *result;
-
-	// char *write_ptr;
 
 	total_len = total_length(segment);
 	if(total_len == 0)
@@ -94,18 +78,11 @@ char *join_segments(t_segment *segment)
 	if(!result)
 		return (NULL);
 	result[0] = '\0'; // Initialize the result string to an empty string
-	// write_ptr = result;
 	while(segment)
 	{
 		if(segment->value)
-		{
 			ft_strlcat(result, segment->value, total_len + 1);
-			// seg_len = ft_strlen(cur->value);
-			// ft_memcpy(write_ptr, cur->value, seg_len);
-			// write_ptr += seg_len;
-		}
 		segment = segment->next;
 	}
-	// *write_ptr = '\0';
 	return (result);
 }
