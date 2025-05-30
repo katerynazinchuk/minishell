@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 15:51:18 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:54:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ bool	process_line(t_session *session)
 {
 	if (!parser(session))
 		return (false);
+	add_history(session->line);
 	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
 	printf("\n");
 	print_node(session->ast, 0);
-	add_history(session->line);
 	return (true);
 }
 
@@ -95,7 +95,7 @@ bool	parser(t_session *session)
 	}
 	//printf all tokens theis tyes and expanded values
 	//print_tokens(session);
-	printf("HEAD: %i TAIL: %i\n", session->tokens->head->type, session->tokens->tail->type);
+	// printf("HEAD: %i TAIL: %i\n", session->tokens->head->type, session->tokens->tail->type);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{

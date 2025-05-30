@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:25:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:29:28 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_com_tokens		*extract_args(t_token *current);
 t_redir				*extract_redirect(t_token *current);
 int					append_redirect(t_token *current, t_command_parsing *structure);
 int					append_args(t_token *current, t_command_parsing *structure);
+void				free_structure(t_command_parsing *structure);
+void 				free_redirects(t_redir *redir);
 
 /* ----------------------------------------------------------------------------- */
 

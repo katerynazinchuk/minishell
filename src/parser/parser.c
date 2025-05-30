@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 15:37:46 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:01:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	t_token *current;
 	t_ast_node *new_ast_node;
 	t_command_parsing *structure;
-	char **argv;
 
 	current = head;
 	new_ast_node = create_ast_node(AST_COMMAND, NULL);
@@ -47,11 +46,20 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 		free_ast(new_ast_node);
 		return (NULL);
 	}
-	argv = tokens_to_argv(structure->args);
-	new_ast_node->value = argv;
+	new_ast_node->value = tokens_to_argv(structure->args);
 	new_ast_node->redir = structure->redirect;
+	free_structure(structure);
 	return (new_ast_node);
 }
+
+// typedef struct	s_command_parsing
+// {
+// 	t_redir			*redirect;
+// 	t_com_tokens	*args;
+// }	t_command_parsing;
+
+
+
 
 t_ast_node *parse_pipe(t_token *head, t_token *end)
 {
@@ -71,7 +79,7 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 	{
 		new_ast_node = create_ast_node(AST_PIPE, NULL);
 		if(!new_ast_node)
-			return (NULL);
+			return (NULL);// need to clean previous node recursevly???
 		new_ast_node->left = parse_pipe(head, last_pipe);
 		if (!new_ast_node->left)
 		{
@@ -124,26 +132,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 	return (argv);
 }
 
-void	free_ast(t_ast_node *ast)
-{
-	int	i;
 
-	if(!ast)
-		return;
-	free_ast(ast->left);
-	free_ast(ast->right);
-	i = 0;
-	if(ast->value)
-	{
-		while(ast->value[i])
-		{
-			free(ast->value[i]);
-			i++;
-		}
-		free(ast->value);
-	}
-	free(ast);
-}
 
 // Print errors:
 // if string starts with |

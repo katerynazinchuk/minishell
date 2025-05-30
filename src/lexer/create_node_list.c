@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 18:11:36 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:58:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void free_segment_list(t_segment *head)
 }
 void free_token(t_token *token)
 {
+	if (!token)
+		return;
 	if (token)
 	{
 		if (token->expanded)

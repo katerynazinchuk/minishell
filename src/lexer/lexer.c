@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:41:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:46:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ bool	lexer(t_session *session)
 	session->tokens = fill_tokens(session->line);
 	if (!session->tokens)
 		return (false);
+	// free_segment_list(session->tokens->head->segment);
 	
-	if (!expand_tokens(session))
+	if (!expand_segments(session))
 		return (false);
 	if(!move_to_token_expand(session->tokens))
 		return (false);

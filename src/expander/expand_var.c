@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 15:45:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:41:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-bool	expand_tokens(t_session *session)//треба почистити результат від expand_value
+bool	expand_segments(t_session *session)//треба почистити результат від expand_value
 {
 	t_token	*cur;
 	t_segment *seg;

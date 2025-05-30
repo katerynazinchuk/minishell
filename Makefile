@@ -29,7 +29,8 @@ EXPANDER = src/expander/expand_var.c \
 			src/expander/free_exp.c
 PARSER = src/parser/parser.c \
 			src/parser/redirects.c \
-			src/parser/parser_debug.c
+			src/parser/parser_debug.c \
+			src/parser/free_parser.c
 
 # SIGNALS = 
 UTILS = src/utils/utils.c \

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:26:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:27:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_red_type	define_redirection(t_tok_type token_type)
 		return(RED_APPEND);
 	if(token_type == T_HEREDOC)
 		return(RED_HEREDOC);
-	return (-1);
+	return (-1);//??
 }
 
 t_redir	*create_redirect_node(t_red_type red, char *connection)
@@ -92,7 +92,7 @@ int	append_args(t_token *current, t_command_parsing *structure)
 
 	new_ref = extract_args(current);
 	if(!new_ref)
-		return (1);
+		return (0);
 	
 	if(!structure->args)
 		structure->args = new_ref;
@@ -103,7 +103,7 @@ int	append_args(t_token *current, t_command_parsing *structure)
 			tmp = tmp->next;
 		tmp->next = new_ref;
 	}
-	return (0);
+	return (1);
 }
 
 t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
@@ -135,7 +135,7 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 		}
 		else 
 		{
-			if(append_args(current, structure))
+			if(!append_args(current, structure))
 			{
 				//free_command_parsing(structure);
 				return (NULL);

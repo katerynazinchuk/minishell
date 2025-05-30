@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 16:34:00 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:41:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_expand_type
 	char	*str;
 }	t_expand_type;
 
-bool	expand_tokens(t_session *session);
+bool	expand_segments(t_session *session);
 char	*expand_value(char *raw, t_shell *shell);
 void	extract_var(char *raw, t_expand_type *exp);
 void	expand_var(t_expand_type *exp, t_shell *shell);
