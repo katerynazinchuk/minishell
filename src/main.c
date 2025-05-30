@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 16:54:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:37:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ bool	process_line(t_session *session)
 	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
-	printf("\n");
-	print_node(session->ast, 0);
 	return (true);
 }
 
@@ -93,9 +91,7 @@ bool	parser(t_session *session)
 		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
-	//printf all tokens theis tyes and expanded values
-	//print_tokens(session);
-	// printf("HEAD: %i TAIL: %i\n", session->tokens->head->type, session->tokens->tail->type);
+	
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
@@ -104,46 +100,3 @@ bool	parser(t_session *session)
 	}
 	return (true);
 }
-/* void	run_shell(t_shell *shell)
-{
-	while(1)
-	{
-		//update_prompt(prompt);
-		shell->line = readline(shell->prompt); 
-		if (!shell->line)
-		{
-			write(1, "exit\n", 5);//TODO do we need clean here or cleanup enough?
-			break ;
-		}
-		if(shell->line)
-		{
-			if(!lexer(shell))
-			{
-				
-			}
-			// shell->tokens = lexer(shell);
-			// print_tokens(&shell);
-			if (shell->tokens)
-			{
-				shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
-				if(shell->ast)
-				{
-					//heredoc expand if not commanf  call left and right. -> rewrite 
-					//execute
-					printf("\n");
-					print_node(shell->ast, 0);
-					// print_ast(shell->ast, 0);
-					// print_redir_tree(shell->ast);
-					// print_argv(shell->ast->value);
-					// free_ast(shell->ast);
-					// shell->ast = NULL;
-				}
-				// free_token_list(shell->tokens);
-				// shell->tokens = NULL;
-			}
-			add_history(shell->line);
-		}
-		cleanup_cycle(shell);
-		// printf("command: %s\n", shell->line);
-	}
-} */

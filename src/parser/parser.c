@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 17:01:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:49:32 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	structure = extract_red_and_args(head, end);
 	if (!structure)
 	{
-		printf("minishell: syntax error near unexpected token `%s`\n", head->expanded);
 		free_ast(new_ast_node);
 		return (NULL);
 	}
 	new_ast_node->value = tokens_to_argv(structure->args);
+	if(!new_ast_node->value)
+		return (NULL);//??
 	new_ast_node->redir = structure->redirect;
+	
 	free_structure(structure);
 	return (new_ast_node);
 }
@@ -136,17 +138,12 @@ char	**tokens_to_argv(t_com_tokens *head)
 
 // Print errors:
 // if string starts with |
+// if string ends with | - than call readline and join results
 // if > >> << without argument
-// if unrecognized tokens
 // return NULL or error struct if input is invalid
 
 
 // add debug function:
 // print_command_list(t_command *)
-
-// function to free memory for **argv
-// function to free memory for t_command
-
-//char* last_pipe = strrchr(input, '|');
 
 
