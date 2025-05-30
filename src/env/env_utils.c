@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:58:50 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
+/*   Updated: 2025/05/30 14:41:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strndup(const char *s, size_t n)
+bool	get_env_value(const char *var, t_env_list *env_list, char **result)
 {
-	char	*new_str;
-	size_t		i;
+	t_env_type	*cur;
 
-	new_str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (i < n && s[i])
+	cur = env_list->head;
+	while(cur)
 	{
-		new_str[i] = s[i];
-		i++;
+		if (ft_strcmp(var, cur->key) == 0)
+		{
+			*result = ft_strdup(cur->value);
+			if (!*result)
+				return (false);
+			return (true);
+		}
+		cur = cur->next;
 	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-int	ft_strcmp(const char *str1, const char *str2)
-{
-	while (*str1 && *str1 == *str2)
-	{
-		str1++;
-		str2++;
-	}
-	return ((unsigned char)*str1 - (unsigned char)*str2);
+	return (false);
 }

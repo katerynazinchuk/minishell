@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:50:36 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 13:26:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:36:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void		free_env_list(t_env_list *env_list);
 void		malloc_error(int *last_exit_status);
 void		free_env_node(t_env_type *node);
 t_env_type	*fill_env_node(char *str);
+bool	get_env_value(const char *var, t_env_list *env_list, char **result);
 
 #endif

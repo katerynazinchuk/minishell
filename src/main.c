@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/25 18:40:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:34:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,16 @@ void	run_shell(t_shell *shell)
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
-			cleanup_cycle(&session);
+			free_for_fork(&session);
 			break ;
 		}
 		if (!process_line(&session))
 		{
-			cleanup_cycle(&session);
+			free_ast(session.ast);
+			free_for_fork(&session);
 			continue ;
 		}
-		cleanup_cycle(&session);
+		free_ast(session.ast);
 	}
 }
 
@@ -76,6 +77,7 @@ bool	process_line(t_session *session)
 {
 	if (!parser(session))
 		return (false);
+	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
 	printf("\n");

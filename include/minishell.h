@@ -22,13 +22,14 @@ w: wait, wait3, wait4, waitpid, write
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include "libft.h"
 # include "env.h"
 # include "token.h"
 # include "shell.h"
-# include "libft.h"
 # include "expand.h"
 # include "lexer.h"
 # include "parser.h"
+# include <limits.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -38,5 +39,6 @@ w: wait, wait3, wait4, waitpid, write
 # include <pwd.h>
 # include <sys/types.h>
 
+int	ft_strcmp(const char *str1, const char *str2);
 
 #endif
