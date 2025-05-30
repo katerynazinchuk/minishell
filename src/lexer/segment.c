@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:10:16 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:30:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_segment *create_segment(char *value, t_q_type q_type)
 	t_segment *segment = malloc(sizeof(t_segment));
 	if(!segment)
 		return (NULL);
-	segment->value = ft_strdup(value);
+	segment->value = value;
 	segment->q_type = q_type;
 	segment->next = NULL;
 	return (segment);
