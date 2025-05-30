@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:00:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 17:01:51 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:11:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void free_structure(t_command_parsing *structure)
 	while (current)
 	{
 		next = current->next;
-		if (current->word) // this is key!
-			free_token(current->word); // assumes free_token frees inner fields
 		free(current);
 		current = next;
 	}
