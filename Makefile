@@ -15,7 +15,8 @@ LIBFT = libft.a
 # Define the source files and object files
 BUILD_IN = src/builtins/
 ENV = src/env/env_errors_frees.c \
-		src/env/env_operations.c
+		src/env/env_operations.c \
+		src/env/env_utils.c
 EXECUTOR = src/executor/
 LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \

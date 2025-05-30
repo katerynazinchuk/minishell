@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/28 18:00:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:45:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,28 +117,15 @@ void	extract_var(char *raw, t_expand_type *exp)
 
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
-	t_env_type		*cur;
-
 	if (is_valid_var(exp->var))
 	{
-		cur = shell->env_list->head;
-		while(cur)
-		{
-			if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
-			{
-				exp->str = ft_strdup(cur->value);
-				
-				break ;
-			}
-			cur = cur->next;
-		}
-		if (!exp->str)
-			exp->str = ft_strdup("");
+		if (!get_env_value(exp->var, shell->env_list, &exp->str))
+			return ;
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);
+		exp->str = ft_itoa(shell->last_exit_status);//TODO do we need to expand not only with echo ?
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }

@@ -6,7 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/30 14:22:22 by kzinchuk         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/30 15:34:34 by tchernia         ###   ########.fr       */
+>>>>>>> 2cf06d7a472e35e9db6e4dc6da8dc8917ba146d1
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +64,16 @@ void	run_shell(t_shell *shell)
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
-			cleanup_cycle(&session);
+			free_for_fork(&session);
 			break ;
 		}
 		if (!process_line(&session))
 		{
-			cleanup_cycle(&session);
+			free_ast(session.ast);
+			free_for_fork(&session);
 			continue ;
 		}
-		cleanup_cycle(&session);
+		free_ast(session.ast);
 	}
 }
 
@@ -76,6 +81,7 @@ bool	process_line(t_session *session)
 {
 	if (!parser(session))
 		return (false);
+	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
 	printf("\n");

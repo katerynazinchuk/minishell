@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/25 18:54:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:35:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_shell(t_shell *shell, char **env)
 	// shell->prompt = "minishell> ";
 }
 
-void	cleanup_cycle(t_session *session)
+void	free_for_fork(t_session *session)
 {
 	if (session->prompt)
 	{
@@ -33,11 +33,6 @@ void	cleanup_cycle(t_session *session)
 	{
 		free_token_list(session->tokens);
 		session->tokens = NULL;
-	}
-	if (session->ast)
-	{
-		free_ast(session->ast);
-		session->ast = NULL;
 	}
 	if (session->line)
 	{

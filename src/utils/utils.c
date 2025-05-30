@@ -6,15 +6,16 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:30:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:49:41 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 // #include <stdlib.h>
 // #include <unistd.h>
 
-char *ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
 	char	*new_str;
 	size_t		i;
@@ -30,6 +31,16 @@ char *ft_strndup(const char *s, size_t n)
 	}
 	new_str[i] = '\0';
 	return (new_str);
+}
+
+int	ft_strcmp(const char *str1, const char *str2)
+{
+	while (*str1 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return ((unsigned char)*str1 - (unsigned char)*str2);
 }
 
 int	is_whitespace(char c)
