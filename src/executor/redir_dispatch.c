@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/29 15:37:33 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:25:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,57 @@ bool	validate_redir(t_redir *redir_list)
 				return (false);
 		}
 		redir_list = redir_list->next;
+	}
+	return (true);
+}
+
+
+bool applay_in(t_redir *red)
+{
+	int fd;
+
+	fd = open(redir->connection, O_RDONLY);
+	if (fd < 0)
+		return (false);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return (true);
+}
+
+bool applay_out(t_redir *red)
+{
+	fd = open(redir->connection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		return (false);//TODO do we need to close fd in this case?
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return (true);
+}
+
+bool applay_append(t_redir *red)
+{
+	fd = open(redir->connection, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+		return (false);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return(true);
+}
+
+bool apply_red(t_redir *head)
+{
+	static t_redir_handler redmap[] = {
+		applay_in,
+		applay_out,
+		applay_append,
+		NULL
+	};
+
+	while (head)
+	{
+		if (redmap[red->type](head) == false)
+			return (false);
+		head = head->next;
 	}
 	return (true);
 }

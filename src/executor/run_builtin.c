@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 13:40:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:20:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	run_builtin(t_cmd_info *cmd_info, t_shell *shell)
 			return (builtins[i].func(argv, env_list));
 		i++;
 	}
-	return(run_external(argv, shell));
+	return(1);
 }

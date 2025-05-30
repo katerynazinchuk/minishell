@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 13:30:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:57:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,17 @@ void	executor(t_ast_node *ast, t_shell *shell)
 
 void	run_ast(t_ast_node *ast, t_shell *shell)
 {
-	(void)shell;
-	// write(1, "1\n", 2);
-	if (!ast)
-		return ;
-	if (ast->type == AST_COMMAND)
-		// printf("HELLO\n");
-		 run_cmd(ast, shell);
-	// if (ast->type == AST_PIPE)
-	// {
-	// 	run_ast(ast->left, shell, exe);
-	// 	run_ast(ast->right, shell, exe);
-	// }
-	// else
-	// {
-	// 	run_cmd(ast, shell, exe);
-	// }
+	if (ast->type == AST_PIPE)
+		run_pipe(ast, shell);
+	else
+		run_cmd(ast, shell);
 }
+
+// if (!ast)
+// 	return ;
+
+	// if (ast->type == AST_COMMAND)
+	// 	run_cmd(ast, shell);
 
 int	run_cmd(t_ast_node *node, t_shell *shell)
 {
@@ -93,55 +87,6 @@ int	run_cmd(t_ast_node *node, t_shell *shell)
 
 /* Meooow
 
-bool applay_in(t_redir *red)
-{
-	int fd;
-
-	fd = open(redir->connection, O_RDONLY);
-	if (fd < 0)
-		return (false);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	return (true);
-}
-
-bool applay_out(t_redir *red)
-{
-	fd = open(redir->connection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return (false);//TODO do we need to close fd in this case?
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	return (true);
-}
-
-bool applay_append(t_redir *red)
-{
-	fd = open(redir->connection, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-		return (false);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	return(true);
-}
-
-bool apply_red(t_redir *head)
-{
-	static t_redir_handler redmap[] = {
-		applay_in,
-		applay_out,
-		applay_append,
-		NULL
-	};
-
-	while (head)
-	{
-		if (redmap[red->type](head) == false)
-			return (false);
-		head = head->next;
-	}
-	return (true);
-}
 
 int exe_cmd(t_ast_node *node, t_shell *shell)
 {
