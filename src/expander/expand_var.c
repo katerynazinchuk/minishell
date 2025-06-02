@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 16:41:20 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:36:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ bool	expand_segments(t_session *session)//треба почистити резу
 	cur = session->tokens->head;
 	while (cur)
 	{
+		if(cur->prev && cur->prev->type == T_HEREDOC)
+		{
+			cur = cur->next;
+			continue;
+		}
 		seg = cur->segment;
 		while(seg)
 		{

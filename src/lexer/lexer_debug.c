@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization_utils.c                               :+:      :+:    :+:   */
+/*   lexer_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:49:11 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 17:46:18 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/02 15:51:46 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/02 15:51:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"');
-}
 
 // void print_tokens(t_session *session)
 // {

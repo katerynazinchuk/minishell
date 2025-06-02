@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/28 18:29:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:12:00 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_token
 	t_tok_type		type;
 	struct s_segment	*segment;
 	struct s_token	*next;
+	struct s_token	*prev; // to track the last token
 }	t_token;
 
 typedef struct s_segment

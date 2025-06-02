@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 13:12:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:36:40 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ bool	process_line(t_session *session)
 		return (false);
 	add_history(session->line);
 	heredoc(session->ast, session);
-	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
+	free_for_fork(session);
 	//execute
 	return (true);
 }
