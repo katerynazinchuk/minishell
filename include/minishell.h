@@ -22,6 +22,7 @@ w: wait, wait3, wait4, waitpid, write
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include <errno.h>
 # include "libft.h"
 # include "env.h"
 # include "token.h"

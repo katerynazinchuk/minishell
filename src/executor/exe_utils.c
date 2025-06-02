@@ -3,27 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/29 18:03:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:55:14 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_execute(t_execute *exe)
-{
-	// exe->shell = session->shell;
-	// exe->ast = session->ast;
-	exe->fd[0] = -1;
-	exe->fd[1] = -1;
-	// int			prev_fd;
-	// t_list		*pid_list;
-	// t_list		*heredoc_fds;
-}
-
-void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe)
+/* void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe)
 {
 	(void)exe;
 	cmd_info->argv = NULL;            // command + arguments
@@ -33,9 +22,9 @@ void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe)
 	cmd_info->is_heredoc = 1;         // 1 if heredoc, 0 otherwise
 	cmd_info->heredoc_delim = NULL;    // heredoc delimiter
 	//struct s_command	*next; // next in pipe chain
-}
+} */
 
-bool	is_builtin(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe)
+bool	is_builtin(t_cmd_info *cmd_info, t_shell *shell)
 {
 	(void)cmd_info;
 	(void)shell;
@@ -73,13 +62,16 @@ char **env_to_arr(t_env_list *env_list)
 		env_arr[i] = to_str(current);
 		if (!env_arr[i])
 		{
-			while(i)
+			env_arr[i] = NULL;
+			free_arr(env_arr)
+			return(NULL;)
+			/* 			while(i)
 			{
 				i--;
 				free(env_arr[i]);
 			}
 			free(env_arr);
-			return (NULL);
+			return (NULL); */
 		}
 		i++;
 		current = current->next;
@@ -89,7 +81,7 @@ char **env_to_arr(t_env_list *env_list)
 
 void	free_arr(char **arr)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!arr)
@@ -102,11 +94,10 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
-char	*full_path(char *cmd, t_env_list *env_list)
+char	*find_path(char *cmd, t_env_list *env_list, int *error_code)
 {
 	char	**e_path;
-	char	path[PATH_MAX];
-	char	*dup_path;
+	char	*full_path;
 	char	**keep_start;
 	char	*value;
 
@@ -118,16 +109,7 @@ char	*full_path(char *cmd, t_env_list *env_list)
 	keep_start = e_path;
 	while (*e_path)
 	{
-		ft_strlcpy(path, *e_path, PATH_MAX);
-		ft_strlcat(path, "/", PATH_MAX);
-		ft_strlcat(path, cmd, PATH_MAX);
-		if (access(path, X_OK) == 0)
-		{
-			dup_path = ft_strdup(path);
-			free(value);
-			free_arr(keep_start);
-			return (dup_path);
-		}
+		
 		e_path++;
 	}
 	free(value);
@@ -135,3 +117,39 @@ char	*full_path(char *cmd, t_env_list *env_list)
 	return (NULL);
 }
 
+static char	*build_and_check_path(char **e_path, char *cmd, int *error_code)
+{
+	char	path[PATH_MAX];
+	char	*full_path;
+	
+	ft_strlcpy(path, *e_path, PATH_MAX);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, cmd, PATH_MAX);
+	if (access(path, X_OK) == 0)
+	{
+		full_path = ft_strdup(path);
+		if(!full_path)
+		{
+			*error_code = ENOMEM;
+			return(NULL);
+		}
+		*error_code = 0;
+		return (full_path);
+	}
+	else
+	{
+		*error_code = ENOENT;
+		return (NULL);
+	}
+}
+
+/* 	ft_strlcpy(path, *e_path, PATH_MAX);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, cmd, PATH_MAX);
+	if (access(path, X_OK) == 0)
+	{
+		full_path = ft_strdup(path);
+		free(value);
+		free_arr(keep_start);
+		return (full_path);
+	} */

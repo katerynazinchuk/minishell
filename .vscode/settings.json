@@ -2,6 +2,7 @@
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
-    "types.h": "c"
+    "types.h": "c",
+    "minishell.h": "c"
   }
 }

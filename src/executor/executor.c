@@ -3,29 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 13:57:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:13:50 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* typedef struct	s_ast_node
-{
-	t_ast_type			type; 
-	char				**value;//command
-	t_redir				*redir;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}	t_ast_node; */
+// структуру exe видалила щоб не тягати по fork
 
 void	executor(t_ast_node *ast, t_shell *shell)
 {
-	// t_execute	exe;
-
-	// init_execute(&exe);
 	//run_heredoc(&exe, shell)
 	run_ast(ast, shell);//TODO do we need to keep head_ast in shell to clean ast in case of error
 	// Відновили стандартні дескриптори
@@ -37,6 +27,7 @@ void	executor(t_ast_node *ast, t_shell *shell)
 
 void	run_ast(t_ast_node *ast, t_shell *shell)
 {
+	//do we need to checl !ast ?
 	if (ast->type == AST_PIPE)
 		run_pipe(ast, shell);
 	else
@@ -46,18 +37,11 @@ void	run_ast(t_ast_node *ast, t_shell *shell)
 // if (!ast)
 // 	return ;
 
-	// if (ast->type == AST_COMMAND)
-	// 	run_cmd(ast, shell);
-
 int	run_cmd(t_ast_node *node, t_shell *shell)
 {
 	// t_cmd_info	cmd_info;
 
 	// init_cmd_info(&cmd_info, exe);
-	// if (validate_redir(node->redir))
-	// 	printf("Valide redirections \n");
-	// else 
-	// 	printf("Not valide redirections \n");
 	// //init_cmd_info
 	// if (is_builtin(&cmd_info, shell, exe))
 	// 	run_builtin(&cmd_info, shell, exe);

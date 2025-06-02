@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 13:30:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:55:26 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 // typedef struct s_execute
 // {
-// 	// t_shell		*shell;
+// // 	// t_shell		*shell;
 // 	// t_ast_node	*ast;
 // 	int			fd[2];
 // 	// int			prev_fd;
@@ -61,5 +61,6 @@ bool	is_builtin(t_cmd_info *cmd_info, t_shell *shell, t_execute *exe);
 int		run_cmd(t_ast_node *node, t_shell *shell);
 void	run_ast(t_ast_node *ast, t_shell *shell);
 char	**env_to_arr(t_env_list *env_list);
+char	*find_path(char *cmd, t_env_list *env_list, int *error_code);
 
 #endif
