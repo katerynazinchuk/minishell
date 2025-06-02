@@ -3,8 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g 
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-LFLAGS += -lreadline -lncurses
-#-fsanitize=address,undefined
+LFLAGS += -lreadline -lncurses -fsanitize=address,undefined
 SRC_DIR = src
 BUILD_DIR = obj
 INCLUDE_DIR = include
@@ -31,8 +30,10 @@ PARSER = src/parser/parser.c \
 			src/parser/redirects.c \
 			src/parser/parser_debug.c \
 			src/parser/free_parser.c
+HEREDOC = src/heredoc/heredoc.c \
+			src/heredoc/utils.c 
 
-# SIGNALS = 
+
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
 		src/utils/shell_debug.c
@@ -40,7 +41,7 @@ UTILS = src/utils/utils.c \
 ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) src/main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 15:35:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:58:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	free_for_fork(t_session *session)
 		free(session->line);
 		session->line = NULL;
 	}
+	session->heredoc_count = 0;
 }
 
 void	init_session(t_session *session, t_shell *shell)
@@ -48,6 +49,7 @@ void	init_session(t_session *session, t_shell *shell)
 	session->ast = NULL;
 	session->line = NULL;
 	session->prompt = NULL;
+	session->heredoc_count = 0;
 }
 
 void	update_prompt(char **prompt)

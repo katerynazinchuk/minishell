@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:49:32 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:31:09 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	new_ast_node->redir = structure->redirect;
 	
 	free_structure(structure);
+	// free(structure);
 	return (new_ast_node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:37:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:12:03 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ bool	process_line(t_session *session)
 	if (!parser(session))
 		return (false);
 	add_history(session->line);
+	heredoc(session->ast, session);
 	free_for_fork(session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	//execute
@@ -93,10 +94,12 @@ bool	parser(t_session *session)
 	}
 	
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
+	
 	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 
 		return (false);
 	}
+	print_node(session->ast, 0);
 	return (true);
 }

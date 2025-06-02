@@ -30,6 +30,7 @@ w: wait, wait3, wait4, waitpid, write
 # include "expand.h"
 # include "lexer.h"
 # include "parser.h"
+# include "heredoc.h"
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>

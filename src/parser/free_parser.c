@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:00:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:11:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:32:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void free_structure(t_command_parsing *structure)
 		free(current);
 		current = next;
 	}
-	if (structure->redirect)
-		free_redirects(structure->redirect); // implement this if it's more than a flat struct
+	// if (structure->redirect)
+	// 	free_redirects(structure->redirect); // implement this if it's more than a flat struct
 	free(structure);
 }
 
@@ -65,5 +65,8 @@ void	free_ast(t_ast_node *ast)
 		}
 		free(ast->value);
 	}
+	if(ast->redir)
+		free_redirects(ast->redir);
+
 	free(ast);
 }
