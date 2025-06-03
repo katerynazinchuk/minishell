@@ -39,7 +39,8 @@ UTILS = src/utils/utils.c \
 		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
-		src/errors/common_errors.c
+		src/errors/common_errors.c \
+		src/errors/pipe_error.c
 
 SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) src/main.c 
 #signal.c

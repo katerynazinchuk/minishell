@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 17:36:40 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:40:41 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	run_shell(t_shell *shell)
 	while(1)
 	{
 		update_prompt(&session.prompt);
-		session.line = readline(session.prompt); 
+		session.line = check_input(readline(session.prompt)); //clarify this logic, cos now it mixing all together
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
@@ -69,6 +69,7 @@ void	run_shell(t_shell *shell)
 			free_for_fork(&session);
 			continue ;
 		}
+		
 		free_ast(session.ast);
 	}
 }

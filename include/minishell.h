@@ -23,6 +23,7 @@ w: wait, wait3, wait4, waitpid, write
 
 # include <stdbool.h>
 # include "libft.h"
+# include "errors.h"
 # include "env.h"
 # include "utils.h"
 # include "token.h"

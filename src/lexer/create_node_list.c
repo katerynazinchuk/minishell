@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 17:36:11 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:42:11 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token *create_token(char *value, t_tok_type types)
 	new_token->type = types;
 	new_token->segment = NULL;
 	new_token->next = NULL;
-	new_token->prev = NULL; // Initialize prev to NULL
+	new_token->prev = NULL;
 	return (new_token);
 }
 
@@ -41,7 +41,7 @@ void add_to_token_list(t_token_list *list, t_token *new_token)
 		list->head = new_token;
 	else
 	{
-		new_token->prev = list->tail; // Set the previous pointer of the new token to the current tail
+		new_token->prev = list->tail;
 		list->tail->next = new_token;
 	}
 	list->tail = new_token;

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 15:38:56 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:26:35 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 			free(line);
 			break;
 		}
+
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
