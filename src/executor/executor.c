@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/02 14:13:50 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/03 18:05:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	executor(t_ast_node *ast, t_shell *shell)
 {
 	//run_heredoc(&exe, shell)
-	run_ast(ast, shell);//TODO do we need to keep head_ast in shell to clean ast in case of error
+	run_ast(ast, shell, false);//TODO do we need to keep head_ast in shell to clean ast in case of error
 	// Відновили стандартні дескриптори
     // dup2(saved_stdin,  STDIN_FILENO);
     // dup2(saved_stdout, STDOUT_FILENO);
@@ -25,29 +25,44 @@ void	executor(t_ast_node *ast, t_shell *shell)
     // close(saved_stdout);
 }
 
-void	run_ast(t_ast_node *ast, t_shell *shell)
+void	run_ast(t_ast_node *ast, t_shell *shell, bool in_pipe)
 {
+	run_cmd(ast, shell);
+
 	//do we need to checl !ast ?
-	if (ast->type == AST_PIPE)
+/* 	if (ast->type == AST_PIPE)
 		run_pipe(ast, shell);
 	else
-		run_cmd(ast, shell);
+		run_cmd(ast, shell); */
 }
 
 // if (!ast)
 // 	return ;
 
-int	run_cmd(t_ast_node *node, t_shell *shell)
+int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)
 {
-	// t_cmd_info	cmd_info;
+	int	exit_status;
+	
+	if (!apply_redir(node->redir))
+	{
+		write(2, "Error redirect\n", 16);
+		return (1);
+	}
+	if (is_builtin(node->value[0]))
+	{
+		if (in_pipe)
+			exit_status = run_fork_builtin(node, shell);
+		else
+			exit_status = run_builtin(node, shell);
+	}
+	else
+		exit_status = run_external(node, shell);
+	return (exit_status);
+}
 
-	// init_cmd_info(&cmd_info, exe);
-	// //init_cmd_info
-	// if (is_builtin(&cmd_info, shell, exe))
-	// 	run_builtin(&cmd_info, shell, exe);
-	// else
-	// 	run_external(&cmd_info, shell, exe);
 
+/* int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)
+{
 	pid_t	proc_id;
 	char	**env_arr;
 	int	status = 0;
@@ -66,8 +81,7 @@ int	run_cmd(t_ast_node *node, t_shell *shell)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
-}
-
+} */
 
 /* Meooow
 

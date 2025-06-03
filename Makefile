@@ -21,7 +21,8 @@ EXECUTOR = src/executor/executor.c \
 		src/executor/exe_utils.c \
 		src/executor/redir_dispatch.c \
 		src/executor/run_builtin.c \
-		src/executor/run_external.c
+		src/executor/run_external.c \
+		src/executor/path_parser.c
 LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \

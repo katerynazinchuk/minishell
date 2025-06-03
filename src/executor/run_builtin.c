@@ -6,15 +6,15 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:20:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:00:21 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_builtin(t_cmd_info *cmd_info, t_shell *shell)
+/* int	run_builtin(t_ast_node *node, t_shell *shell)
 {
-	static const t_builtin_entry	builtins[] = {
+	static const t_builtin_fn	builtins[] = {
 	{"echo", builtin_echo},
 	{"cd", builtin_cd},
 	{"pwd", builtin_pwd},
@@ -34,4 +34,4 @@ int	run_builtin(t_cmd_info *cmd_info, t_shell *shell)
 		i++;
 	}
 	return(1);
-}
+} */

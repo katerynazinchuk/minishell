@@ -6,112 +6,118 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:25:36 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:52:05 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-static bool	validate_in(t_redir *redir)
-{
-	int	fd;
+/* dup2(fd_what_I_already_have, fd_what_I_want_to_make) */
+static bool	apply_in(t_redir *redir);
+static bool	apply_out(t_redir *redir);
+static bool	apply_append(t_redir *redir);
+static bool	apply_heredoc(t_redir *redir);
 
-	fd = open(redir->connection, O_RDONLY);
-	if (fd < 0)
-		return (false);
-	close(fd);
-	return (true);
-}
-
-static bool	validate_out(t_redir *redir)
-{
-	int	fd;
-
-	fd = open(redir->connection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return (false);//TODO do we need to close fd in this case?
-	close(fd);
-	return (true);
-}
-
-static bool	validate_append(t_redir	*redir)
-{
-	int	fd;
-
-	fd = open(redir->connection, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-		return (false);
-	close(fd);
-	return(true);
-	
-}
-//typedef enum	e_red_type
-//{
-//	RED_IN,//<
-//	RED_OUT,//>
-//	RED_APPEND,//>>
-//	RED_HEREDOC,//<<
-//}	t_red_type;
-
-bool	validate_redir(t_redir *redir_list)
+bool	apply_redir(t_redir *redir_list)
 {
 	static t_redir_handler handlers[] = {
-		[RED_IN] = validate_in,
-		[RED_OUT] = validate_out,
-		[RED_APPEND] = validate_append,
-		[RED_HEREDOC] = NULL
+		[RED_IN] = apply_in,
+		[RED_OUT] = apply_out,
+		[RED_APPEND] = apply_append,
+		[RED_HEREDOC] = apply_heredoc
 	};
-	t_redir_handler f;
+	t_redir_handler	f;
+	
 	if (!redir_list)
 		return (false);
 	while (redir_list)
 	{
-		if (redir_list->type != RED_HEREDOC && redir_list > 0)//check with Katia when *redir_list can return -1
-		{
-			f = handlers[redir_list->type];
-			if (!f || !f(redir_list))
-				return (false);
-		}
+		f = handlers[redir_list->type];
+		if (!f || !f(redir_list))
+			return (false);
 		redir_list = redir_list->next;
 	}
 	return (true);
-}
+	}
 
-
-bool applay_in(t_redir *red)
+/* we need to manage correct errors for open */
+static bool	apply_in(t_redir *redir)
 {
-	int fd;
+	int	fd;
 
 	fd = open(redir->connection, O_RDONLY);
 	if (fd < 0)
+	{
+		write(2, "Error open file\n", 17);
 		return (false);
-	dup2(fd, STDIN_FILENO);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		write(2, "Error dup2\n", 12);
+		return (false);
+	}
 	close(fd);
 	return (true);
 }
 
-bool applay_out(t_redir *red)
+static bool	apply_out(t_redir *redir)
 {
+	int	fd;
+
 	fd = open(redir->connection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (false);//TODO do we need to close fd in this case?
-	dup2(fd, STDOUT_FILENO);
+	{
+		write(2, "Error open file\n", 17);
+		return (false);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		write(2, "Error dup2\n", 12);
+		return (false);
+	}
 	close(fd);
 	return (true);
 }
 
-bool applay_append(t_redir *red)
+static bool	apply_append(t_redir *redir)
 {
+	int	fd;
+	
 	fd = open(redir->connection, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
+	{
+		write(2, "Error open file\n", 17);
 		return (false);
-	dup2(fd, STDOUT_FILENO);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		write(2, "Error dup2\n", 12);
+		return (false);
+	}
 	close(fd);
 	return(true);
 }
 
-bool apply_red(t_redir *head)
+static bool	apply_heredoc(t_redir *redir)
+{
+	int	fd;
+
+	fd = open(redir->connection, O_RDONLY);
+	if (fd < 0)
+		{
+		write(2, "Error open file\n", 17);
+		return (false);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		write(2, "Error dup2\n", 12);
+		return (false);
+	}
+	close(fd);
+	return (true);
+}
+
+/* bool apply_red(t_redir *head)
 {
 	static t_redir_handler redmap[] = {
 		applay_in,
@@ -127,4 +133,11 @@ bool apply_red(t_redir *head)
 		head = head->next;
 	}
 	return (true);
-}
+} */
+
+	/* 		if (redir_list->type != RED_HEREDOC && redir_list > 0)//check with Katia when *redir_list can return -1
+			{
+				f = handlers[redir_list->type];
+				if (!f || !f(redir_list))
+					return (false);
+			} */
