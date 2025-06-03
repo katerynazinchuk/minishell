@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 17:12:00 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:29:17 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 typedef enum e_tok_type
 {
-	T_WORD,//argc, argv
-	T_PIPE,//|
+	T_WORD,
+	T_PIPE,
 	T_IN,//<
 	T_OUT,//>
 	T_APPEND,//>>
@@ -24,7 +24,6 @@ typedef enum e_tok_type
 	T_EOF,
 }	t_tok_type;
 
-//Tracks whether you're inside single quotes, double quotes
 typedef enum e_q_type
 {
 	Q_NONE,
@@ -39,7 +38,7 @@ typedef struct s_token
 	t_tok_type		type;
 	struct s_segment	*segment;
 	struct s_token	*next;
-	struct s_token	*prev; // to track the last token
+	struct s_token	*prev; // to track the last token for heredoc
 }	t_token;
 
 typedef struct s_segment
@@ -49,7 +48,9 @@ typedef struct s_segment
 	struct s_segment	*next;
 }	t_segment;
 
-//helps to avoid writing token_last() every time you want to add to the end.
+//if any of the segments is quoted, the whole token is considered quoted - logic for heredoc var expansion
+//expand heredoc content only if unquoted
+
 typedef struct s_token_list
 {
 	int 		error;// to track errors (not sure yet)

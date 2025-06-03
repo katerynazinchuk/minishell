@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 15:40:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:52:38 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	run_shell(t_shell *shell)
 			free_for_fork(&session);
 			continue ;
 		}
-		
 		free_ast(session.ast);
 	}
 }

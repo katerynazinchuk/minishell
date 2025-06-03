@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 15:27:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:52:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ char *join_input(char *line)
 char *check_input(char *line)
 {
 	if(!line)// || ft_strlen(line) == 0)
-		return (NULL);
+		return (NULL);//TODO set error
 	if (check_unmached_quotes(line))
-		return (NULL);
+		return (NULL);//TODO set error
 	if (first_pipe_error(line))
-		return (NULL);
+		return (NULL);//TODO set error
 	if (last_pipe_error(line))
 	{
 		line = join_input(line);
