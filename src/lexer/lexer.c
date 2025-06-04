@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 16:46:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:48:03 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_token_list *fill_tokens(char *line)
 			return (NULL);
 		}
 	}
-	eof = create_token("eof", T_EOF);
+	eof = create_token("eof", T_EOF, UNQUOTED);
 	if (!eof)
 	{
 		free_token_list(list);
@@ -106,7 +106,7 @@ bool	move_to_token_expand(t_token_list *list)
 	{
 		if (!current->expanded)
 		{
-			current->expanded = join_segments(current->segment);
+			current->expanded = join_segments(current->segment, &current->quoted);
 			if(!current->expanded)
 				return (false);
 		}

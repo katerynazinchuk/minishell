@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:30:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:33:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ t_segment *build_segment_list(t_str_pos *lexer)
 	return (head);
 }
 
-char *join_segments(t_segment *segment)
+char *join_segments(t_segment *segment, t_quoted *quoted)
 {
 	size_t total_len;
 	char *result;
 
+	*quoted = UNQUOTED;
 	total_len = total_length(segment);
 	if(total_len == 0)
 		return(ft_strdup(""));
@@ -80,6 +81,8 @@ char *join_segments(t_segment *segment)
 	result[0] = '\0'; // Initialize the result string to an empty string
 	while(segment)
 	{
+		if(segment->q_type == Q_SINGLE || segment->q_type == Q_DOUBLE)
+			*quoted = QUOTED;
 		if(segment->value)
 			ft_strlcat(result, segment->value, total_len + 1);
 		segment = segment->next;

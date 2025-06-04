@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 16:27:21 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:42:56 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_red_type	define_redirection(t_tok_type token_type)
 	return (-1);//??
 }
 
-t_redir	*create_redirect_node(t_red_type red, char *connection)
+t_redir	*create_redirect_node(t_red_type red, char *connection, t_quoted quoted)
 {
 	t_redir *redirect;
 	
@@ -34,6 +34,7 @@ t_redir	*create_redirect_node(t_red_type red, char *connection)
 		return (NULL);
 	redirect->type = red;
 	redirect->connection = ft_strdup(connection);
+	redirect->quoted = quoted;
 	redirect->next = NULL;
 	return (redirect);
 }
@@ -58,7 +59,9 @@ t_redir	*extract_redirect(t_token *current)
 	next = current->next;
 	if(!next || next->type != T_WORD)
 		return (NULL);
-	new_redir = create_redirect_node(define_redirection(current->type), next->expanded);
+	new_redir = create_redirect_node(
+		define_redirection(current->type), next->expanded,
+		next->quoted);
 	if(!new_redir)
 		return (NULL);
 	return(new_redir);
@@ -126,27 +129,15 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 			current->type == T_IN || current->type == T_OUT )
 		{
 			if (append_redirect(current, structure))
-			{
-				//free_command_parsing(structure); //before & NULL
 				return (NULL);
-			}
 			current = current->next;
-			//return (free_structure(structure), NULL);//catch error end show msg allocate fail
 		}
 		else 
 		{
 			if(!append_args(current, structure))
-			{
-				//free_command_parsing(structure);
 				return (NULL);
-			}
 		}
 		current = current->next;
 	}
 	return (structure);
 }
-
-// void free_command_parsing(t_command_parsing *structure)
-// {
-	
-// }

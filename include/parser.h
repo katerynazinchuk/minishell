@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 16:29:28 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:48:35 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_redir
 {
 	t_red_type 		type;
 	char			*connection;//filename or heredoc delimetr
+	t_quoted 		quoted;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -65,7 +66,7 @@ char				**tokens_to_argv (t_com_tokens *head);
 void				free_ast(t_ast_node *ast);
 
 t_red_type			define_redirection(t_tok_type token_type);
-t_redir				*create_redirect_node(t_red_type red, char *connection);
+t_redir				*create_redirect_node(t_red_type red, char *connection, t_quoted quoted);
 
 t_command_parsing	*extract_red_and_args(t_token *head, t_token *end);
 t_com_tokens		*extract_args(t_token *current);

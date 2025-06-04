@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 16:29:17 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:29:28 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,18 @@ typedef enum e_q_type
 	Q_DOUBLE,
 }	t_q_type;
 
+typedef enum e_quoted
+{
+	UNQUOTED,
+	QUOTED,
+}	t_quoted;
+
 typedef struct s_token
 {
 	char			*expanded;
 	int				bad_subs;
 	t_tok_type		type;
+	t_quoted		quoted; // to track if the token is quoted for heredoc expansion
 	struct s_segment	*segment;
 	struct s_token	*next;
 	struct s_token	*prev; // to track the last token for heredoc

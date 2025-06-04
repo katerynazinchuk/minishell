@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 15:26:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:38:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	char *heredoc_file_name;
 	int fd;
 	char *line;
+	char *tmp;
 
 	heredoc_id = session->heredoc_count++;
 	heredoc_id_str = ft_itoa(heredoc_id);
@@ -46,6 +47,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	}
 	while (1)
 	{
+		tmp = NULL;
 		line = readline("heredoc> ");
 		if (!line)
 		{
@@ -59,13 +61,30 @@ void expand_heredoc(t_redir *redir, t_session *session)
 			free(line);
 			break;
 		}
-
+		if(redir->quoted != QUOTED)
+		{
+			tmp = expand_value(line, session->shell);
+			free(line);
+			line = tmp;
+			// write(fd, tmp, ft_strlen(tmp));
+			// write(fd, "\n", 1);
+			// free(line);
+			// free(tmp);
+			// continue;
+		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
+		// if(tmp)
+		// 	free(tmp);
+		// else
+		// {
+		// 	write(fd, line, ft_strlen(line));
+		// 	write(fd, "\n", 1);
+		// 	free(line);
+		// }
 	}
 	close(fd);
-
 	if (redir->connection)
 		free(redir->connection);
 	redir->connection = heredoc_file_name;

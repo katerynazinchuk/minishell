@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:38:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:49:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void skip_whitespace(t_str_pos *lexer)
 void add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token	*new_token;
-	new_token = create_token("|", T_PIPE);
+	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
@@ -61,7 +61,7 @@ void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type
 {
 	t_token	*new_token;
 
-	new_token = create_token(symbol, type);
+	new_token = create_token(symbol, type, UNQUOTED);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
@@ -71,7 +71,7 @@ bool add_word_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token *token;
 
-	token = create_token(NULL, T_WORD);
+	token = create_token(NULL, T_WORD, UNQUOTED);
 	if(!token)
 		return (false);
 	token->segment = build_segment_list(lexer);

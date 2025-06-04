@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:40:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:49:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ typedef struct s_str_pos
 
 /* -------------------------------------------------------------------------- */
 
-t_token 		*create_token(char *value, t_tok_type types); // Updated function signature
-
+t_token 		*create_token(char *value, t_tok_type types, t_quoted quoted);
 void			add_to_token_list(t_token_list *list, t_token *new_token);
 void			free_token(t_token *token);
 void			free_token_list(t_token_list *list);
@@ -44,7 +43,7 @@ t_segment		*create_segment(char *value, t_q_type q_type);
 void			append_segment(t_segment **head, t_segment *new_seg);
 t_segment		*build_segment_list(t_str_pos *lexer);
 size_t			total_length(t_segment *segments);
-char 			*join_segments(t_segment *segment);
+char 			*join_segments(t_segment *segment, t_quoted *quoted);
 
 /* -------------------------------------------------------------------------- */
 
