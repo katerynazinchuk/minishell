@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/03 17:56:31 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:49:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*to_str(t_env_type *cur)
 	return (str);
 }
 
-char **env_to_arr(t_env_list *env_list)
+char	**env_to_arr(t_env_list *env_list)
 {
 	char		**env_arr;
 	t_env_type	*current;

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 13:28:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:45:54 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,9 @@ bool	process_line(t_session *session)
 		return (false);
 	//(переїхав в executor) heredoc expand if not commanf  call left and right. -> rewrite 
 	add_history(session->line);
+	write(1, "run ast\n", 9);
 	
-	executor(session->ast, session->shell);
+	// executor(session->ast, session->shell);
 	printf("\n");
 	print_node(session->ast, 0);
 	return (true);
