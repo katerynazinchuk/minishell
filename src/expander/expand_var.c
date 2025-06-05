@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 12:16:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:20:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	extract_var(char *raw, t_expand_type *exp)
 			&& !is_quote(raw[exp->len_var]))
 			exp->len_var++;
 		exp->var = ft_strndup(raw, exp->len_var);
-		printf("%s \n", exp->var);
 	}
 }
 
