@@ -6,18 +6,19 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 15:40:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:39:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	run_external(t_ast_node *node, t_shell *shell)
+int	run_external(t_ast_node *node, t_shell *shell)
 {
 	pid_t	proc_id;
 	int		exit_status;
 	char	**env_arr;
 
+	exit_status = 0;
 	proc_id = fork();
 	if (proc_id < 0)
 		return (1);//TODO check return

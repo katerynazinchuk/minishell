@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 15:32:06 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:45:00 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	executor(t_ast_node *ast, t_shell *shell)
 {
 	write(1, "a\n", 2);
 	//run_heredoc(&exe, shell)
-	run_ast(ast, shell, false);//TODO do we need to keep head_ast in shell to clean ast in case of error
+	run_ast(ast, shell);//TODO do we need to keep head_ast in shell to clean ast in case of error
 	// Відновили стандартні дескриптори
     // dup2(saved_stdin,  STDIN_FILENO);
     // dup2(saved_stdout, STDOUT_FILENO);
@@ -26,9 +26,11 @@ void	executor(t_ast_node *ast, t_shell *shell)
     // close(saved_stdout);
 }
 
-void	run_ast(t_ast_node *ast, t_shell *shell, bool in_pipe)
+void	run_ast(t_ast_node *ast, t_shell *shell)
 {
-	// run_cmd(ast, shell, in_pipe);
+	run_cmd(ast, shell);
+	if (!ast)
+		return ;
 
 	//do we need to checl !ast ?
 /* 	if (ast->type == AST_PIPE)
@@ -37,24 +39,23 @@ void	run_ast(t_ast_node *ast, t_shell *shell, bool in_pipe)
 		run_cmd(ast, shell); */
 }
 
-// if (!ast)
-// 	return ;
 
 int	run_cmd(t_ast_node *node, t_shell *shell)
 {
-	t_builtin_fn	builtin;
-	
+	// t_builtin_fn	builtin_fn;
+	write(1, "1\n", 2);
 	if (!apply_redir(node->redir))
 	{
 		// restore_fd()
 		write(2, "Error redirect\n", 16);
 		return (1);
 	}
-	builtin = get_builtin_fn(node->value[0]);
-	if (builtin)
-		shell->last_exit_status = builtin(node, shell);
-	else
-		shell->last_exit_status = run_external(node, shell);
+	shell->last_exit_status = run_external(node, shell);
+	// builtin_fn = get_builtin_fn(node->value[0]);
+	// if (builtin_fn)
+	// 	shell->last_exit_status = builtin_fn(node->value, shell->env_list);
+	// else
+	// 	shell->last_exit_status = run_external(node, shell);
 	return (shell->last_exit_status);
 }
 
