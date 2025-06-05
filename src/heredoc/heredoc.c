@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 14:38:44 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:56:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	if (redir->connection)
 		free(redir->connection);
 	redir->connection = heredoc_file_name;
-	redir->type = RED_HEREDOC;
+	redir->type = RED_IN;//we need this cause it's the same processing as RED_IN
+	// redir->type = RED_HEREDOC;
 }
 
 void heredoc(t_ast_node *node, t_session *session)
