@@ -6,30 +6,12 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/04 13:49:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:42:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe)
-{
-	(void)exe;
-	cmd_info->argv = NULL;            // command + arguments
-	cmd_info->infile = NULL;           // for `<`
-	cmd_info->outfile = NULL;          // for `>` or `>>`
-	cmd_info->append_mode = 1;        // 1 if >>, 0 if >
-	cmd_info->is_heredoc = 1;         // 1 if heredoc, 0 otherwise
-	cmd_info->heredoc_delim = NULL;    // heredoc delimiter
-	//struct s_command	*next; // next in pipe chain
-} */
-
-bool	is_builtin(char *cmd)
-{
-	
-	(void)shell;
-	return (true);
-}
 
 static char	*to_str(t_env_type *cur)
 {

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/04 17:00:57 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:32:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,22 @@ void	run_ast(t_ast_node *ast, t_shell *shell, bool in_pipe)
 // if (!ast)
 // 	return ;
 
-int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)
+int	run_cmd(t_ast_node *node, t_shell *shell)
 {
-	int	exit_status;
+	t_builtin_fn	builtin;
 	
-	exit_status = 0;
 	if (!apply_redir(node->redir))
 	{
 		// restore_fd()
 		write(2, "Error redirect\n", 16);
 		return (1);
 	}
-	if (is_builtin(node->value[0]))
-	{
-		if (in_pipe)
-			exit_status = run_fork_builtin(node, shell);
-		else
-			exit_status = run_builtin(node, shell);
-	}
+	builtin = get_builtin_fn(node->value[0]);
+	if (builtin)
+		shell->last_exit_status = builtin(node, shell);
 	else
-		exit_status = run_external(node, shell);
-	return (exit_status);
+		shell->last_exit_status = run_external(node, shell);
+	return (shell->last_exit_status);
 }
 
 

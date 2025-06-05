@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/03 16:52:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:43:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,24 @@ static bool	apply_append(t_redir *redir)
 	return(true);
 }
 
-static bool	apply_heredoc(t_redir *redir)
-{
-	int	fd;
+// static bool	apply_heredoc(t_redir *redir)
+// {
+// 	int	fd;
 
-	fd = open(redir->connection, O_RDONLY);
-	if (fd < 0)
-		{
-		write(2, "Error open file\n", 17);
-		return (false);
-	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		write(2, "Error dup2\n", 12);
-		return (false);
-	}
-	close(fd);
-	return (true);
-}
+// 	fd = open(redir->connection, O_RDONLY);
+// 	if (fd < 0)
+// 		{
+// 		write(2, "Error open file\n", 17);
+// 		return (false);
+// 	}
+// 	if (dup2(fd, STDIN_FILENO) == -1)
+// 	{
+// 		write(2, "Error dup2\n", 12);
+// 		return (false);
+// 	}
+// 	close(fd);
+// 	return (true);
+// }
 
 /* bool apply_red(t_redir *head)
 {

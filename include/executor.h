@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 18:05:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:41:55 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@ void	executor(t_ast_node *ast, t_shell *shell);
 void	run_external(t_ast_node *node, t_shell *shell);
 
 bool	apply_redir(t_redir *redir_list);
-bool	is_builtin(char *cmd);
-int		run_fork_builtin(t_ast_node *node, t_shell *shell);
+
 
 /* ___________________________________________________________________________*/
 
-void	run_ast(t_ast_node *ast, t_shell *shell, bool in_pipe);
-int		run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe);
+void	run_ast(t_ast_node *ast, t_shell *shell);
+int		run_cmd(t_ast_node *node, t_shell *shell);
 char	**env_to_arr(t_env_list *env_list);
 char	*find_path(char *cmd, t_env_list *env_list, int error_code);
 void	free_arr(char **arr);
