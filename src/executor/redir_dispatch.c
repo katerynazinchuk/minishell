@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 17:43:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:27:05 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	apply_redir(t_redir *redir_list)
 	t_redir_handler	f;
 	
 	if (!redir_list)
-		return (false);
+		return (true);
 	while (redir_list)
 	{
 		f = handlers[redir_list->type];

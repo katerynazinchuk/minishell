@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/05 17:39:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:58:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool			apply_redir(t_redir *redir_list);
 /* ___________________________________________________________________________*/
 
 char	**env_to_arr(t_env_list *env_list);
-char	*find_path(char *cmd, t_env_list *env_list, int error_code);
+bool	find_path(char **value, t_env_list *env_list);
 void	free_arr(char **arr);
 
 #endif

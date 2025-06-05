@@ -15,8 +15,7 @@ BUILD_IN = src/builtins/
 ENV = src/env/env_errors_frees.c \
 		src/env/env_operations.c \
 		src/env/env_utils.c
-		src/env/env_operations.c \
-		src/env/env_utils.c
+
 EXECUTOR = src/executor/executor.c \
 		src/executor/exe_utils.c \
 		src/executor/redir_dispatch.c \
@@ -40,7 +39,6 @@ PARSER = src/parser/parser.c \
 HEREDOC = src/heredoc/heredoc.c \
 			src/heredoc/utils.c \
 			src/heredoc/heredoc_cleanup.c
-EXECUTOR = src/executor/
 
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
@@ -50,8 +48,7 @@ ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c \
 		src/errors/pipe_error.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) src/main.c 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(EXECUTOR) src/main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(EXECUTOR) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/05 18:10:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:34:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ void	run_shell(t_shell *shell)
 			free_for_fork(&session);
 			break ;
 		}
-		cleanup_cycle(&session);
 		if (!process_line(&session))
 		{
-			free_ast(session.ast);
 			free_for_fork(&session);
+			free_ast(session.ast);
 			continue ;
 		}
 		// free_for_fork(&session); we free session in case of success in process_line()
@@ -87,7 +86,7 @@ bool	process_line(t_session *session)
 	heredoc(session->ast, session);
 	//heredoc expand if not commanf  call left and right. -> rewrite 
 	free_for_fork(session);
-	//execute
+	executor(session->ast, session->shell);
 	return (true);
 }
 

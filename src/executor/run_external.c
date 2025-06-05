@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 17:39:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:57:30 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	run_external(t_ast_node *node, t_shell *shell)
 	pid_t	proc_id;
 	int		exit_status;
 	char	**env_arr;
-
+	// char	*full_path;
+	
+	write(1, "1\n", 2);
+	write(1, node->value[0], ft_strlen(node->value[0]));
 	exit_status = 0;
 	proc_id = fork();
 	if (proc_id < 0)
@@ -31,6 +34,7 @@ int	run_external(t_ast_node *node, t_shell *shell)
 			//free_ast
 			exit (1);
 		}
+
 		if(execve(node->value[0], node->value, env_arr) == -1)
 		{
 			free_arr(env_arr);
@@ -46,3 +50,5 @@ int	run_external(t_ast_node *node, t_shell *shell)
 		return (WEXITSTATUS(exit_status));
 	return(1);
 }
+
+//execve will return ENOENT and we need to change it to " : command not found"

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 17:45:00 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:28:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void	executor(t_ast_node *ast, t_shell *shell)
 {
-	write(1, "a\n", 2);
 	//run_heredoc(&exe, shell)
 	run_ast(ast, shell);//TODO do we need to keep head_ast in shell to clean ast in case of error
 	// Відновили стандартні дескриптори
@@ -28,9 +27,9 @@ void	executor(t_ast_node *ast, t_shell *shell)
 
 void	run_ast(t_ast_node *ast, t_shell *shell)
 {
-	run_cmd(ast, shell);
 	if (!ast)
 		return ;
+	run_cmd(ast, shell);
 
 	//do we need to checl !ast ?
 /* 	if (ast->type == AST_PIPE)
@@ -43,7 +42,6 @@ void	run_ast(t_ast_node *ast, t_shell *shell)
 int	run_cmd(t_ast_node *node, t_shell *shell)
 {
 	// t_builtin_fn	builtin_fn;
-	write(1, "1\n", 2);
 	if (!apply_redir(node->redir))
 	{
 		// restore_fd()

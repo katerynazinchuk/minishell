@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:06:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:56:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,13 @@ void	extract_var(char *raw, t_expand_type *exp)
 
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
+	char	*tmp;
+
 	if (is_valid_var(exp->var))
 	{
-		if (!get_env_value(exp->var, shell->env_list, &exp->str))
+		if (!get_env_value(exp->var, shell->env_list, &tmp))
 			return ;
+		exp->str = ft_strdup(tmp);
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
