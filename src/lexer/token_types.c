@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/20 15:03:12 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/04 12:49:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void skip_whitespace(t_str_pos *lexer)
 void add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token	*new_token;
-	new_token = create_token("|", T_PIPE, Q_NONE);
+	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
@@ -57,34 +57,32 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 }
 
-void create_redirection_token(t_token_list *list, char *symbol, t_tok_type type)
+void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type)
 {
 	t_token	*new_token;
 
-	new_token = create_token(symbol, type, Q_NONE);
+	new_token = create_token(symbol, type, UNQUOTED);
 	if (!new_token)
 		return;
 	add_to_token_list(list, new_token);
 }	
 
-void add_word_token(t_token_list *list, t_str_pos *lexer)
+bool add_word_token(t_token_list *list, t_str_pos *lexer)
 {
-	// printf("add word token : check quotes: %s   -> position: %d\n", lexer->input, lexer->current);
+	t_token *token;
 
-	if (use_quotes(lexer))// && previous char is not a space)
+	token = create_token(NULL, T_WORD, UNQUOTED);
+	if(!token)
+		return (false);
+	token->segment = build_segment_list(lexer);
+	if(!token->segment)
 	{
-		if (!check_quotes(lexer))
-		{
-			quotes_error(lexer);
-			//exit (1);
-			lexer->current++;
-			return;
-			//figure out what better use return or exit, and on which cases what?
-		}
-		add_quoted_word(list, lexer);
-		return;
+		free(token);
+		return (false);
 	}
-	add_unquoted_word(list, lexer);
+	add_to_token_list(list, token);
+	return (true);
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"
+//echo  a | b c>d "<input" >output | grep "hello|world"$USER'$PWD'

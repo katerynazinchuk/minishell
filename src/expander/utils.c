@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/23 16:37:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:14:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,7 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	}
 	return (new_ptr);
 }
-
+int	is_quote(char c)
+{
+	return(c == '\'' || c == '\"');
+}

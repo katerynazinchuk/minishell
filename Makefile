@@ -1,20 +1,20 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-LFLAGS += -lreadline -lncurses
-
+LFLAGS += -lreadline -lncurses 
 SRC_DIR = src
 BUILD_DIR = obj
 INCLUDE_DIR = include
-
+#-fsanitize=address,undefined
 LIBFT_DIR = libft
 LIBFT = libft.a
 
-# Define the source files and object files
 BUILD_IN = src/builtins/
 ENV = src/env/env_errors_frees.c \
+		src/env/env_operations.c \
+		src/env/env_utils.c
 		src/env/env_operations.c \
 		src/env/env_utils.c
 EXECUTOR = src/executor/executor.c \
@@ -27,23 +27,30 @@ LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \
 		src/lexer/lexer.c \
-		src/lexer/token_word_utils.c \
-		src/lexer/tokenization_utils.c
+		src/lexer/segment.c \
+		src/lexer/segment_utils.c \
+		src/lexer/lexer_debug.c 
 EXPANDER = src/expander/expand_var.c \
 			src/expander/utils.c \
 			src/expander/free_exp.c
 PARSER = src/parser/parser.c \
 			src/parser/redirects.c \
-			src/parser/parser_debug.c
+			src/parser/parser_debug.c \
+			src/parser/free_parser.c
+HEREDOC = src/heredoc/heredoc.c \
+			src/heredoc/utils.c \
+			src/heredoc/heredoc_cleanup.c
+EXECUTOR = src/executor/
 
-# SIGNALS = 
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
 		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
-		src/errors/common_errors.c
+		src/errors/common_errors.c \
+		src/errors/pipe_error.c
 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) src/main.c 
 SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(EXECUTOR) src/main.c 
 #signal.c
 
@@ -59,7 +66,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
-	@$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LFLAGS)
 
 $(LIBFT_DIR)/$(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)

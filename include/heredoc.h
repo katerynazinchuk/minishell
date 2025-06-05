@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_error.c                                      :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 15:07:45 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:33:48 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/02 12:50:19 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/02 15:54:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
-int quotes_error(t_str_pos *lexer)
-{
-	printf("Error: No matching quotes found for token starting at index %d\n", lexer->current);
-	return (0);
-}
+void heredoc_foreach_ast(t_ast_node *node, t_session *ctx ,void (*func)(t_redir *, t_session *));
+void heredoc(t_ast_node *node, t_session *session);
+void expand_heredoc(t_redir *redir, t_session *session);
+void cleanup_heredoc(t_redir *redir, t_session *session);
+
+#endif
