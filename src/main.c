@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 14:52:08 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/05 11:56:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void	run_shell(t_shell *shell)
 			free_for_fork(&session);
 			continue ;
 		}
-		free_for_fork(&session);
-		free_ast(session.ast);
+		// free_for_fork(&session); we free session in case of success in process_line()
+		if(session.ast)
+			free_ast(session.ast);
 	}
 }
 
