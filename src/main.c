@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 13:23:21 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:34:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,23 @@ void	run_shell(t_shell *shell)
 	while(1)
 	{
 		update_prompt(&session.prompt);
-		session.line = readline(session.prompt); 
+		session.line = readline(session.prompt);
+		//session.line = check_input(readline(session.prompt)); //clarify this logic, cos now it mixing all together
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
-			cleanup_cycle(&session);
+			free_for_fork(&session);
 			break ;
 		}
-		cleanup_cycle(&session);
 		if (!process_line(&session))
 		{
-			cleanup_cycle(&session);
-			free_ast(session.ast);//TODO воно тут точно існує?
+			free_for_fork(&session);
+			free_ast(session.ast);
 			continue ;
 		}
-		free_ast(session.ast);
+		// free_for_fork(&session); we free session in case of success in process_line()
+		if(session.ast)
+			free_ast(session.ast);
 	}
 }
 
@@ -80,12 +82,11 @@ bool	process_line(t_session *session)
 {
 	if (!parser(session))
 		return (false);
-	//(переїхав в executor) heredoc expand if not commanf  call left and right. -> rewrite 
 	add_history(session->line);
-	
+	heredoc(session->ast, session);
+	//heredoc expand if not commanf  call left and right. -> rewrite 
+	free_for_fork(session);
 	executor(session->ast, session->shell);
-	printf("\n");
-	print_node(session->ast, 0);
 	return (true);
 }
 
@@ -96,54 +97,14 @@ bool	parser(t_session *session)
 		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
-	session->ast = build_tree(session->tokens->head, session->tokens->tail);
+	
+	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
+	
 	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 
 		return (false);
 	}
+	print_node(session->ast, 0);
 	return (true);
 }
-/* void	run_shell(t_shell *shell)
-{
-	while(1)
-	{
-		//update_prompt(prompt);
-		shell->line = readline(shell->prompt); 
-		if (!shell->line)
-		{
-			write(1, "exit\n", 5);//TODO do we need clean here or cleanup enough?
-			break ;
-		}
-		if(shell->line)
-		{
-			if(!lexer(shell))
-			{
-				
-			}
-			// shell->tokens = lexer(shell);
-			// print_tokens(&shell);
-			if (shell->tokens)
-			{
-				shell->ast = build_tree(shell->tokens->head, shell->tokens->tail);
-				if(shell->ast)
-				{
-					//heredoc expand if not commanf  call left and right. -> rewrite 
-					//execute
-					printf("\n");
-					print_node(shell->ast, 0);
-					// print_ast(shell->ast, 0);
-					// print_redir_tree(shell->ast);
-					// print_argv(shell->ast->value);
-					// free_ast(shell->ast);
-					// shell->ast = NULL;
-				}
-				// free_token_list(shell->tokens);
-				// shell->tokens = NULL;
-			}
-			add_history(shell->line);
-		}
-		cleanup_cycle(shell);
-		// printf("command: %s\n", shell->line);
-	}
-} */

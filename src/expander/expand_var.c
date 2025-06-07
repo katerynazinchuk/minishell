@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/29 17:49:15 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:56:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,38 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-bool	expand_tokens(t_session *session)//треба почистити результат від expand_value
+bool	expand_segments(t_session *session)//треба почистити результат від expand_value
 {
 	t_token	*cur;
+	t_segment *seg;
+	char *tmp;
 
 	cur = session->tokens->head;
 	while (cur)
 	{
-		if (ft_strchr(cur->value, '$') && cur->q_type != Q_SINGLE)///start from here
+		if(cur->prev && cur->prev->type == T_HEREDOC)
 		{
-			if (check_subs(cur->value))
-				cur->bad_subs = 1;
-			else
-				cur->expanded = expand_value(cur->value, session->shell);//TODO what happens if there will be NULL?
+			cur = cur->next;
+			continue;
 		}
-		else
-			cur->expanded = ft_strdup(cur->value);
-		if (!cur->expanded)
-			return (false);
+		seg = cur->segment;
+		while(seg)
+		{
+			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
+			{
+				if (check_subs(seg->value))
+					cur->bad_subs = 1;
+				else
+					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
+			}
+			else
+				tmp = ft_strdup(seg->value);
+			if (!tmp)
+				return (false);
+			free(seg->value);
+			seg->value = tmp;
+			seg = seg->next;
+		}
 		cur = cur->next;
 	}
 	return (true);
@@ -100,7 +114,8 @@ void	extract_var(char *raw, t_expand_type *exp)
 	}
 	else
 	{
-		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var]))
+		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var])
+			&& !is_quote(raw[exp->len_var]))
 			exp->len_var++;
 		exp->var = ft_strndup(raw, exp->len_var);
 	}
@@ -108,29 +123,18 @@ void	extract_var(char *raw, t_expand_type *exp)
 
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
-	// t_env_type		*cur;
+	char	*tmp;
 
 	if (is_valid_var(exp->var))
 	{
-		// cur = shell->env_list->head;
-		// while(cur)
-		// {
-		// 	if (ft_strlen(exp->var) == ft_strlen(cur->key) && ft_strncmp(exp->var, cur->key, ft_strlen(cur->key)) == 0)
-		// 	{
-		// 		exp->str = ft_strdup(cur->value);
-		// 		break ;
-		// 	}
-		// 	cur = cur->next;
-		// }
-		if (!get_env_value(exp->var, shell->env_list, &exp->str))
+		if (!get_env_value(exp->var, shell->env_list, &tmp))
 			return ;
-		// if (!exp->str)
-		// 	exp->str = NULL;
+		exp->str = ft_strdup(tmp);
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);
+		exp->str = ft_itoa(shell->last_exit_status);//TODO do we need to expand not only with echo ?
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/02 14:13:50 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/05 18:28:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,39 @@ void	executor(t_ast_node *ast, t_shell *shell)
 
 void	run_ast(t_ast_node *ast, t_shell *shell)
 {
+	if (!ast)
+		return ;
+	run_cmd(ast, shell);
+
 	//do we need to checl !ast ?
-	if (ast->type == AST_PIPE)
+/* 	if (ast->type == AST_PIPE)
 		run_pipe(ast, shell);
 	else
-		run_cmd(ast, shell);
+		run_cmd(ast, shell); */
 }
 
-// if (!ast)
-// 	return ;
 
 int	run_cmd(t_ast_node *node, t_shell *shell)
 {
-	// t_cmd_info	cmd_info;
-
-	// init_cmd_info(&cmd_info, exe);
-	// //init_cmd_info
-	// if (is_builtin(&cmd_info, shell, exe))
-	// 	run_builtin(&cmd_info, shell, exe);
+	// t_builtin_fn	builtin_fn;
+	if (!apply_redir(node->redir))
+	{
+		// restore_fd()
+		write(2, "Error redirect\n", 16);
+		return (1);
+	}
+	shell->last_exit_status = run_external(node, shell);
+	// builtin_fn = get_builtin_fn(node->value[0]);
+	// if (builtin_fn)
+	// 	shell->last_exit_status = builtin_fn(node->value, shell->env_list);
 	// else
-	// 	run_external(&cmd_info, shell, exe);
+	// 	shell->last_exit_status = run_external(node, shell);
+	return (shell->last_exit_status);
+}
 
+
+/* int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)
+{
 	pid_t	proc_id;
 	char	**env_arr;
 	int	status = 0;
@@ -66,8 +78,7 @@ int	run_cmd(t_ast_node *node, t_shell *shell)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
-}
-
+} */
 
 /* Meooow
 

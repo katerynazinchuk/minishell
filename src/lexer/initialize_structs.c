@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:49:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/17 11:00:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:38:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,4 @@ t_token_list *init_token_list(void)
 	list->tail = NULL;
 	return (list);
 }
+

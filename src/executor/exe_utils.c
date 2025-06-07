@@ -3,34 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/02 14:55:14 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:42:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	init_cmd_info(t_cmd_info *cmd_info, t_execute *exe)
-{
-	(void)exe;
-	cmd_info->argv = NULL;            // command + arguments
-	cmd_info->infile = NULL;           // for `<`
-	cmd_info->outfile = NULL;          // for `>` or `>>`
-	cmd_info->append_mode = 1;        // 1 if >>, 0 if >
-	cmd_info->is_heredoc = 1;         // 1 if heredoc, 0 otherwise
-	cmd_info->heredoc_delim = NULL;    // heredoc delimiter
-	//struct s_command	*next; // next in pipe chain
-} */
-
-bool	is_builtin(t_cmd_info *cmd_info, t_shell *shell)
-{
-	(void)cmd_info;
-	(void)shell;
-	(void)exe;
-	return (true);
-}
 
 static char	*to_str(t_env_type *cur)
 {
@@ -46,7 +27,7 @@ static char	*to_str(t_env_type *cur)
 	return (str);
 }
 
-char **env_to_arr(t_env_list *env_list)
+char	**env_to_arr(t_env_list *env_list)
 {
 	char		**env_arr;
 	t_env_type	*current;
@@ -63,8 +44,8 @@ char **env_to_arr(t_env_list *env_list)
 		if (!env_arr[i])
 		{
 			env_arr[i] = NULL;
-			free_arr(env_arr)
-			return(NULL;)
+			free_arr(env_arr);
+			return(NULL);
 			/* 			while(i)
 			{
 				i--;
@@ -94,54 +75,7 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
-char	*find_path(char *cmd, t_env_list *env_list, int *error_code)
-{
-	char	**e_path;
-	char	*full_path;
-	char	**keep_start;
-	char	*value;
 
-	if (!get_env_value("PATH", env_list, &value))
-		return (NULL);
-	e_path = ft_split(value, ':');
-	if (!e_path || !e_path[0])
-		return (NULL);
-	keep_start = e_path;
-	while (*e_path)
-	{
-		
-		e_path++;
-	}
-	free(value);
-	free_arr(keep_start);
-	return (NULL);
-}
-
-static char	*build_and_check_path(char **e_path, char *cmd, int *error_code)
-{
-	char	path[PATH_MAX];
-	char	*full_path;
-	
-	ft_strlcpy(path, *e_path, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
-	ft_strlcat(path, cmd, PATH_MAX);
-	if (access(path, X_OK) == 0)
-	{
-		full_path = ft_strdup(path);
-		if(!full_path)
-		{
-			*error_code = ENOMEM;
-			return(NULL);
-		}
-		*error_code = 0;
-		return (full_path);
-	}
-	else
-	{
-		*error_code = ENOENT;
-		return (NULL);
-	}
-}
 
 /* 	ft_strlcpy(path, *e_path, PATH_MAX);
 	ft_strlcat(path, "/", PATH_MAX);

@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_error.c                                      :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 15:07:45 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/30 14:33:48 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/05/27 15:03:54 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/05/30 14:30:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int quotes_error(t_str_pos *lexer)
-{
-	printf("Error: No matching quotes found for token starting at index %d\n", lexer->current);
-	return (0);
-}
+char *ft_strndup(const char *s, size_t n);
+int	is_whitespace(char c);
+int	is_special_char(char c);
+
+#endif
