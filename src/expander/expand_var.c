@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:56:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 12:57:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,15 @@ void	extract_var(char *raw, t_expand_type *exp)
 	}
 }
 
+/* how we track here malloc errors */
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
 	char	*tmp;
 
 	if (is_valid_var(exp->var))
 	{
-		if (!get_env_value(exp->var, shell->env_list, &tmp))
+		tmp = get_env_value(exp->var, shell->env_list);
+		if (!tmp)
 			return ;
 		exp->str = ft_strdup(tmp);
 	}

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:28:51 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:22:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ int	run_cmd(t_ast_node *node, t_shell *shell)
 	return (shell->last_exit_status);
 }
 
+int	run_pipe(t_ast_node *ast, t_shell *shell)
+{
+	
+}
 
 /* int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)
 {

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:01 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:20:45 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,3 @@ void	free_arr(char **arr)
 	}
 	free(arr);
 }
-
-
-
-/* 	ft_strlcpy(path, *e_path, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
-	ft_strlcat(path, cmd, PATH_MAX);
-	if (access(path, X_OK) == 0)
-	{
-		full_path = ft_strdup(path);
-		free(value);
-		free_arr(keep_start);
-		return (full_path);
-	} */

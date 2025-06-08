@@ -6,13 +6,13 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:57:02 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 11:59:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	get_env_value(const char *var, t_env_list *env_list, char **result)
+char	*get_env_value(const char *var, t_env_list *env_list)
 {
 	t_env_type	*cur;
 
@@ -21,14 +21,11 @@ bool	get_env_value(const char *var, t_env_list *env_list, char **result)
 	{
 		if (ft_strcmp(var, cur->key) == 0)
 		{
-			*result = cur->value;
-			if (!*result)
-				return (false);
-			return (true);
+			return (cur->value);
 		}
 		cur = cur->next;
 	}
-	return (false);
+	return (NULL);
 }
 
 /* 
