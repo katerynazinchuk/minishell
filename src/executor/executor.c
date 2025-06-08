@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 18:59:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 23:20:34 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
 	}
 	else if(proc_id == 0)
 	{
-		dup2(pipe_fd[0], STDIN_FILENO);
+		dup2(pipe_fd[0], STDOUT_FILENO);
 		close_pipe_fd(pipe_fd);
 		exit(run_ast(node, session));
 	}
@@ -113,7 +113,7 @@ pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 	}
 	else if(proc_id == 0)
 	{
-		dup2(pipe_fd[1], STDOUT_FILENO);
+		dup2(pipe_fd[1], STDIN_FILENO);
 		close_pipe_fd(pipe_fd);
 		exit(run_cmd(node, session));
 	}
