@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 13:22:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:21:18 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,26 @@
 
 // структуру exe видалила щоб не тягати по fork
 
-void	executor(t_ast_node *ast, t_shell *shell)
+void	executor(t_session *session)
 {
-	//run_heredoc(&exe, shell)
-	run_ast(ast, shell);//TODO do we need to keep head_ast in shell to clean ast in case of error
-	// Відновили стандартні дескриптори
-    // dup2(saved_stdin,  STDIN_FILENO);
-    // dup2(saved_stdout, STDOUT_FILENO);
-    // close(saved_stdin);
-    // close(saved_stdout);
+	session->shell->last_exit_status = run_ast(session->ast, session);
+	dup2(session->shell->fd[STDIN_FILENO],  STDIN_FILENO);
+	dup2(session->shell->fd[STDOUT_FILENO], STDOUT_FILENO);
 }
 
-void	run_ast(t_ast_node *ast, t_shell *shell)
-{
-	if (!ast)
-		return ;
-	run_cmd(ast, shell);
 
-	//do we need to checl !ast ?
-/* 	if (ast->type == AST_PIPE)
-		run_pipe(ast, shell);
+int	run_ast(t_ast_node *ast, t_session *session)
+{
+	if (ast->type == AST_PIPE)
+		return(run_pipe(ast, session));
 	else
-		run_cmd(ast, shell); */
+		return(run_cmd(ast, session));
 }
 
+// if (!ast)
+// 	return ;
 
-int	run_cmd(t_ast_node *node, t_shell *shell)
+int	run_cmd(t_ast_node *node, t_session *session)
 {
 	// t_builtin_fn	builtin_fn;
 	if (!apply_redir(node->redir))
@@ -48,18 +42,20 @@ int	run_cmd(t_ast_node *node, t_shell *shell)
 		write(2, "Error redirect\n", 16);
 		return (1);
 	}
-	shell->last_exit_status = run_external(node, shell);
+	session->shell->last_exit_status = run_external(node, session);
 	// builtin_fn = get_builtin_fn(node->value[0]);
 	// if (builtin_fn)
 	// 	shell->last_exit_status = builtin_fn(node->value, shell->env_list);
 	// else
 	// 	shell->last_exit_status = run_external(node, shell);
-	return (shell->last_exit_status);
+	return (session->shell->last_exit_status);
 }
 
-int	run_pipe(t_ast_node *ast, t_shell *shell)
+int	run_pipe(t_ast_node *ast, t_session *session)
 {
-	
+	(void)ast;
+	(void)session;
+	return (0);
 }
 
 /* int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)

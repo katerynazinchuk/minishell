@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/08 12:45:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:24:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,15 @@ typedef struct s_builtin
 }	t_builtin;
 
 /*____________________________________________________________________________*/
-void	executor(t_ast_node *ast, t_shell *shell);
-// void	run_ast(t_ast_node *ast_node, t_shell *shell);
-// void	run_cmd(t_ast_node *node, t_shell *shell);
+void	executor(t_session	*session);
 
 // void	run_builtin(t_ast_node *node, t_shell *shell);
 
-int				run_external(t_ast_node *node, t_shell *shell);
+int				run_external(t_ast_node *node, t_session *session);
 // t_builtin_fn	get_builtin(char *cmd);
-void			run_ast(t_ast_node *ast, t_shell *shell);
-int				run_cmd(t_ast_node *node, t_shell *shell);
+void			run_ast(t_ast_node *ast, t_session *session);
+int				run_cmd(t_ast_node *node, t_session *session);
 bool			apply_redir(t_redir *redir_list);
-
-
 
 /* ___________________________________________________________________________*/
 

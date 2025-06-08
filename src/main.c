@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/05 18:34:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:15:25 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ bool	process_line(t_session *session)
 		return (false);
 	add_history(session->line);
 	heredoc(session->ast, session);
-	//heredoc expand if not commanf  call left and right. -> rewrite 
+	//heredoc expand if not command  call left and right. -> rewrite
 	free_for_fork(session);
-	executor(session->ast, session->shell);
+	executor(session);
 	return (true);
 }
 
@@ -97,9 +97,7 @@ bool	parser(t_session *session)
 		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
-	
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
-	
 	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 

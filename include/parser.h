@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:48:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:18:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_command_parsing
 
 typedef struct	s_ast_node
 {
-	t_ast_type			type; 
+	t_ast_type			type;
 	char				**value;//command
 	t_redir				*redir;
 	struct s_ast_node	*left;

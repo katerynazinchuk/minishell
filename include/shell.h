@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:15:28 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:03:13 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 typedef struct s_shell
 {
 	t_env_list		*env_list;
+	int				fd[2];
 	int				last_exit_status;
 }	t_shell;
 
