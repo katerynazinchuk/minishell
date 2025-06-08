@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 13:20:45 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:58:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,22 @@ void	free_arr(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+void	restore_fd(t_session *session)
+{
+	dup2(session->shell->fd[STDIN_FILENO], STDIN_FILENO);
+	dup2(session->shell->fd[STDOUT_FILENO], STDOUT_FILENO);
+}
+
+void	close_pipe_fd(int *pipe_fd)
+{
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+}
+
+void	free_in_fork(t_session *session)
+{
+	free_env_list(session->shell->env_list);
+	free_ast(session->ast);
 }

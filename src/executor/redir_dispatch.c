@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:27:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:25:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static bool	apply_in(t_redir *redir);
 static bool	apply_out(t_redir *redir);
 static bool	apply_append(t_redir *redir);
-// static bool	apply_heredoc(t_redir *redir);
 
 bool	apply_redir(t_redir *redir_list)
 {
@@ -24,7 +23,7 @@ bool	apply_redir(t_redir *redir_list)
 		[RED_IN] = apply_in,
 		[RED_OUT] = apply_out,
 		[RED_APPEND] = apply_append,
-		[RED_HEREDOC] = NULL //apply_heredoc
+		[RED_HEREDOC] = NULL
 	};
 	t_redir_handler	f;
 	

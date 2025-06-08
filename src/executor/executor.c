@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 15:21:18 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:59:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 void	executor(t_session *session)
 {
 	session->shell->last_exit_status = run_ast(session->ast, session);
-	dup2(session->shell->fd[STDIN_FILENO],  STDIN_FILENO);
-	dup2(session->shell->fd[STDOUT_FILENO], STDOUT_FILENO);
+	restore_fd(session);
 }
 
 
@@ -38,7 +37,7 @@ int	run_cmd(t_ast_node *node, t_session *session)
 	// t_builtin_fn	builtin_fn;
 	if (!apply_redir(node->redir))
 	{
-		// restore_fd()
+		// restore_fd(session);
 		write(2, "Error redirect\n", 16);
 		return (1);
 	}
@@ -47,15 +46,78 @@ int	run_cmd(t_ast_node *node, t_session *session)
 	// if (builtin_fn)
 	// 	shell->last_exit_status = builtin_fn(node->value, shell->env_list);
 	// else
-	// 	shell->last_exit_status = run_external(node, shell);
+	// 	shell->last_exit_status = run_external(node, session);
 	return (session->shell->last_exit_status);
 }
 
 int	run_pipe(t_ast_node *ast, t_session *session)
 {
-	(void)ast;
-	(void)session;
-	return (0);
+	pid_t	id_left;
+	pid_t	id_right;
+	int		status;
+	int		pipe_fd[2];
+
+	if (pipe(pipe_fd) < 0)
+		write(2, "Pipe error \n", 13);
+	//pipe_error();
+	id_left = child_left(ast->left, session, pipe_fd);
+	if (id_left < 0)
+	{
+		free_in_fork(session);
+		return (-1);
+	}
+	id_right = child_right(ast->right, session, pipe_fd);
+	if (id_right < 0)
+	{
+		free_in_fork(session);
+		waitpid(id_left, NULL, 0);//?
+		//ft_fail_child("fork", pipe_fd); return
+	}
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	waitpid(id_left, NULL, 0);
+	waitpid(id_right, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
+
+pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
+{
+	pid_t	proc_id;
+
+	proc_id = fork();
+	if (proc_id < 0)
+	{
+		close_pipe_fd(pipe_fd);
+		return (-1);
+	}
+	else if(proc_id == 0)
+	{
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close_pipe_fd(pipe_fd);
+		exit(run_ast(node, session));
+	}
+	return (proc_id);
+}
+
+pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
+{
+	pid_t	proc_id;
+
+	proc_id = fork();
+	if (proc_id < 0)
+	{
+		close_pipe_fd(pipe_fd);
+		return (-1);
+	}
+	else if(proc_id == 0)
+	{
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close_pipe_fd(pipe_fd);
+		exit(run_cmd(node, session));
+	}
+	return (proc_id);
 }
 
 /* int	run_cmd(t_ast_node *node, t_shell *shell, bool in_pipe)

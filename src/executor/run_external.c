@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 14:22:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/08 18:16:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	run_external(t_ast_node *node, t_session *session)
 		return (1);//TODO check return
 	if (proc_id == 0)
 	{
-		env_arr = env_to_arr(session->shell->env_list); //can be NULL
+		env_arr = env_to_arr(session->shell->env_list);
 		if (!env_arr)
 		{
 			free_env_list(session->shell->env_list);
@@ -39,7 +39,6 @@ int	run_external(t_ast_node *node, t_session *session)
 			errno = ENOMEM;
 			perror("minishell executor ");
 			exit(1);
-			
 		}
 		if(execve(node->value[0], node->value, env_arr) == -1)
 		{
