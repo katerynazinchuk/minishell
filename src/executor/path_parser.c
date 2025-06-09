@@ -6,31 +6,30 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 13:18:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:38:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	verify_cmd_path(char **pathes, char **val, const char *cmd, int *f);
+static int	check_pathes(t_env_list *env_list, char ***pathes);
 
 /* need to decide with return value to track malloc errors */
 int	find_path(char **value, t_env_list *env_list)
 {
-	char	*env_value;
-	char	**pathes;
-	char	**keep_start;
+	// char		*env_value;
+	char		**pathes;
+	char		**keep_start;
 	const char	*cmd;
 	int			flag;
 
 	cmd = value[0];
-	env_value = get_env_value("PATH", env_list);
-	if (!env_value)
-		return (0);//execve will process error with "path not found"
-	pathes = ft_split(env_value, ':');
-	if (!pathes)//TODO do we need to set error code?
-		return (0);//malloc error
+	flag = check_pathes(env_list, &pathes);
+	if (!flag)
+		return (0);
 	keep_start = pathes;
+	flag = 0;
 	while (*pathes)
 	{
 		if (verify_cmd_path(pathes, &value[0], cmd, &flag))
@@ -42,6 +41,33 @@ int	find_path(char **value, t_env_list *env_list)
 		return (0);//malloc error
 	return (1);
 }
+
+/* 	flag = get_env_value("PATH", env_list, &env_value);
+	if (flag == 2)
+		return (0);
+	else if (flag == 0)
+		return (1);//execve will process error with "path not found"
+	pathes = ft_split(env_value, ':');
+	if (!pathes)
+		return (0);//malloc error */
+
+
+static int	check_pathes(t_env_list *env_list, char ***pathes)
+{
+	int		flag;
+	char	*env_value;
+
+	flag = get_env_value("PATH", env_list, &env_value);
+	if (flag == 2)
+		return (0);
+	else if (flag == 0)
+		return (1);//execve will process error with "path not found"
+	*pathes = ft_split(env_value, ':');
+	if (!*pathes)
+		return (0);//malloc error
+	return (1);
+}
+
 
 static int	verify_cmd_path(char **pathes, char **val, const char *cmd, int *f)
 {
@@ -176,3 +202,5 @@ static char	*build_and_check_path(char **pathes, char *cmd, int *error_code)
 		return (NULL);
 	}
 } */
+
+

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 17:25:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 18:11:31 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static bool	apply_in(t_redir *redir);
 static bool	apply_out(t_redir *redir);
 static bool	apply_append(t_redir *redir);
+static bool	apply_heredoc(t_redir *redir);
 
 bool	apply_redir(t_redir *redir_list)
 {
@@ -23,7 +24,7 @@ bool	apply_redir(t_redir *redir_list)
 		[RED_IN] = apply_in,
 		[RED_OUT] = apply_out,
 		[RED_APPEND] = apply_append,
-		[RED_HEREDOC] = NULL
+		[RED_HEREDOC] = apply_heredoc
 	};
 	t_redir_handler	f;
 	
@@ -97,24 +98,25 @@ static bool	apply_append(t_redir *redir)
 	return(true);
 }
 
-// static bool	apply_heredoc(t_redir *redir)
-// {
-// 	int	fd;
+static bool	apply_heredoc(t_redir *redir)
+{
+	int	fd;
 
-// 	fd = open(redir->connection, O_RDONLY);
-// 	if (fd < 0)
-// 		{
-// 		write(2, "Error open file\n", 17);
-// 		return (false);
-// 	}
-// 	if (dup2(fd, STDIN_FILENO) == -1)
-// 	{
-// 		write(2, "Error dup2\n", 12);
-// 		return (false);
-// 	}
-// 	close(fd);
-// 	return (true);
-// }
+	fd = open(redir->connection, O_RDONLY);
+	if (fd < 0)
+		{
+		write(2, "Error open file\n", 17);
+		return (false);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		write(2, "Error dup2\n", 12);
+		return (false);
+	}
+	close(fd);
+	unlink(redir->connection);
+	return (true);
+}
 
 /* bool apply_red(t_redir *head)
 {
