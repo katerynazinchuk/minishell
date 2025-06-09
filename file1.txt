@@ -1,6 +1,6 @@
-world
-world
-bkhbk
+hello
+tchernia
 /home/tchernia/Downloads/4_Minishell
 
-bkb
+bkblbl
+bllnl
