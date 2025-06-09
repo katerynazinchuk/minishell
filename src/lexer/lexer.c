@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:48:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:50:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,14 @@ bool	lexer(t_session *session)
 	// free_segment_list(session->tokens->head->segment);
 	
 	if (!expand_segments(session))
-		return (false);
+	{
+		// if (session->tokens->error == 1)//bad_subs
+		// 	bad_subs_error();//syntax error {{}}
+		//else
+			//malloc_error(&session->shell->last_exit_status);
+		free_token_list(session->tokens);
+		return (false);//malloc 
+	}
 	if(!move_to_token_expand(session->tokens))
 		return (false);
 	//print_tokens(session->tokens);
