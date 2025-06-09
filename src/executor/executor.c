@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 23:20:34 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/09 12:56:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// структуру exe видалила щоб не тягати по fork
 
 void	executor(t_session *session)
 {
@@ -64,7 +62,7 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 	if (id_left < 0)
 	{
 		free_in_fork(session);
-		return (-1);
+		return (1);
 	}
 	id_right = child_right(ast->right, session, pipe_fd);
 	if (id_right < 0)
@@ -73,8 +71,7 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 		waitpid(id_left, NULL, 0);//?
 		//ft_fail_child("fork", pipe_fd); return
 	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+	close_pipe_fd(pipe_fd);
 	waitpid(id_left, NULL, 0);
 	waitpid(id_right, &status, 0);
 	if (WIFEXITED(status))
@@ -94,7 +91,8 @@ pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
 	}
 	else if(proc_id == 0)
 	{
-		dup2(pipe_fd[0], STDOUT_FILENO);
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		// dup2(pipe_fd[0], STDOUT_FILENO);
 		close_pipe_fd(pipe_fd);
 		exit(run_ast(node, session));
 	}
@@ -113,7 +111,8 @@ pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 	}
 	else if(proc_id == 0)
 	{
-		dup2(pipe_fd[1], STDIN_FILENO);
+		dup2(pipe_fd[0], STDIN_FILENO);
+		// dup2(pipe_fd[1], STDIN_FILENO);
 		close_pipe_fd(pipe_fd);
 		exit(run_cmd(node, session));
 	}

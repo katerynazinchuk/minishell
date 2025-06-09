@@ -6,12 +6,13 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 18:58:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:52:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// 
 
 static char	*to_str(t_env_type *cur)
 {

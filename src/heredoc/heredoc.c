@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/05 15:56:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:52:25 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void expand_heredoc(t_redir *redir, t_session *session)
 		malloc_error(&session->shell->last_exit_status);
 		return;
 	}
-	fd = open(heredoc_file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open("/tmp", O_TMPFILE | O_RDWR, 0600);
+	// fd = open(heredoc_file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror("minishell: open");
