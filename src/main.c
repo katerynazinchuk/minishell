@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/05 11:56:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:44:48 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	run_shell(t_shell *shell)
 	while(1)
 	{
 		update_prompt(&session.prompt);
-		session.line = readline(session.prompt);
-		//session.line = check_input(readline(session.prompt)); //clarify this logic, cos now it mixing all together
+		//session.line = readline(session.prompt);
+		session.line = check_input(readline(session.prompt)); //clarify this logic, cos now it mixing all together
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
@@ -70,7 +70,6 @@ void	run_shell(t_shell *shell)
 			free_for_fork(&session);
 			continue ;
 		}
-		// free_for_fork(&session); we free session in case of success in process_line()
 		if(session.ast)
 			free_ast(session.ast);
 	}
@@ -92,7 +91,6 @@ bool	parser(t_session *session)
 {
 	if(!lexer(session))
 	{
-		malloc_error(&session->shell->last_exit_status);
 		return (false);
 	}
 	

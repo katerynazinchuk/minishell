@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 12:20:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:37:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,20 @@ bool	expand_segments(t_session *session)//треба почистити резу
 			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
 			{
 				if (check_subs(seg->value))
-					cur->bad_subs = 1;
+				{
+					session->tokens->error = 1;
+					return (false);
+				}	
 				else
 					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
 			}
 			else
 				tmp = ft_strdup(seg->value);
 			if (!tmp)
+			{
+				free(seg->value);
 				return (false);
+			}
 			free(seg->value);
 			seg->value = tmp;
 			seg = seg->next;
@@ -123,10 +129,15 @@ void	extract_var(char *raw, t_expand_type *exp)
 
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
+	int	flag;
+
 	if (is_valid_var(exp->var))
 	{
-		if (!get_env_value(exp->var, shell->env_list, &exp->str))
-			return ;
+		flag = get_env_value(exp->var, shell->env_list, &exp->str);
+		if (!flag)
+			exp->str = ft_strdup("");//неіснуюча змінна
+		else if (flag == 2)
+			exp->str = NULL;
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
