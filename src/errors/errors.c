@@ -16,3 +16,8 @@ void show_error(int number, char *msg, int last_exit_status)
 }
 
 show_error(200, )
+
+show_error(errno, NULL, exit_status, flag)
+
+if (flag)
+	return 
