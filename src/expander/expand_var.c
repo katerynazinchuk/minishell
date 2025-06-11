@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 15:37:16 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/09 18:51:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,23 @@ void	extract_var(char *raw, t_expand_type *exp)
 	}
 }
 
+/* how we track here malloc errors */
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
-	int	flag;
-
+	int		flag;
+	char	*tmp;
+	
 	if (is_valid_var(exp->var))
 	{
-		flag = get_env_value(exp->var, shell->env_list, &exp->str);
+		flag = get_env_value(exp->var, shell->env_list, &tmp);
 		if (!flag)
 			exp->str = ft_strdup("");//неіснуюча змінна
-		else if (flag == 2)
-			exp->str = NULL;
+		else
+		{
+			exp->str = ft_strdup(tmp);
+			if (!exp->str)
+				exp->str = NULL;
+		}
 	}
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);

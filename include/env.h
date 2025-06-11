@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:50:36 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 15:07:19 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:25:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_env_list
 {
 	t_env_type	*head;
 	t_env_type	*tail;
+	size_t		size;
 }	t_env_list;
 
 void		add_env_node(t_env_list *env_list, t_env_type *node);

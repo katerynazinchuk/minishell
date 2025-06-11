@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g 
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-CFLAGS += -fsanitize=address,undefined
+# CFLAGS += -fsanitize=address,undefined
 LFLAGS += -lreadline -lncurses 
 SRC_DIR = src
 BUILD_DIR = obj
@@ -15,6 +15,13 @@ BUILD_IN = src/builtins/
 ENV = src/env/env_errors_frees.c \
 		src/env/env_operations.c \
 		src/env/env_utils.c
+
+EXECUTOR = src/executor/executor.c \
+		src/executor/exe_utils.c \
+		src/executor/redir_dispatch.c \
+		src/executor/run_builtin.c \
+		src/executor/run_external.c \
+		src/executor/path_parser.c
 LEXER = src/lexer/create_node_list.c \
 		src/lexer/initialize_structs.c \
 		src/lexer/token_types.c \
@@ -32,7 +39,6 @@ PARSER = src/parser/parser.c \
 HEREDOC = src/heredoc/heredoc.c \
 			src/heredoc/utils.c \
 			src/heredoc/heredoc_cleanup.c
-EXECUTOR = src/executor/
 
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
@@ -42,7 +48,7 @@ ERRORS = src/errors/lexer_error.c \
 		src/errors/common_errors.c \
 		src/errors/pipe_error.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) src/main.c 
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(EXECUTOR) src/main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))

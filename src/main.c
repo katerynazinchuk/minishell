@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/09 15:44:48 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:11:21 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./minishell
 
 */
 
@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **env)
 	return(shell.last_exit_status);
 }
 
+/* maybe better to move *shell from structure session or not */
+//TODO fork() тягне алоковані структури в свої процеси, тому до них завжди має бути доступ, щоб почистити перед execve
 void	run_shell(t_shell *shell)
 {
 	t_session	session;
@@ -66,8 +68,8 @@ void	run_shell(t_shell *shell)
 		}
 		if (!process_line(&session))
 		{
-			free_ast(session.ast);
 			free_for_fork(&session);
+			free_ast(session.ast);
 			continue ;
 		}
 		if(session.ast)
@@ -81,9 +83,9 @@ bool	process_line(t_session *session)
 		return (false);
 	add_history(session->line);
 	heredoc(session->ast, session);
-	//heredoc expand if not commanf  call left and right. -> rewrite 
+	//heredoc expand if not command  call left and right. -> rewrite
 	free_for_fork(session);
-	//execute
+	executor(session);
 	return (true);
 }
 
@@ -93,9 +95,7 @@ bool	parser(t_session *session)
 	{
 		return (false);
 	}
-	
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
-	
 	if(!session->ast)
 	{
 		// TODO need to manage errors, maybe do it with return like write 

@@ -2,6 +2,7 @@ https://www.gnu.org/software/bash/manual/bash.html#Here-Documents
 https://linuxize.com/post/bash-heredoc/
 https://medium.com/@oduwoledare/heredoc-a-deep-dive-23c82992e522
 
+
 Won't expand values inside:
 cat << $SHELL''
 cat << $SHELL""

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 15:01:06 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:01:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Be carefull: there is malloc */
 int	get_env_value(const char *var, t_env_list *env_list, char **result)
 {
 	t_env_type	*cur;
@@ -21,12 +22,10 @@ int	get_env_value(const char *var, t_env_list *env_list, char **result)
 	{
 		if (ft_strcmp(var, cur->key) == 0)
 		{
-			*result = ft_strdup(cur->value);
-			if (!*result)
-				return (2);
-			return (1);
+			*result = cur->value;
+			return (1);//success
 		}
 		cur = cur->next;
 	}
-	return (0);
+	return (0);//variable not found
 }

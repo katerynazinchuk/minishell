@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/24 15:34:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:55:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_env_list	*init_env_list(void);
 
 t_env_list	*fill_env_list(char **env)
 {
-	int			i;
+	size_t		i;
 	t_env_list	*env_list;
 	t_env_type	*node;
 
@@ -47,6 +47,7 @@ static t_env_list	*init_env_list(void)
 		return (NULL);
 	env_list->head = NULL;
 	env_list->tail = NULL;
+	env_list->size = 0;
 	return (env_list);
 }
 
@@ -62,6 +63,7 @@ void	add_env_node(t_env_list *env_list, t_env_type *node)
 		env_list->tail->next = node;
 		env_list->tail = node;
 	}
+	env_list->size++;
 }
 
 t_env_type	*fill_env_node(char *str)

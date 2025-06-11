@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/11 19:17:06 by kzinchuk         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/11 17:24:22 by tchernia         ###   ########.fr       */
+>>>>>>> 5ab192165f8517cb08b5cff54cccd37690becd19
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +18,7 @@
 #include "heredoc.h"
 #include <fcntl.h>
 
+<<<<<<< HEAD
 char *create_heredoc_filename(int heredoc_id, int *exit_status)
 {
 	char *id_str;
@@ -40,12 +45,51 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 	char *line;
 	char *tmp;
 	//setsignal(heredoc)
+=======
+void expand_heredoc(t_redir *redir, t_session *session)
+{	
+	int heredoc_id;
+	char *heredoc_id_str;
+	char *heredoc_file_name;
+	int fd;
+	char *line;
+	char *tmp;
+
+	heredoc_id = session->heredoc_count++;
+	heredoc_id_str = ft_itoa(heredoc_id);
+	if (!heredoc_id_str)
+	{
+		malloc_error(&session->shell->last_exit_status);
+		return;
+	}
+	heredoc_file_name = ft_strjoin("/tmp/heredoc_", heredoc_id_str);
+	free(heredoc_id_str);
+	if (!heredoc_file_name)
+	{
+		malloc_error(&session->shell->last_exit_status);
+		return;
+	}
+	fd = open(heredoc_file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	// fd = open("/tmp", O_TMPFILE | O_RDWR, 0600);
+	if (fd < 0)
+	{
+		perror("minishell: open");
+		free(heredoc_file_name);
+		session->shell->last_exit_status = 1;
+		return;
+	}
+>>>>>>> 5ab192165f8517cb08b5cff54cccd37690becd19
 	while (1)
 	{
 		tmp = NULL;
 		line = readline("heredoc> ");
 		if (!line)
-			return (0);
+		{
+			free(heredoc_file_name);
+			close(fd);
+			session->shell->last_exit_status = 1;
+			return;
+		}
 		if (ft_strcmp(line, redir->connection) == 0)
 		{
 			free(line);
@@ -61,39 +105,17 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	return (1);
-}
-
-void expand_heredoc(t_redir *redir, t_session *session)
-{	
-	int heredoc_id;
-	char *heredoc_filename;
-	int fd;
-
-	heredoc_id = session->heredoc_count++;
-	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->last_exit_status);
-	if(!heredoc_filename)
-		return ;
-	fd = open(heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		perror("minishell: open");
-		free(heredoc_filename);
-		session->shell->last_exit_status = 1;
-		return;
-	}
-	if(!write_heredoc_lines(redir, session, fd))
-	{
-		malloc_error(&session->shell->last_exit_status);
-		return ;
-	}
 	close(fd);
 	if (redir->connection)
 		free(redir->connection);
-	redir->connection = heredoc_filename;
+	redir->connection = heredoc_file_name;
+	// redir->type = RED_IN;//we need this cause it's the same processing as RED_IN
+	redir->type = RED_HEREDOC;//we need to delete files
+
 }
 
 void heredoc(t_ast_node *node, t_session *session)
 {
 	heredoc_foreach_ast(node, session, expand_heredoc);
 }
+
