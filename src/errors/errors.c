@@ -1,11 +1,18 @@
-void show_error(int number, char *msg)
+#include <minishell.h>
+
+void show_error(int number, char *msg, int last_exit_status)
 {
 	if (number < 132)
-		perror(msg);
+		{
+			errno == number;
+			perror(msg);
+		}
 	else if (number >= 200)
 		//dispath
 
-
+			ft_strcmp("200")
 		{200, bad_subs}
 		{201, syntax_error}
 }
+
+show_error(200, )
