@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_builtin.c                                      :+:      :+:    :+:   */
+/*   run_builtin_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 18:14:44 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:10:31 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* t_builtin_fn	get_builtin(char *cmd)
+t_builtin_fn	get_builtin_fn(char *cmd)
 {
-	static const t_builtin_fn	builtin[] = {
+	static const t_builtin	builtin[] = {
 	{"echo", builtin_echo},
 	{"cd", builtin_cd},
 	{"pwd", builtin_pwd},
@@ -24,18 +24,62 @@
 	{"exit", builtin_exit},
 	{NULL, NULL}
 	};
-	int								i;
+	int						i;
 
 	i = 0;
 	while (builtin[i].name)
 	{
-		if(ft_strcmp(cmd, builtin[i].name) == 0)
+		if (ft_strcmp(cmd, builtin[i].name) == 0)
 			return (builtin[i].func);
 		i++;
 	}
-	return(NULL);
-} */
+	return (NULL);
+}
 
+int	builtin_echo(char **argv, t_env_list *env_list)
+{
+	int		new_line;
+
+	(void)env_list;
+	argv++;
+	new_line = 1;
+	while(*argv && is_new_line(*argv))
+	{
+		new_line = 0;
+		argv++;
+	}
+	while (*argv)
+	{
+		ft_putstr_fd(*argv, 1);
+		if (*(argv + 1))
+			write(1, " ", 1);
+		argv++;
+	}
+	if (new_line)
+		write(1, "\n", 1);
+	return (0);
+}
+
+int		builtin_cd(char **argv, t_env_list *env_list)
+{
+	(void)argv;
+	(void)env_list;
+	return (0);
+}
+
+int		builtin_pwd(char **argv, t_env_list *env_list)
+{
+	(void)argv;
+	(void)env_list;
+	return (0);
+}
+
+int		builtin_export(char **argv, t_env_list *env_list)
+{
+	(void)argv;
+	(void)env_list;
+	return (0);
+}
 
 /* int	run_builtin(t_ast_node *node, t_shell *shell)
 {

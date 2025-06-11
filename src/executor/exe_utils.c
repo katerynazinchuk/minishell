@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/11 14:44:59 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 18:55:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,20 @@ char	**env_to_arr(t_env_list *env_list)
 }
 free(env_arr);
 return (NULL); */
+
+bool	is_new_line(char *str)
+{
+	if (!str || str[0] != '-')
+		return (false);
+	str++;
+	while (*str)
+	{
+		if (*str != 'n')
+			return (false);
+		str++;
+	}
+	return (true);
+}
 
 void	free_arr(char **arr)
 {
