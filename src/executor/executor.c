@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 12:56:34 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:07:54 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 	id_left = child_left(ast->left, session, pipe_fd);
 	if (id_left < 0)
 	{
-		free_in_fork(session);
+		free_in_fork(session, NULL);
 		return (1);
 	}
 	id_right = child_right(ast->right, session, pipe_fd);
 	if (id_right < 0)
 	{
-		free_in_fork(session);
+		free_in_fork(session, NULL);
 		waitpid(id_left, NULL, 0);//?
 		//ft_fail_child("fork", pipe_fd); return
 	}
@@ -79,9 +79,11 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 	return (1);
 }
 
+
 pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
 {
 	pid_t	proc_id;
+	int		exit_status;
 
 	proc_id = fork();
 	if (proc_id < 0)
@@ -92,9 +94,10 @@ pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
 	else if(proc_id == 0)
 	{
 		dup2(pipe_fd[1], STDOUT_FILENO);
-		// dup2(pipe_fd[0], STDOUT_FILENO);
 		close_pipe_fd(pipe_fd);
-		exit(run_ast(node, session));
+		exit_status = run_ast(node, session);
+		free_in_fork(session, NULL);
+		exit(exit_status);//or return ?
 	}
 	return (proc_id);
 }
@@ -102,6 +105,8 @@ pid_t	child_left(t_ast_node *node, t_session *session, int *pipe_fd)
 pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 {
 	pid_t	proc_id;
+	int		exit_status;
+
 
 	proc_id = fork();
 	if (proc_id < 0)
@@ -112,9 +117,11 @@ pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 	else if(proc_id == 0)
 	{
 		dup2(pipe_fd[0], STDIN_FILENO);
-		// dup2(pipe_fd[1], STDIN_FILENO);
 		close_pipe_fd(pipe_fd);
-		exit(run_cmd(node, session));
+		exit_status = run_cmd(node, session);
+		free_env_list(session->shell->env_list);
+		free_ast(session->ast);
+		exit(exit_status);//or return ?
 	}
 	return (proc_id);
 }

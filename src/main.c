@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/09 16:26:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:11:21 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./minishell
 
 */
 

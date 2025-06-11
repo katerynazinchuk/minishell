@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g 
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-CFLAGS += -fsanitize=address,undefined
+# CFLAGS += -fsanitize=address,undefined
 LFLAGS += -lreadline -lncurses 
 SRC_DIR = src
 BUILD_DIR = obj

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 17:18:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:03:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,20 @@ int	run_external(t_ast_node *node, t_session *session)
 	exit_status = 0;
 	proc_id = fork();
 	if (proc_id < 0)
-		return (1);//TODO check return
+		return (-1);//TODO check return for fork_error
 	if (proc_id == 0)
 	{
 		env_arr = env_to_arr(session->shell->env_list);
 		if (!env_arr)
 		{
-			free_env_list(session->shell->env_list);
-			free_ast(session->ast);
+			free_in_fork(session, NULL);
+			errno = ENOMEM;
+			perror("minishell executor ");
 			exit (1);
 		}
 		if (!find_path(node->value, session->shell->env_list))
 		{
-			free_arr(env_arr);
-			free_env_list(session->shell->env_list);
-			free_ast(session->ast);
+			free_in_fork(session, env_arr);
 			errno = ENOMEM;
 			perror("minishell executor ");
 			exit(1);
@@ -50,9 +49,7 @@ int	run_external(t_ast_node *node, t_session *session)
 			}
 			else
 				perror("minishel execute ");
-			free_ast(session->ast);
-			free_arr(env_arr);
-			free_env_list(session->shell->env_list);
+			free_in_fork(session, env_arr);
 			exit (exit_status);
 		}
 		exit(1);

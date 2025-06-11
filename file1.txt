@@ -1,6 +1,0 @@
-hello
-tchernia
-/home/tchernia/Downloads/4_Minishell
-
-bkblbl
-bllnl

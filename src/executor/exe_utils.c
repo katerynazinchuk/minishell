@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 15:52:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:44:59 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,20 @@ char	**env_to_arr(t_env_list *env_list)
 			env_arr[i] = NULL;
 			free_arr(env_arr);
 			return(NULL);
-			/* 			while(i)
-			{
-				i--;
-				free(env_arr[i]);
-			}
-			free(env_arr);
-			return (NULL); */
 		}
 		i++;
 		current = current->next;
 	}
 	return (env_arr);
 }
+
+/* 			while(i)
+{
+	i--;
+	free(env_arr[i]);
+}
+free(env_arr);
+return (NULL); */
 
 void	free_arr(char **arr)
 {
@@ -88,8 +89,10 @@ void	close_pipe_fd(int *pipe_fd)
 	close(pipe_fd[1]);
 }
 
-void	free_in_fork(t_session *session)
+void	free_in_fork(t_session *session, char **env_arr)
 {
+	if (env_arr)
+		free_arr(env_arr);
 	free_env_list(session->shell->env_list);
 	free_ast(session->ast);
 }

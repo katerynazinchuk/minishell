@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 19:02:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:14:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ int	find_path(char **value, t_env_list *env_list)
 		return (0);//malloc error
 	return (1);
 }
-
-/* 	flag = get_env_value("PATH", env_list, &env_value);
-	if (flag == 2)
-		return (0);
-	else if (flag == 0)
-		return (1);//execve will process error with "path not found"
-	pathes = ft_split(env_value, ':');
-	if (!pathes)
-		return (0);//malloc error */
-
 
 static int	check_pathes(t_env_list *env_list, char ***pathes)
 {
