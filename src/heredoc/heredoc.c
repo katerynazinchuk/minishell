@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/12 11:29:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:58:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		if (g_signal != 0)
 		{
 			session->shell->last_exit_status = 128 + g_signal;
-			g_signal = 0;
 			setsignal(MAIN_SIG);
 			return (1);
 		}
@@ -114,8 +113,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	redir->connection = heredoc_filename;
 }
 
-int heredoc(t_ast_node *node, t_session *session)
+void heredoc(t_ast_node *node, t_session *session)
 {
 	heredoc_foreach_ast(node, session, expand_heredoc);
-	return(session->shell->last_exit_status);
 }
