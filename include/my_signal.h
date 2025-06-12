@@ -1,10 +1,17 @@
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef MY_SIGNAL_H
+# define MY_SIGNAL_H
 
 # include <signal.h>
 
-void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
-void	init_signals(void);
+typedef enum e_sigtype
+{
+	MAIN_SIG,
+	HEREDOC_SIG,
+	DEFAULT_SIG,
+} t_sigtype;
+
+void sigint_main(int signal_type);
+void sigint_heredoc(int signal_type);
+void setsignal(t_sigtype type);
 
 #endif

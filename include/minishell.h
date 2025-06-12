@@ -22,6 +22,7 @@ w: wait, wait3, wait4, waitpid, write
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include "my_signal.h"
 # include "libft.h"
 # include "errors.h"
 # include <errno.h>
@@ -45,6 +46,8 @@ w: wait, wait3, wait4, waitpid, write
 # include <readline/history.h>
 # include <pwd.h>
 # include <sys/types.h>
+
+extern volatile sig_atomic_t g_signal;
 
 int	ft_strcmp(const char *str1, const char *str2);
 int	ft_strcmp(const char *str1, const char *str2);

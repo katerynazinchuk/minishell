@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/11 17:11:21 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 11:32:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	(void)argc;
 	(void)argv;
-	// init_signals();
+	setsignal(MAIN_SIG);
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
@@ -82,7 +82,8 @@ bool	process_line(t_session *session)
 	if (!parser(session))
 		return (false);
 	add_history(session->line);
-	heredoc(session->ast, session);
+	if(heredoc(session->ast, session) == 130)
+		return (false);
 	//heredoc expand if not command  call left and right. -> rewrite
 	free_for_fork(session);
 	executor(session);
@@ -92,9 +93,7 @@ bool	process_line(t_session *session)
 bool	parser(t_session *session)
 {
 	if(!lexer(session))
-	{
 		return (false);
-	}
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{

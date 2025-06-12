@@ -15,15 +15,8 @@ without it could kill shell or give back strange symbols insted prompt
 */
 
 //Ctrl-C
-sig_atomic_t g_signal = 0;
-
-
-typedef enum e_sigtype
-{
-	MAIN_SIG,
-	HEREDOC_SIG,
-	DEFAULT_SIG
-} t_sigtype;
+// g_signal = 0;
+volatile sig_atomic_t g_signal = 0;
 
 // For main readline
 void sigint_main(int signal_type)

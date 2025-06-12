@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/11 19:36:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/12 11:29:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,21 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 {
 	char *line;
 	char *tmp;
-	//setsignal(heredoc)
+	setsignal(HEREDOC_SIG);
+	rl_event_hook = event_handler;
 	while (1)
 	{
 		tmp = NULL;
 		line = readline("heredoc> ");
 		if (!line)
-			return (0);
+			break;
+		if (g_signal != 0)
+		{
+			session->shell->last_exit_status = 128 + g_signal;
+			g_signal = 0;
+			setsignal(MAIN_SIG);
+			return (1);
+		}
 		if (ft_strcmp(line, redir->connection) == 0)
 		{
 			free(line);
@@ -60,13 +68,16 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		{
 			tmp = expand_value(line, session->shell);
 			free(line);
+			if(!tmp)
+				return (2);
 			line = tmp;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
-	return (1);
+	setsignal(MAIN_SIG);
+	return (0);
 }
 
 void expand_heredoc(t_redir *redir, t_session *session)
@@ -74,6 +85,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	int heredoc_id;
 	char *heredoc_filename;
 	int fd;
+	int status;
 
 	heredoc_id = session->heredoc_count++;
 	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->last_exit_status);
@@ -87,18 +99,23 @@ void expand_heredoc(t_redir *redir, t_session *session)
 		session->shell->last_exit_status = 1;
 		return;
 	}
-	if(!write_heredoc_lines(redir, session, fd))
+	status = write_heredoc_lines(redir, session, fd);
+	if(status == 2)
 	{
 		malloc_error(&session->shell->last_exit_status);
+		close(fd);
 		return ;
 	}
 	close(fd);
+	if (status == 1)
+		return ;
 	if (redir->connection)
 		free(redir->connection);
 	redir->connection = heredoc_filename;
 }
 
-void heredoc(t_ast_node *node, t_session *session)
+int heredoc(t_ast_node *node, t_session *session)
 {
 	heredoc_foreach_ast(node, session, expand_heredoc);
+	return(session->shell->last_exit_status);
 }
