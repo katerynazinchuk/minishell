@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/12 11:32:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:00:36 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ bool	process_line(t_session *session)
 	if (!parser(session))
 		return (false);
 	add_history(session->line);
-	if(heredoc(session->ast, session) == 130)
-		return (false);
+	heredoc(session->ast, session);
+	if (g_signal != 0)
+		return (g_signal = 0, false);
 	//heredoc expand if not command  call left and right. -> rewrite
 	free_for_fork(session);
 	executor(session);
