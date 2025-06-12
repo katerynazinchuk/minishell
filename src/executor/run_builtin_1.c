@@ -6,11 +6,13 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 16:59:50 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:34:28 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// cat << k > 1.txt | ls | > 2.txt
 
 t_builtin_fn	get_builtin_fn(char *cmd)
 {

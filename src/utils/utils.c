@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 18:12:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:26:54 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strndup(const char *s, size_t n)
 
 int	ft_strcmp(const char *str1, const char *str2)
 {
-	while (*str1 && *str1 == *str2)
+	while (*str1 && *str1 == *str2)// && *str2)
 	{
 		str1++;
 		str2++;

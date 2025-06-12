@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/11 19:18:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:25:59 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ void	executor(t_session *session)
 
 int	run_ast(t_ast_node *ast, t_session *session)
 {
+	if (!ast)
+		return (0);
 	if (ast->type == AST_PIPE)
 		return(run_pipe(ast, session));
 	else
 		return(run_cmd(ast, session));
 }
-
-// if (!ast)
-// 	return ;
 
 int	run_cmd(t_ast_node *node, t_session *session)
 {
@@ -39,7 +38,8 @@ int	run_cmd(t_ast_node *node, t_session *session)
 		write(2, "Error redirect\n", 16);
 		return (1);
 	}
-	// session->shell->last_exit_status = run_external(node, session);
+	if (!node->value[0])
+		return (0);
 	builtin_fn = get_builtin_fn(node->value[0]);
 	if (builtin_fn)
 		session->shell->last_exit_status = builtin_fn(node->value, session->shell->env_list);
