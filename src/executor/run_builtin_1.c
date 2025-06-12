@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 13:00:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:47:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,34 +62,29 @@ int	builtin_echo(char **argv, t_env_list *env_list)
 
 int	builtin_cd(char **argv, t_env_list *env_list)
 {
-	char	*old_path;
-	char	*new_path;
+	char	old_path[PATH_MAX];
+	char	new_path[PATH_MAX];
 	int	flag[3];
 	
-	old_path = getcwd(NULL, 0);
-	if (!old_path)
+	if (!getcwd(old_path, PATH_MAX))
 	{
 		old_path = ft_strdup("");
 		if (!old_path)
 			return (ENOMEM) ;
 	}
-	flag[0] = chdir(*argv);
-	if (flag == -1 )
+	if (chdir(*(argv + 1)) == -1 )
 	{
 		error ;//errno seted up
 		free(old_path);
 		return (-1);
 	}
-	new_path = getcwd(NULL, 0);
-	if (!new_path)
+	if (!getcwd(new_path, PATH_MAX))
 	{
 		free(old_path);
 		return (-1);
 	}
 	flag[1] = update_env_list("OLDPATH", env_list, old_path);
-	
 	flag[2] = update_env_list("PWD", env_list, new_path);
-	
 	if(!flag[1] || !flag[2])
 		return (ENOMEM);
 	return (0);
