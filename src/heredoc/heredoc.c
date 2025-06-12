@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/11 17:24:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/12 11:29:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,50 @@
 #include "heredoc.h"
 #include <fcntl.h>
 
-void expand_heredoc(t_redir *redir, t_session *session)
-{	
-	int heredoc_id;
-	char *heredoc_id_str;
-	char *heredoc_file_name;
-	int fd;
+int event_handler(void)
+{
+	return 0;
+}
+
+char *create_heredoc_filename(int heredoc_id, int *exit_status)
+{
+	char *id_str;
+	char *filename;
+
+	id_str = ft_itoa(heredoc_id);
+	if (!id_str)
+	{
+		malloc_error(exit_status);
+		return (NULL);
+	}
+	filename = ft_strjoin("/tmp/heredoc_", id_str);
+	free(id_str);
+	if(!filename)
+	{
+		malloc_error(exit_status);
+		return (NULL);
+	}
+	return(filename);
+}
+
+int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
+{
 	char *line;
 	char *tmp;
-
-	heredoc_id = session->heredoc_count++;
-	heredoc_id_str = ft_itoa(heredoc_id);
-	if (!heredoc_id_str)
-	{
-		malloc_error(&session->shell->last_exit_status);
-		return;
-	}
-	heredoc_file_name = ft_strjoin("/tmp/heredoc_", heredoc_id_str);
-	free(heredoc_id_str);
-	if (!heredoc_file_name)
-	{
-		malloc_error(&session->shell->last_exit_status);
-		return;
-	}
-	fd = open(heredoc_file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	// fd = open("/tmp", O_TMPFILE | O_RDWR, 0600);
-	if (fd < 0)
-	{
-		perror("minishell: open");
-		free(heredoc_file_name);
-		session->shell->last_exit_status = 1;
-		return;
-	}
+	setsignal(HEREDOC_SIG);
+	rl_event_hook = event_handler;
 	while (1)
 	{
 		tmp = NULL;
 		line = readline("heredoc> ");
 		if (!line)
+			break;
+		if (g_signal != 0)
 		{
-			free(heredoc_file_name);
-			close(fd);
-			session->shell->last_exit_status = 1;
-			return;
+			session->shell->last_exit_status = 128 + g_signal;
+			g_signal = 0;
+			setsignal(MAIN_SIG);
+			return (1);
 		}
 		if (ft_strcmp(line, redir->connection) == 0)
 		{
@@ -66,23 +68,54 @@ void expand_heredoc(t_redir *redir, t_session *session)
 		{
 			tmp = expand_value(line, session->shell);
 			free(line);
+			if(!tmp)
+				return (2);
 			line = tmp;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
+	setsignal(MAIN_SIG);
+	return (0);
+}
+
+void expand_heredoc(t_redir *redir, t_session *session)
+{	
+	int heredoc_id;
+	char *heredoc_filename;
+	int fd;
+	int status;
+
+	heredoc_id = session->heredoc_count++;
+	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->last_exit_status);
+	if(!heredoc_filename)
+		return ;
+	fd = open(heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		perror("minishell: open");
+		free(heredoc_filename);
+		session->shell->last_exit_status = 1;
+		return;
+	}
+	status = write_heredoc_lines(redir, session, fd);
+	if(status == 2)
+	{
+		malloc_error(&session->shell->last_exit_status);
+		close(fd);
+		return ;
+	}
 	close(fd);
+	if (status == 1)
+		return ;
 	if (redir->connection)
 		free(redir->connection);
-	redir->connection = heredoc_file_name;
-	// redir->type = RED_IN;//we need this cause it's the same processing as RED_IN
-	redir->type = RED_HEREDOC;//we need to delete files
-
+	redir->connection = heredoc_filename;
 }
 
-void heredoc(t_ast_node *node, t_session *session)
+int heredoc(t_ast_node *node, t_session *session)
 {
 	heredoc_foreach_ast(node, session, expand_heredoc);
+	return(session->shell->last_exit_status);
 }
-
