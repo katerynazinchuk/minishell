@@ -6,7 +6,7 @@
 /*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/13 00:37:07 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/13 13:33:50 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "minishell.h"
 
 //typedef int (*t_error_fn)(int errno, char *context, int exit_status, int should_return);
-typedef int (*t_error_fn)(int errno, char *context, char *detail);
+typedef int (*t_error_fn)(int code, char *context, char *msg);
 
 typedef struct s_error
 {
@@ -35,9 +35,10 @@ char *join_input(char *line);
 char *check_input(char *line);
 
 /* _______________________________ */
-int	commant_not_found(int code, char *context);
-int	bad_subs(int code, char *context);
-int	syntax_error(int code, char *context);
-
+int	cmd_not_found(int code, char *context, char *msg);
+int	bad_subs(int code, char *context, char *msg);
+int	syntax_error(int code, char *context, char *msg);
+int	execute_error(int code, char *context, char *msg);
+int	redirect_fail(int code, char *context, char *msg);
 
 #endif
