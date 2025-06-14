@@ -6,7 +6,7 @@
 /*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/13 13:33:50 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:27:42 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char *join_input(char *line);
 char *check_input(char *line);
 
 /* _______________________________ */
-int	cmd_not_found(int code, char *context, char *msg);
-int	bad_subs(int code, char *context, char *msg);
-int	syntax_error(int code, char *context, char *msg);
-int	execute_error(int code, char *context, char *msg);
-int	redirect_fail(int code, char *context, char *msg);
+int	handle_cmd_not_found(int code, char *context, char *msg);
+int	handle_bad_subs(int code, char *context, char *msg);
+int	handle_syntax_error(int code, char *context, char *msg);
+int	handle_execute_error(int code, char *context, char *msg);
+int	handle_redirect_fail(int code, char *context, char *msg);
 
 #endif
