@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 18:11:31 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:36:09 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static bool	apply_out(t_redir *redir);
 static bool	apply_append(t_redir *redir);
 static bool	apply_heredoc(t_redir *redir);
 
+/* hash map, acces via key*/
 bool	apply_redir(t_redir *redir_list)
 {
 	static t_redir_handler handlers[] = {

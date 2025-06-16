@@ -4,7 +4,7 @@ void show_error(int number, char *msg, int last_exit_status)
 {
 	if (number < 132)
 		{
-			errno == number;
+			errno = number;
 			perror(msg);
 		}
 	else if (number >= 200)

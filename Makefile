@@ -46,8 +46,12 @@ UTILS = src/utils/utils.c \
 		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
+		src/errors/dispatch_errors.c \
 		src/errors/common_errors.c \
-		src/errors/pipe_error.c
+		src/errors/pipe_error.c \
+		src/errors/syntax_fn.c \
+		src/errors/execute_fn.c
+
 
 SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/main.c 
 #signal.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/13 18:27:42 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/16 12:34:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "minishell.h"
 
 //typedef int (*t_error_fn)(int errno, char *context, int exit_status, int should_return);
-typedef int (*t_error_fn)(int code, char *context, char *msg);
+typedef int (*t_error_fn)(int code, char *context);
 
 typedef struct s_error
 {
@@ -34,11 +34,15 @@ bool first_pipe_error(char *line);
 char *join_input(char *line);
 char *check_input(char *line);
 
+/* ________________________________ */
+int	check_error(int err_code, char *context);
+
+
 /* _______________________________ */
-int	handle_cmd_not_found(int code, char *context, char *msg);
-int	handle_bad_subs(int code, char *context, char *msg);
-int	handle_syntax_error(int code, char *context, char *msg);
-int	handle_execute_error(int code, char *context, char *msg);
-int	handle_redirect_fail(int code, char *context, char *msg);
+int	handle_cmd_not_found(int code, char *context);
+int	handle_bad_subs(int code, char *context);
+int	handle_syntax_error(int code, char *context);
+int	handle_execute_error(int code, char *context);
+int	handle_redirect_fail(int code, char *context);
 
 #endif

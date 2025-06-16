@@ -27,8 +27,6 @@ w: wait, wait3, wait4, waitpid, write
 # include <errno.h>
 # include "errors_enum.h"
 # include "errors.h"
-# include "dispatch_errors.h"
-# include "error_fn.h"
 # include "libft.h"
 # include "env.h"
 # include "utils.h"

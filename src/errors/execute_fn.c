@@ -3,27 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   execute_fn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/13 15:23:30 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/13 18:26:57 by Amirre           ###   ########.fr       */
+/*   Created: 2025/06/13 13:30:21 by Amirre            #+#    #+#             */
+/*   Updated: 2025/06/16 12:35:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_cmd_not_found(int code, char *context, char *msg)
+int	handle_execute_error(int code, char *context)
 {
-	
+	(void)code;
+	(void)context;
 	return (1);
 }
 
-int	handle_bad_subs(int code, char *context, char *msg)
+int	handle_redirect_fail(int code, char *context)
 {
+	(void)code;
+	(void)context;
 	return (1);
 }
 
-int	handle_syntax_error(int code, char *context, char *msg)
+int	handle_cmd_not_found(int code, char *context)
 {
-	return (1);
+	(void)code;
+	ft_putstr_fd(context, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	return (127);
 }
+
+//  cat -e Makefile > 1.txt | echo 1.txt | bkbl
