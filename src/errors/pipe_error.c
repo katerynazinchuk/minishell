@@ -22,9 +22,12 @@ bool check_unmached_quotes(char *line)
 	while(line[i])
 	{
 		if (line[i] == '"' || line[i] == '\'')
-			quote = line[i];
-		else if (line[i] == quote)
-			quote = 0;
+		{
+			if(quote == 0)
+				quote = line[i];
+			else if (line[i] == quote)
+				quote = 0;
+		}
 		i++;
 	}
 	if(quote != 0)
