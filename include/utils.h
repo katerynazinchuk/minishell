@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:03:54 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 14:30:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:10:21 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 char *ft_strndup(const char *s, size_t n);
 int	is_whitespace(char c);
 int	is_special_char(char c);
+void	ignore_args(int argc, char **argv);
 
 #endif

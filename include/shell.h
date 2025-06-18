@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 15:03:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:14:14 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_session
 
 void	init_shell(t_shell *shell, char **env);
 void	run_shell(t_shell *shell);
+int		shell_loop(t_session *session);
 void	init_session(t_session *session, t_shell *shell);
-bool	process_line(t_session *session);
-bool	parser(t_session *session);
-void	update_prompt(char **prompt);
+int		process_line(t_session *session);
+int		parser(t_session *session);
+int		update_prompt(char **prompt);
 
-// void	free_shell(t_shell *shell);
 void	free_for_fork(t_session *session);
 
 /* debug */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/08 15:05:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:14:56 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_session(t_session *session, t_shell *shell)
 	session->heredoc_count = 0;
 }
 
-void	update_prompt(char **prompt)
+int	update_prompt(char **prompt)
 {
 	char	*log_name;
 	char	*new_prompt;
@@ -59,11 +59,17 @@ void	update_prompt(char **prompt)
 	if (!log_name)
 		log_name = ft_strdup("unknown");
 	if (!log_name)
-		return ;//TODO set malloc_error
+		return (check_error(ENOMEM));//TODO set malloc_error
 	new_prompt = ft_strjoin(log_name, ":~$ ");
 	free(log_name);
 	if (!new_prompt)
 		return ;//TODO set malloc_error
 	free(*prompt);
 	*prompt = new_prompt;
+}
+
+void	ignore_args(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
 }

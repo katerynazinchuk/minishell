@@ -6,7 +6,7 @@
 /*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/18 20:27:12 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/18 22:12:57 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./minishell
 
 */
-
-static void	ignore_args(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -114,4 +108,3 @@ int	parser(t_session *session)
 	print_node(session->ast, 0);
 	return (0);
 }
-
