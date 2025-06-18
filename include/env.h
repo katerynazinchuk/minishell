@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:50:36 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/16 16:10:56 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:07:19 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int			get_env_value(const char *var, t_env_list *env_list, char **result);
 int			update_env_list(const char *var, t_env_list *env_list, char *new_data);
 int			set_env(t_env_list *env_list, const char *var, const char *value);
 void		unset_env(t_env_list *env_list, const char *var);
+t_env_type	*get_node(const char *var, t_env_list *env_list);
 
 #endif

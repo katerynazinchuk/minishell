@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 15:52:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:48:58 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ bool check_unmached_quotes(char *line)
 	}
 	return (false);
 }
+
 bool last_pipe_error(char *line)
 {
 	int i;
@@ -47,6 +48,7 @@ bool last_pipe_error(char *line)
 		return (true);
 	return (false);
 }
+
 bool first_pipe_error(char *line)
 {
 	int i;

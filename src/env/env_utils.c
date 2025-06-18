@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/16 16:09:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:43:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 
 /* Be carefull: there is malloc */
-static t_env_type	*get_node(const char *var, t_env_list *env_list)
+t_env_type	*get_node(const char *var, t_env_list *env_list)
 {
 	t_env_type	*cur;
 
@@ -89,21 +89,17 @@ int set_env(t_env_list *env_list, const char *var, const char *value)
 		return (ENOMEM);
 	}
 	// node->value = NULL;
-	// if (value)
-	// {
-	// 	node->value = ft_strdup(value);
-	// 	if (!node->value)
-	// 	{
-	// 		free_env_node(node);
-	// 		return (ENOMEM);
-	// 	}
-	// }
-	node->value = ft_strdup(value);
-	if (!node->value)
+	if(value)
 	{
-		free_env_node(node);
-		return (ENOMEM);
+		node->value = ft_strdup(value);
+		if (!node->value)
+		{
+			free_env_node(node);
+			return (ENOMEM);
+		}
 	}
+	else
+		node->value = NULL; // if value is NULL, we set it to NULL
 	node->next = NULL;
 	add_env_node(env_list, node);
 	return (0); //success
