@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/09 15:50:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:34:02 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ t_token_list *fill_tokens(char *line)
 	return (list);
 }
 
-bool	lexer(t_session *session)
+int	lexer(t_session *session)
 {
 	session->tokens = fill_tokens(session->line);
 	if (!session->tokens)
-		return (false);
+		return (1);
 	// free_segment_list(session->tokens->head->segment);
 	
 	if (!expand_segments(session))
@@ -96,12 +96,12 @@ bool	lexer(t_session *session)
 		//else
 			//malloc_error(&session->shell->last_exit_status);
 		free_token_list(session->tokens);
-		return (false);//malloc 
+		return (1);//malloc 
 	}
 	if(!move_to_token_expand(session->tokens))
-		return (false);
+		return (1);
 	//print_tokens(session->tokens);
-	return (true);
+	return (0);
 }
 
 bool	move_to_token_expand(t_token_list *list)

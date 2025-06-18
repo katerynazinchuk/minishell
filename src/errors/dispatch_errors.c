@@ -3,24 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/16 12:34:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:12:30 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* if error_cose < 200 treat it as errno with perror 
-	else its our error codes so we need dispatch table for it - if it possible cause 
-	in dispatch we use or enum or from 0 and next is +1,
-	for int 200 we can only make atoi and ther char 200 (?)*/
-
 static t_error_fn	get_error_fn(int err_code);
 static t_error_fn	get_syntax_fn(int err_code);
 static t_error_fn	get_execute_fn(int err_code);
-
 
 //maybe when I have malloc_error I need to set errno inside function to show exaxtly malloc? like if (errno == ENOMEM) {errno = ENOMEM} perror(context); 
 // or always I can set errno = code;
