@@ -38,7 +38,13 @@ int		builtin_env(char **argv, t_env_list *env_list)
 {
 	t_env_type	*current;
 	
-	(void)argv;
+	if (argv[1])
+	{
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (127);
+	}
 	current = env_list->head;
 	while (current)
 	{
