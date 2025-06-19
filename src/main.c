@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/18 14:48:52 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:16:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ bool	parser(t_session *session)
 		// TODO need to manage errors, maybe do it with return like write 
 		return (false);
 	}
-	print_node(session->ast, 0);
+	// print_node(session->ast, 0);
 	return (true);
 }

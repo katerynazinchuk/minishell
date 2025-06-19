@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/18 18:40:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:07:58 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		builtin_export(char **argv, t_env_list *env_list)
 	}
 	while(argv[i])
 	{
-		if(!is_valid_var(argv[i]))
+		if(!is_valid_input(argv[i]))
 		{
 			ft_putstr_fd("export: `", 2);
 			ft_putstr_fd(argv[i], 2);
@@ -186,14 +186,18 @@ int is_valid_input(char *var)
 {
 	int i;
 
-	i = 0;
-	if(!var || !var[0] || ft_isdigit(var[0]) || var[0] == '=')
+	i = 1;
+	if(!var || !var[0] || ft_isdigit(var[0]) || (!ft_isalpha(var[0]) && !var[0] == '_' ) || var[0] == '=')
 	{
-		ft_putstr_fd("export: not a valid identifier\n", 2);
+		//write(1, &var[i], 1);
+		//ft_putstr_fd("export: not a valid identifier\n", 2);
 		return (0);
 	}
+
 	while(var[i] && var[i] != '=')
 	{
+		//write(1, &var[i], 1);
+		
 		if(var[i] != '_' && !ft_isalnum(var[i]))
    			return (0);
 		i++;
