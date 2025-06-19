@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/08 15:18:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:32:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct	s_ast_node
 t_ast_node			*create_ast_node(t_ast_type type, char **command);
 t_ast_node			 *parse_pipe(t_token *head, t_token *end);
 char				**tokens_to_argv (t_com_tokens *head);
-void				free_ast(t_ast_node *ast);
+void				free_ast(t_ast_node **ast);
 
 t_red_type			define_redirection(t_tok_type token_type);
 t_redir				*create_redirect_node(t_red_type red, char *connection, t_quoted quoted);

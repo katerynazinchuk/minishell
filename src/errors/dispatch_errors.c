@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/17 20:12:30 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:34:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static t_error_fn	get_syntax_fn(int err_code)
 {
 	static const t_error error[] = {
 		{SYNTAX_ERROR, handle_syntax_error},
+		{TOKEN_ERROR, handle_token_error},
 		{BAD_SUBS, handle_bad_subs},
 		{0, NULL}
 		};

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 18:25:59 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:32:54 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	executor(t_session *session)
 {
-	session->shell->last_exit_status = run_ast(session->ast, session);
+	session->shell->status = run_ast(session->ast, session);
 	restore_fd(session);
 }
 
@@ -42,10 +42,10 @@ int	run_cmd(t_ast_node *node, t_session *session)
 		return (0);
 	builtin_fn = get_builtin_fn(node->value[0]);
 	if (builtin_fn)
-		session->shell->last_exit_status = builtin_fn(node->value, session->shell->env_list);
+		session->shell->status = builtin_fn(node->value, session->shell->env_list);
 	else
-		session->shell->last_exit_status = run_external(node, session);
-	return (session->shell->last_exit_status);
+		session->shell->status = run_external(node, session);
+	return (session->shell->status);
 }
 
 int	run_pipe(t_ast_node *ast, t_session *session)
@@ -120,7 +120,7 @@ pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 		close_pipe_fd(pipe_fd);
 		exit_status = run_cmd(node, session);
 		free_env_list(session->shell->env_list);
-		free_ast(session->ast);
+		free_ast(&session->ast);
 		exit(exit_status);//or return ?
 	}
 	return (proc_id);

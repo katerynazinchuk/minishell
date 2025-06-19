@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/09 18:51:39 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:11:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,50 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-bool	expand_segments(t_session *session)//треба почистити результат від expand_value
+int	expand_segments(t_session *session)//треба почистити результат від expand_value
+{
+	t_token	*cur;
+	t_segment *seg;
+	char *tmp;
+
+	cur = session->tokens->head;
+	while (cur)
+	{
+		if(cur->prev && cur->prev->type == T_HEREDOC)
+		{
+			cur = cur->next;
+			continue;
+		}
+		seg = cur->segment;
+		while(seg)
+		{
+			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
+			{
+				if (check_subs(seg->value))
+				{
+					
+					return (check_error(BAD_SUBS, seg->value));
+				}
+				else
+					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
+			}
+			else
+				tmp = ft_strdup(seg->value);
+			if (!tmp)
+			{
+				free(seg->value);
+				return (check_error(ENOMEM, "create tokens: "));
+			}
+			free(seg->value);
+			seg->value = tmp;
+			seg = seg->next;
+		}
+		cur = cur->next;
+	}
+	return (0);
+}
+
+/* bool	expand_segments(t_session *session)//треба почистити результат від expand_value
 {
 	t_token	*cur;
 	t_segment *seg;
@@ -57,7 +100,7 @@ bool	expand_segments(t_session *session)//треба почистити резу
 		cur = cur->next;
 	}
 	return (true);
-}
+} */
 
 
 /* void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
@@ -148,7 +191,7 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);//TODO do we need to expand not only with echo ?
+		exp->str = ft_itoa(shell->status);//TODO do we need to expand not only with echo ?
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }

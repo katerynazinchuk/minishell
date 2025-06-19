@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/17 20:20:11 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:16:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char **argv, char **env)
 	init_shell(&shell, env);
 	if (!shell.env_list)
 	{
-		malloc_error(&shell.last_exit_status);
-		return (shell.last_exit_status);
+		malloc_error(&shell.status);
+		return (shell.status);
 	}
 	(void)argc;
 	(void)argv;
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
-	return(shell.last_exit_status);
+	return(shell.status);
 }
 
 void	run_shell(t_shell *shell)

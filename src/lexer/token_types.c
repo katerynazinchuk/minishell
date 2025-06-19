@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:49:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:50:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ void skip_whitespace(t_str_pos *lexer)
 		lexer->current++;
 }
 
-void add_pipe_token(t_token_list *list, t_str_pos *lexer)
+int add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token	*new_token;
 	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
-		return;
-	add_to_token_list(list, new_token);
+		return (check_error(ENOMEM, "create token: "));
+	add_to_token_list(list, new_token);//TODO check !!!
 	lexer->current++;
+	return (0);
 }
 
 void add_redirection_token(t_token_list *list, t_str_pos *lexer)
@@ -52,7 +53,8 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 	else 
 	{
-		printf("minishell: syntax error near unexpected token `%c`\n", lexer->input[lexer->current]);
+		check_error(TOKEN_ERROR, &lexer->input[lexer->current]);//TODO test case
+		// printf("minishell: syntax error near unexpected token `%c`\n", lexer->input[lexer->current]);
 		lexer->current++;
 	}
 }
@@ -74,7 +76,7 @@ bool add_word_token(t_token_list *list, t_str_pos *lexer)
 	token = create_token(NULL, T_WORD, UNQUOTED);
 	if(!token)
 		return (false);
-	token->segment = build_segment_list(lexer);
+	token->segment = build_segment_list(lexer);//TODO what kind or errors are here?
 	if(!token->segment)
 	{
 		free(token);

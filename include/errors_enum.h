@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_enum.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/13 13:29:02 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:34:11 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef enum s_error_code
 {
     SYNTAX_ERROR = 200,
+    TOKEN_ERROR,
     BAD_SUBS,
     
     

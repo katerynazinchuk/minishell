@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/11 18:55:51 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:33:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,5 @@ void	free_in_fork(t_session *session, char **env_arr)
 	if (env_arr)
 		free_arr(env_arr);
 	free_env_list(session->shell->env_list);
-	free_ast(session->ast);
+	free_ast(&session->ast);
 }

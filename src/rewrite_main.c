@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rewrite_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/18 22:12:57 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 21:33:12 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ int	main(int argc, char **argv, char **env)
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
-	return(shell.last_exit_status);
+	return(shell.status);
 }
 
 void	run_shell(t_shell *shell)
 {
 	t_session	session;
 
-	init_session(&session, shell);	
+	init_session(&session, shell);
 	while(1)
 	{
 		errno = 0;
-		if (shell_loop(&session) != 0)
+		if (shell_loop(&session))
 			break ;
 		if (errno == ENOMEM)
 			break ;
@@ -60,32 +60,26 @@ void	run_shell(t_shell *shell)
 
 int	shell_loop(t_session *session)
 {
-	update_prompt(&session.prompt);
-	session->line = check_input(readline(session->prompt));//rewrite to int with parameters update
-	if (!session->line)
-	{
-		write(1, "exit\n", 5);
-		free_for_fork(&session);
-		return (1);
-	}
-	if (SIGINT == 2)
-	{
-		setsignal(MAIN_SIG);
-	}
-	if (!process_line(&session))
-	{
-		free_for_fork(&session);
-		free_ast(session->ast);
+	int	input_status;
+	
+	if (update_prompt(&session->prompt))
+		return (0);//track enomem to comtinue loop
+	input_status = check_input(readline(session->prompt), &session->line);
+	if (input_status == 1)
+		return(shell_exit(session));
+	else if (input_status != 0)
 		return (0);
-	}
-	if(session.ast) //do we really need it?
-		free_ast(session->ast);
+	setsignal(MAIN_SIG);
+	if (process_line(session))
+		free_for_fork(session);
+	if (session->ast)
+		free_ast(&session->ast);
 	return (0);
 }
 
 int	process_line(t_session *session)
 {
-	if (parser(session) != 0)
+	if (parser(session))
 		return (1);
 	add_history(session->line);
 	heredoc(session->ast, session);//переписати на int
@@ -98,7 +92,7 @@ int	process_line(t_session *session)
 
 int	parser(t_session *session)
 {
-	if(lexer(session) != 0)
+	if(lexer(session))
 		return (1);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)

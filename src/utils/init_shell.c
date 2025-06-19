@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/18 22:14:56 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:25:55 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_shell(t_shell *shell, char **env)
 	shell->env_list = fill_env_list(env);//TODO how we handle case if !shell->env_list ?
 	shell->fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	shell->fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	shell->last_exit_status = 0;
+	shell->status = 0;
 }
 
 void	free_for_fork(t_session *session)
@@ -59,17 +59,13 @@ int	update_prompt(char **prompt)
 	if (!log_name)
 		log_name = ft_strdup("unknown");
 	if (!log_name)
-		return (check_error(ENOMEM));//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt: "));//TODO set malloc_error
 	new_prompt = ft_strjoin(log_name, ":~$ ");
 	free(log_name);
 	if (!new_prompt)
-		return ;//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt: "));//TODO set malloc_error
 	free(*prompt);
 	*prompt = new_prompt;
+	return (0);
 }
 
-void	ignore_args(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-}

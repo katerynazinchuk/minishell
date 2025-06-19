@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/18 20:34:02 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/06/19 21:21:22 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void print_segments(t_segment *segment)
 // 	}
 // }
 
-t_token_list *fill_tokens(char *line)
+/* t_token_list *fill_tokens(char *line)
 {
 	t_token_list	*list;
 	t_token			*eof;
@@ -80,31 +80,67 @@ t_token_list *fill_tokens(char *line)
 	}
 	add_to_token_list(list, eof);
 	return (list);
+} */
+
+int fill_tokens(char *line, t_token_list **tokens)
+{
+	t_token_list	*list;
+	t_token			*eof;
+	t_str_pos		lexer;
+	
+	list = init_token_list();
+	if (!list)
+		return (check_error(ENOMEM, "create tokens: "));
+	init_lexer_state(&lexer, line);
+	while (lexer.input[lexer.current])//str[i]
+	{
+		if (is_whitespace(lexer.input[lexer.current]))
+			skip_whitespace(&lexer);
+		else if (lexer.input[lexer.current] == '|')
+		{
+			if (add_pipe_token(list, &lexer))
+				return (1);
+		}
+		else if (lexer.input[lexer.current] == '<' \
+			|| lexer.input[lexer.current] == '>')
+			add_redirection_token(list, &lexer);
+		else if(!add_word_token(list, &lexer))
+		{
+			free_token_list(list);
+			return (check_error(ENOMEM, "create tokens :"));
+		}
+	}
+	eof = create_token("eof", T_EOF, UNQUOTED);
+	if (!eof)
+	{
+		free_token_list(list);
+		return (check_error(ENOMEM, "create tokens :"));
+	}
+	add_to_token_list(list, eof);
+	*tokens = list;
+	return (0);
 }
 
 int	lexer(t_session *session)
 {
-	session->tokens = fill_tokens(session->line);
+	if (fill_tokens(session->line, &session->tokens))
+		return (1);
 	if (!session->tokens)
 		return (1);
 	// free_segment_list(session->tokens->head->segment);
 	
-	if (!expand_segments(session))
+	if (expand_segments(session))
 	{
-		// if (session->tokens->error == 1)//bad_subs
-		// 	bad_subs_error();//syntax error {{}}
-		//else
-			//malloc_error(&session->shell->last_exit_status);
-		free_token_list(session->tokens);
-		return (1);//malloc 
+		// free_token_list(session->tokens); level up free
+		return (1);
 	}
-	if(!move_to_token_expand(session->tokens))
+	if(move_to_token_expand(session->tokens))
 		return (1);
 	//print_tokens(session->tokens);
 	return (0);
 }
 
-bool	move_to_token_expand(t_token_list *list)
+int	move_to_token_expand(t_token_list *list)
 {
 	t_token *current;
 
@@ -115,11 +151,11 @@ bool	move_to_token_expand(t_token_list *list)
 		{
 			current->expanded = join_segments(current->segment, &current->quoted);
 			if(!current->expanded)
-				return (false);
+				return (check_error(ENOMEM, "create tokens: "));
 		}
 		current = current->next;
 	}
-	return (true);
+	return (0);
 }
 
 

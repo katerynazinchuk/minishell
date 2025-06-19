@@ -6,14 +6,12 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 17:26:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:25:29 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-// #include <stdlib.h>
-// #include <unistd.h>
 
 char	*ft_strndup(const char *s, size_t n)
 {
@@ -49,6 +47,7 @@ int	is_whitespace(char c)
 		return (1);
 	return (0);
 }
+
 int	is_special_char(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '\'' || c == '"');
