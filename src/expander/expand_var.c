@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 16:19:45 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:06:42 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,15 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->status);//TODO do we need to expand not only with echo ?
+	{
+		exp->str = ft_itoa(shell->status);
+		if (exp->len_var != 1)
+		{
+			tmp = ft_strjoin(exp->str, exp->var +1);
+			free(exp->str);
+			exp->str = tmp;
+		}
+	}
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }
@@ -232,3 +240,5 @@ void	append_exp_str(t_expand_type *exp)
 	}
 	exp->res[exp->j] = '\0';
 }
+
+//  echo "$bkbli $$$$ $? $?nln;mj;p"
