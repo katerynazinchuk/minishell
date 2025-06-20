@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/19 20:34:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:33:09 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static t_error_fn	get_execute_fn(int err_code)
 		{EXECUTE_ERROR, handle_execute_error},
 		{REDIRECT_FAIL, handle_redirect_fail},
 		{CMD_NOT_FOUND, handle_cmd_not_found},
+		{CD_ERR, handle_cd_error},
 		{0, NULL}
 		};
 	int							i;

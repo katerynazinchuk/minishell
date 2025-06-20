@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/19 20:34:11 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:32:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef enum s_error_code
     
     EXECUTE_ERROR = 250,
     REDIRECT_FAIL,
-    CMD_NOT_FOUND
+    CMD_NOT_FOUND,
+    CD_ERR
 }   t_error_code;
 
 
