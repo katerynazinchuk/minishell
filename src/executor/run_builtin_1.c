@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 12:01:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:09:27 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,7 @@ int		builtin_export(char **argv, t_env_list *env_list)
 				free(value);
 			}
 			else
-			{
-				if(!ft_strchr(argv[i], '='))
-					set_env(env_list, argv[i], "");//NULL
-			}
+				set_env(env_list, argv[i], NULL);//NULL
 		}
 		i++;
 	}
@@ -169,12 +166,15 @@ void print_export(t_env_list *env_list)
 		{
 			ft_putstr_fd("declare -x ", 1);
 			ft_putstr_fd(current->key, 1);
-			if (ft_strcmp(current->value, ""))
-			{
-				ft_putstr_fd("=\"", 1);
-				ft_putstr_fd(current->value, 1);
-				ft_putstr_fd("\"", 1);
-			}
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(current->value, 1);
+			ft_putstr_fd("\"", 1);
+			write(1, "\n", 1);
+		}
+		else if( current->key && !current->value)
+		{
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd(current->key, 1);
 			write(1, "\n", 1);
 		}
 		current = current->next;

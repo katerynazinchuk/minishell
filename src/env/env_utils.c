@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/18 17:43:14 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:10:23 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_env_value(const char *var, t_env_list *env_list, char **result)
 	t_env_type	*cur;
 
 	cur = get_node(var, env_list);
-	if (!cur)
+	if (!cur && !cur->value)
 		return (0);
 	*result = cur->value;
 	return (1);
@@ -63,6 +63,8 @@ int	update_env_list(const char *var, t_env_list *env_list, char *new_data)
 {
 	t_env_type	*cur;
 
+	if(!new_data)
+		return (0);
 	cur = get_node(var, env_list);
 	if(!cur)
 		return (ENOENT); //malloc error
@@ -88,7 +90,6 @@ int set_env(t_env_list *env_list, const char *var, const char *value)
 		free(node);
 		return (ENOMEM);
 	}
-	// node->value = NULL;
 	if(value)
 	{
 		node->value = ft_strdup(value);
