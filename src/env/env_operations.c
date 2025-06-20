@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_operations.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/29 15:55:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:37:07 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,4 @@ t_env_type	*fill_env_node(char *str)
 	node->next = NULL;
 	return (node);
 }
+

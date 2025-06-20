@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 19:56:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:12:04 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ bool check_unmached_quotes(char *line)
 	while(line[i])
 	{
 		if (line[i] == '"' || line[i] == '\'')
-			quote = line[i];
-		else if (line[i] == quote)
-			quote = 0;
+		{
+			if(quote == 0)
+				quote = line[i];
+			else if (line[i] == quote)
+				quote = 0;
+		}
 		i++;
 	}
 	if(quote != 0)
@@ -35,6 +38,7 @@ bool check_unmached_quotes(char *line)
 	}
 	return (false);
 }
+
 bool last_pipe_error(char *line)
 {
 	int i;
@@ -45,6 +49,7 @@ bool last_pipe_error(char *line)
 		return (true);
 	return (false);
 }
+
 bool first_pipe_error(char *line)
 {
 	int i;
