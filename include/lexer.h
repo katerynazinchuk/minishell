@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:21:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:10:55 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			skip_whitespace(t_str_pos *lexer);
 int			add_pipe_token(t_token_list *list, t_str_pos *lexer);
 void			add_redirection_token(t_token_list *list, t_str_pos *lexer);
 void			create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
-bool			add_word_token(t_token_list *list, t_str_pos *lexer);
+int			add_word_token(t_token_list *list, t_str_pos *lexer);
 
 /* -------------------------------------------------------------------------- */
 

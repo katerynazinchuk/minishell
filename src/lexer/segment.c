@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:33:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:08:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ t_segment *create_segment(char *value, t_q_type q_type)
 {
 	t_segment *segment = malloc(sizeof(t_segment));
 	if(!segment)
+	{
+		check_error(ENOMEM, "minishell : segment");
 		return (NULL);
+	}
 	segment->value = value;
 	segment->q_type = q_type;
 	segment->next = NULL;
@@ -52,7 +55,7 @@ t_segment *build_segment_list(t_str_pos *lexer)
 		{
 			if(!check_quotes(lexer))
 			{
-				quotes_error(lexer);
+				check_error(SYNTAX_ERROR, "No matching quotes");
 				return (NULL);
 			}
 			new_seg = add_quoted_segment(lexer);
@@ -78,7 +81,7 @@ char *join_segments(t_segment *segment, t_quoted *quoted)
 	result = malloc(total_len + 1);
 	if(!result)
 		return (NULL);
-	result[0] = '\0'; // Initialize the result string to an empty string
+	result[0] = '\0';
 	while(segment)
 	{
 		if(segment->q_type == Q_SINGLE || segment->q_type == Q_DOUBLE)

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/05/30 18:11:53 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:03:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ t_segment *add_quoted_segment(t_str_pos *lexer)
 		lexer->current++;
 	len = lexer->current - lexer->start;
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
+	if(!new_seg)
+	{
+		check_error(ENOMEM, "minishell: segment");
+		return (NULL);
+	}
 	if (lexer->input[lexer->current] == quote_char)
 		lexer->current++;
 	return (create_segment(new_seg, quote_type));
@@ -91,5 +96,10 @@ t_segment *add_unquoted_segment(t_str_pos *lexer)
 	}
 	len = lexer->current - lexer->start;
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
+	if(!new_seg)
+	{
+		check_error(ENOMEM, "minishell: segment");
+		return (NULL);
+	}
 	return(create_segment(new_seg, Q_NONE));
 }

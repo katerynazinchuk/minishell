@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 14:43:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:09:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int add_pipe_token(t_token_list *list, t_str_pos *lexer)
 	t_token	*new_token;
 	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
-		return (check_error(ENOMEM, "create token"));
-	add_to_token_list(list, new_token);//TODO check !!!
+		return (1);
+	add_to_token_list(list, new_token);
 	lexer->current++;
 	return (0);
 }
 
-void add_redirection_token(t_token_list *list, t_str_pos *lexer)
+void add_redirection_token(t_token_list *list, t_str_pos *lexer)//change to int
 {
 	if (lexer->input[lexer->current + 1] == '>' && lexer->input[lexer->current] == '>')
 	{
@@ -69,21 +69,21 @@ void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type
 	add_to_token_list(list, new_token);
 }	
 
-bool add_word_token(t_token_list *list, t_str_pos *lexer)
+int add_word_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token *token;
 
 	token = create_token(NULL, T_WORD, UNQUOTED);
 	if(!token)
-		return (false);
+		return (1);
 	token->segment = build_segment_list(lexer);//TODO what kind or errors are here?
 	if(!token->segment)
 	{
 		free(token);
-		return (false);
+		return (1);
 	}
 	add_to_token_list(list, token);
-	return (true);
+	return (0);
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"

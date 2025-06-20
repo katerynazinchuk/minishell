@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 18:49:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:52:07 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,36 +158,4 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 	}
 	return (structure);
 }
-
-// int extract_red_and_args(t_token *head, t_token *end, t_command_parsing **structure)
-// {
-// 	t_token				*current;
-	
-// 	if(!head || !end)
-// 		return (1);
-// 	current = head;
-// 	while(current != end)
-// 	{
-// 		if(current->type == T_APPEND || current->type == T_HEREDOC ||
-// 			current->type == T_IN || current->type == T_OUT )
-// 		{
-// 			if (append_redirect(current, *structure))
-// 			{
-// 				free_structure(*structure);
-// 				return (check_error(ENOMEM, "Command parsing"));
-// 			}
-// 			current = current->next;
-// 		}
-// 		else 
-// 		{
-// 			if(append_args(current, *structure))
-// 			{
-// 				free_structure(*structure);
-// 				return (check_error(ENOMEM, "Command parsing"));
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (0);
-// }
 

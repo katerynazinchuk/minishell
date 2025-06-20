@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 18:46:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:53:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,6 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	free_structure(structure);
 	return (new_ast_node);
 }
-
-// typedef struct	s_command_parsing
-// {
-// 	t_redir			*redirect;
-// 	t_com_tokens	*args;
-// }	t_command_parsing;
-
-
-
 
 t_ast_node *parse_pipe(t_token *head, t_token *end)
 {
@@ -144,7 +135,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 // Print errors:
 // if string starts with |
 // if string ends with | - than call readline and join results
-// if > >> << without argument
+
 // return NULL or error struct if input is invalid
 
 
