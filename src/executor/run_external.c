@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/11 17:13:10 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:46:45 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,18 @@ int	run_external(t_ast_node *node, t_session *session)
 		if (!find_path(node->value, session->shell->env_list))
 		{
 			free_in_fork(session, env_arr);
-			errno = ENOMEM;
-			perror("minishell executor ");
-			exit(1);
+			exit(check_error(ENOMEM, NULL));
+			// errno = ENOMEM;
+			// perror("minishell executor ");
+			// exit(1);
 		}
 		if(execve(node->value[0], node->value, env_arr) == -1)
 		{
 			if (errno == ENOENT)
-			{
-				ft_putstr_fd(node->value[0], 2);
-				ft_putstr_fd(": command not found\n", 2);
-				exit_status = 127;
-			}
+				exit_status = check_error(CMD_NOT_FOUND, node->value[0]);
 			else
-				perror("minishel execute ");
+				exit_status = check_error(errno, "execve error");
+				// perror("minishel execute ");
 			free_in_fork(session, env_arr);
 			exit (exit_status);
 		}

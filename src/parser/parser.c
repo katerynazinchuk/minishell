@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:31:09 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:23:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	structure = extract_red_and_args(head, end);
 	if (!structure)
 	{
-		free_ast(new_ast_node);
+		write(1, "no struct\n", 11);
+		free_ast(&new_ast_node);
 		return (NULL);
 	}
 	new_ast_node->value = tokens_to_argv(structure->args);
@@ -86,13 +87,13 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 		new_ast_node->left = parse_pipe(head, last_pipe);
 		if (!new_ast_node->left)
 		{
-			free_ast(new_ast_node);
+			free_ast(&new_ast_node);
 			return (NULL);
 		}
 		new_ast_node->right = parse_command(last_pipe->next, end);
 		if (!new_ast_node->right)
 		{
-			free_ast(new_ast_node);
+			free_ast(&new_ast_node);
 			return (NULL);
 		}
 		return (new_ast_node);

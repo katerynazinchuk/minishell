@@ -24,8 +24,9 @@ w: wait, wait3, wait4, waitpid, write
 # include <stdbool.h>
 # include "my_signal.h"
 # include "libft.h"
-# include "errors.h"
 # include <errno.h>
+# include "errors_enum.h"
+# include "errors.h"
 # include "libft.h"
 # include "env.h"
 # include "utils.h"
@@ -48,6 +49,7 @@ w: wait, wait3, wait4, waitpid, write
 # include <sys/types.h>
 
 extern volatile sig_atomic_t g_signal;
+void print_tokens(t_session *session);
 
 int	ft_strcmp(const char *str1, const char *str2);
 int	ft_strcmp(const char *str1, const char *str2);

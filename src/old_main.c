@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   old_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 13:16:54 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:09:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char **argv, char **env)
 	init_shell(&shell, env);
 	if (!shell.env_list)
 	{
-		malloc_error(&shell.last_exit_status);
-		return (shell.last_exit_status);
+		malloc_error(&shell.status);
+		return (shell.status);
 	}
 	(void)argc;
 	(void)argv;
@@ -44,11 +44,9 @@ int	main(int argc, char **argv, char **env)
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
-	return(shell.last_exit_status);
+	return(shell.status);
 }
 
-/* maybe better to move *shell from structure session or not */
-//TODO fork() тягне алоковані структури в свої процеси, тому до них завжди має бути доступ, щоб почистити перед execve
 void	run_shell(t_shell *shell)
 {
 	t_session	session;
@@ -58,8 +56,7 @@ void	run_shell(t_shell *shell)
 	while(1)
 	{
 		update_prompt(&session.prompt);
-		//session.line = readline(session.prompt);
-		session.line = check_input(readline(session.prompt)); //clarify this logic, cos now it mixing all together
+		session.line = check_input(readline(session.prompt));
 		if (!session.line)
 		{
 			write(1, "exit\n", 5);
@@ -89,7 +86,6 @@ bool	process_line(t_session *session)
 	heredoc(session->ast, session);
 	if (g_signal != 0)
 		return (g_signal = 0, false);
-	//heredoc expand if not command  call left and right. -> rewrite
 	free_for_fork(session);
 	executor(session);
 	return (true);
@@ -102,7 +98,6 @@ bool	parser(t_session *session)
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
-		// TODO need to manage errors, maybe do it with return like write 
 		return (false);
 	}
 	// print_node(session->ast, 0);

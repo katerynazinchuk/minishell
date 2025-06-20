@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 12:14:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:59:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_expand_type
 	char	*str;
 }	t_expand_type;
 
-bool	expand_segments(t_session *session);
+int		expand_segments(t_session *session);
 char	*expand_value(char *raw, t_shell *shell);
 void	extract_var(char *raw, t_expand_type *exp);
 void	expand_var(t_expand_type *exp, t_shell *shell);
@@ -38,7 +38,7 @@ void	init_exp(t_expand_type *exp, char *raw);
 bool	is_valid_var(char *var);
 bool	check_subs(char *raw);
 void	free_exp(t_expand_type *exp);
-char	*error_free(t_expand_type *exp);
+int		error_free(t_expand_type *exp);
 int		is_quote(char c);
 
 #endif

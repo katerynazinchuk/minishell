@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_debug.c                                      :+:      :+:    :+:   */
+/*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/19 19:17:55 by tchernia         ###   ########.fr       */
+/*   Created: 2025/06/19 19:25:07 by tchernia          #+#    #+#             */
+/*   Updated: 2025/06/19 19:27:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_shell(t_shell *shell)
+void	ignore_args(int argc, char **argv)
 {
-	if (shell->env_list)
-		print_env_list(shell->env_list);
-	printf("lsat exit status: %i\n", shell->status);
+	(void)argc;
+	(void)argv;
 }
 
-void	print_env_list(t_env_list *env_list)
+int	shell_exit(t_session *session)
 {
-	t_env_type	*current;
-	
-	current = env_list->head;
-	while (current)
-	{
-		printf("key: %s\n value: %s\n\n", current->key, current->value);
-		current = current->next;
-	}
+	write(1, "exit\n", 5);
+	free_for_fork(session);
+	return (1);
 }

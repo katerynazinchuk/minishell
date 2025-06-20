@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/16 17:36:38 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:20:40 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int				run_pipe(t_ast_node *ast, t_session *session);
 pid_t			child_left(t_ast_node *node, t_session *session, int *pipe_fd);
 pid_t			child_right(t_ast_node *node, t_session *session, int *pipe_fd);
 int				run_cmd(t_ast_node *node, t_session *session);
-bool			apply_redir(t_redir *redir_list);
+int			apply_redir(t_redir *redir_list);
 int				run_external(t_ast_node *node, t_session *session);
 t_builtin_fn	get_builtin_fn(char *cmd);
 

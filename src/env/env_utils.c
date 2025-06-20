@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 16:10:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:27:27 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_env_type	*get_node(const char *var, t_env_list *env_list)
 	return (NULL);
 }
 
-
-/* Be carefull: there is malloc */
 int	get_env_value(const char *var, t_env_list *env_list, char **result)
 {
 	t_env_type	*cur;

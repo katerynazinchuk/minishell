@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/18 17:48:58 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:57:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ bool check_unmached_quotes(char *line)
 	}
 	if(quote != 0)
 	{
-		printf("minishell: syntax error: unclosed quote\n");
-		return (true);
+		return (check_error(SYNTAX_ERROR, "unclosed quote\n"));
+		// printf("minishell: syntax error: unclosed quote\n");
+		// return (true);
 	}
 	return (false);
 }
@@ -57,10 +58,11 @@ bool first_pipe_error(char *line)
 	while (line[i] && is_whitespace(line[i]))
 		i++;
 	if (line[i] == '|')
-	{
-		printf("minishell: syntax error: unexpected token `|'\n");
-		return (true);
-	}
+		return (check_error(SYNTAX_ERROR, "unexpected token `|'\n"));
+	// {
+	// 	printf("minishell: syntax error: unexpected token `|'\n");
+	// 	return (true);
+	// }
 	return (false);
 }
 
@@ -83,7 +85,25 @@ char *join_input(char *line)
 	return (joined_line);
 }
 
-char *check_input(char *line)
+int	check_input(char *line, char **result_line)
+{
+	if(!line)
+		return (1);
+	if (check_unmached_quotes(line))
+		return (2);
+	if (first_pipe_error(line))
+		return (2);
+	while (last_pipe_error(line))
+	{
+		line = join_input(line);
+		if(!line)
+			return (check_error(ENOMEM, "Join fail"));
+	}
+	*result_line = line;
+	return (0);
+}
+
+/* char *check_input(char *line)
 {
 	if(!line)// || ft_strlen(line) == 0)
 		return (NULL);//TODO set error
@@ -98,5 +118,4 @@ char *check_input(char *line)
 			return (NULL);
 	}
 	return (line);
-}
-
+} */

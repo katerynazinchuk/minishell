@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/08 14:09:29 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:49:04 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,18 @@ t_redir	*extract_redirect(t_token *current)
 	
 	next = current->next;
 	if(!next || next->type != T_WORD)
+	{
+		check_error(SYNTAX_ERROR, "near unexpected token `newline'");//TODO  text for error
 		return (NULL);
+	}
 	new_redir = create_redirect_node(
 		define_redirection(current->type), next->expanded,
 		next->quoted);
 	if(!new_redir)
-		return (NULL);
+	{
+		check_error(ENOMEM, "create redirection");
+		return (NULL);//only allocate error
+	}
 	return(new_redir);
 }
 
@@ -74,7 +80,10 @@ int	append_redirect(t_token *current, t_command_parsing *structure)
 
 	new_red = extract_redirect(current);
 	if(!new_red)
+	{
+		write(1, "1\n", 2);
 		return (1);
+	}
 	
 	if(!structure->redirect)
 		structure->redirect = new_red;
@@ -129,13 +138,20 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 			current->type == T_IN || current->type == T_OUT )
 		{
 			if (append_redirect(current, structure))
+			{
+				write(1, "no redd\n", 9);
+				// free(structure);
 				return (NULL);
+			}
 			current = current->next;
 		}
 		else 
 		{
 			if(!append_args(current, structure))
+			{
+				write(1, "no node\n", 9);
 				return (NULL);
+			}
 		}
 		current = current->next;
 	}

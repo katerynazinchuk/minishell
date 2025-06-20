@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:49:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:21:47 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ char 			*join_segments(t_segment *segment, t_quoted *quoted);
 /* -------------------------------------------------------------------------- */
 
 void			skip_whitespace(t_str_pos *lexer);
-void			add_pipe_token(t_token_list *list, t_str_pos *lexer);
+int			add_pipe_token(t_token_list *list, t_str_pos *lexer);
 void			add_redirection_token(t_token_list *list, t_str_pos *lexer);
 void			create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
 bool			add_word_token(t_token_list *list, t_str_pos *lexer);
 
 /* -------------------------------------------------------------------------- */
 
-t_token_list	*fill_tokens(char *line);
-bool			lexer(t_session *session);
-bool			move_to_token_expand(t_token_list *list);
+int				fill_tokens(char *line, t_token_list **tokens);
+// t_token_list	*fill_tokens(char *line);
+int				lexer(t_session *session);
+int			move_to_token_expand(t_token_list *list);
 // void			print_tokens(t_session *session);
 
 /* -------------------------------------------------------------------------- */

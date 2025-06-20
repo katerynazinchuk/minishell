@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/12 12:58:24 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:44:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)
 		malloc_error(exit_status);
 		return (NULL);
 	}
-	filename = ft_strjoin("/tmp/heredoc_", id_str);
+	filename = ft_strjoin("/tmp/heredoc_", id_str);//TODO valgrind
 	free(id_str);
 	if(!filename)
 	{
@@ -54,8 +54,9 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 			break;
 		if (g_signal != 0)
 		{
-			session->shell->last_exit_status = 128 + g_signal;
+			session->shell->status = 128 + g_signal;
 			setsignal(MAIN_SIG);
+			free(line);
 			return (1);
 		}
 		if (ft_strcmp(line, redir->connection) == 0)
@@ -87,7 +88,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	int status;
 
 	heredoc_id = session->heredoc_count++;
-	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->last_exit_status);
+	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->status);
 	if(!heredoc_filename)
 		return ;
 	fd = open(heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -95,19 +96,23 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	{
 		perror("minishell: open");
 		free(heredoc_filename);
-		session->shell->last_exit_status = 1;
+		session->shell->status = 1;
 		return;
 	}
 	status = write_heredoc_lines(redir, session, fd);
 	if(status == 2)
 	{
-		malloc_error(&session->shell->last_exit_status);
+		malloc_error(&session->shell->status);
 		close(fd);
+		free(heredoc_filename);
 		return ;
 	}
 	close(fd);
 	if (status == 1)
+	{
+		free(heredoc_filename);
 		return ;
+	}
 	if (redir->connection)
 		free(redir->connection);
 	redir->connection = heredoc_filename;

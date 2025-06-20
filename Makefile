@@ -39,18 +39,23 @@ PARSER = src/parser/parser.c \
 			src/parser/parser_debug.c \
 			src/parser/free_parser.c
 HEREDOC = src/heredoc/heredoc.c \
-			src/heredoc/utils.c \
+			src/heredoc/utils_heredoc.c \
 			src/heredoc/heredoc_cleanup.c
 MY_SIGNAL = src/signals/signal.c
 UTILS = src/utils/utils.c \
 		src/utils/init_shell.c \
+		src/utils/utils_main.c \
 		src/utils/shell_debug.c
 
 ERRORS = src/errors/lexer_error.c \
+		src/errors/dispatch_errors.c \
 		src/errors/common_errors.c \
-		src/errors/pipe_error.c
+		src/errors/pipe_error.c \
+		src/errors/syntax_fn.c \
+		src/errors/execute_fn.c
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/main.c 
+
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/rewrite_main.c 
 #signal.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
@@ -81,4 +86,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./$(NAME)
+
+.PHONY: all clean fclean re valgrind

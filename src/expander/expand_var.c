@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/18 17:42:52 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:19:45 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,53 @@
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
 
-bool	expand_segments(t_session *session)//треба почистити результат від expand_value
+static int	process_var(char *raw, t_expand_type *exp, t_shell *shell);
+
+int	expand_segments(t_session *session)//треба почистити результат від expand_value
+{
+	t_token	*cur;
+	t_segment *seg;
+	char *tmp;
+
+	cur = session->tokens->head;
+	while (cur)
+	{
+		if(cur->prev && cur->prev->type == T_HEREDOC)
+		{
+			cur = cur->next;
+			continue;
+		}
+		seg = cur->segment;
+		while(seg)
+		{
+			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
+			{
+				
+				if (check_subs(seg->value))
+				{
+					
+					return (check_error(BAD_SUBS, seg->value));
+				}
+				else
+					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
+			}
+			else
+				tmp = ft_strdup(seg->value);
+			if (!tmp)
+			{
+				free(seg->value);
+				return (check_error(ENOMEM, "create tokens: "));
+			}
+			free(seg->value);
+			seg->value = tmp;
+			seg = seg->next;
+		}
+		cur = cur->next;
+	}
+	return (0);
+}
+
+/* bool	expand_segments(t_session *session)//треба почистити результат від expand_value
 {
 	t_token	*cur;
 	t_segment *seg;
@@ -57,7 +103,7 @@ bool	expand_segments(t_session *session)//треба почистити резу
 		cur = cur->next;
 	}
 	return (true);
-}
+} */
 
 
 /* void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
@@ -89,24 +135,39 @@ char	*expand_value(char *raw, t_shell *shell)
 	{
 		if (raw[exp.i] == '$')
 		{
-			exp.i++;
-			extract_var(raw + exp.i, &exp);
-			if (!exp.var)
-				return (error_free(&exp));
-			expand_var(&exp, shell);
-			if (!exp.str)
-				return (error_free(&exp));
-			append_exp_str(&exp);
-			if (!exp.res)
-				return (error_free(&exp));
-			exp.i+=exp.len_var;
-			free_exp(&exp);
+			if (raw[exp.i +1 ] == '$' || is_whitespace(raw[exp.i + 1]) || raw[exp.i + 1] == '\0')
+			{
+				while(raw[exp.i + 1] && raw[exp.i + 1] == '$')
+					exp.res[exp.j++] = raw[exp.i++];
+				exp.res[exp.j++] = raw[exp.i++];
+			}
+			else
+			{
+				exp.i++;
+				process_var(raw, &exp, shell);
+				exp.i+=exp.len_var;
+				free_exp(&exp);
+			}
 		}
 		else
 			exp.res[exp.j++] = raw[exp.i++];
 	}
 	exp.res[exp.j] = '\0';
 	return (exp.res);
+}
+
+static int	process_var(char *raw, t_expand_type *exp, t_shell *shell)
+{
+	extract_var(raw + exp->i, exp);
+	if (!exp->var)
+		return (error_free(exp));
+	expand_var(exp, shell);
+	if (!exp->str)
+		return (error_free(exp));
+	append_exp_str(exp);
+	if (!exp->res)
+		return (error_free(exp));
+	return (0);
 }
 
 //somethinf after $ {} or just var_name
@@ -148,7 +209,7 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-		exp->str = ft_itoa(shell->last_exit_status);//TODO do we need to expand not only with echo ?
+		exp->str = ft_itoa(shell->status);//TODO do we need to expand not only with echo ?
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }
