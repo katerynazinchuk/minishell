@@ -49,6 +49,7 @@ w: wait, wait3, wait4, waitpid, write
 # include <sys/types.h>
 
 extern volatile sig_atomic_t g_signal;
+void print_tokens(t_session *session);
 
 int	ft_strcmp(const char *str1, const char *str2);
 int	ft_strcmp(const char *str1, const char *str2);

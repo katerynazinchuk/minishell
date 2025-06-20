@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 11:48:39 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:44:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		{
 			session->shell->status = 128 + g_signal;
 			setsignal(MAIN_SIG);
+			free(line);
 			return (1);
 		}
 		if (ft_strcmp(line, redir->connection) == 0)
@@ -103,11 +104,15 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	{
 		malloc_error(&session->shell->status);
 		close(fd);
+		free(heredoc_filename);
 		return ;
 	}
 	close(fd);
 	if (status == 1)
+	{
+		free(heredoc_filename);
 		return ;
+	}
 	if (redir->connection)
 		free(redir->connection);
 	redir->connection = heredoc_filename;

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:32:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:23:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	structure = extract_red_and_args(head, end);
 	if (!structure)
 	{
+		write(1, "no struct\n", 11);
 		free_ast(&new_ast_node);
 		return (NULL);
 	}

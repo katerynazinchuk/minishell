@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 12:12:04 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:57:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char *join_input(char *line)
 
 int	check_input(char *line, char **result_line)
 {
-	if(!line)// || ft_strlen(line) == 0)
+	if(!line)
 		return (1);
 	if (check_unmached_quotes(line))
 		return (2);
@@ -97,7 +97,7 @@ int	check_input(char *line, char **result_line)
 	{
 		line = join_input(line);
 		if(!line)
-			return (check_error(ENOMEM, " join line: "));
+			return (check_error(ENOMEM, "Join fail"));
 	}
 	*result_line = line;
 	return (0);

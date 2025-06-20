@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 20:50:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:43:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int add_pipe_token(t_token_list *list, t_str_pos *lexer)
 	t_token	*new_token;
 	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
-		return (check_error(ENOMEM, "create token: "));
+		return (check_error(ENOMEM, "create token"));
 	add_to_token_list(list, new_token);//TODO check !!!
 	lexer->current++;
 	return (0);

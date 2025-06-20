@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:16:23 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/23 16:37:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 15:57:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_exp(t_expand_type *exp)
 	}
 }
 
-char	*error_free(t_expand_type *exp)
+int	error_free(t_expand_type *exp)
 {
 	free_exp(exp);
 	if (exp->res)
@@ -34,5 +34,5 @@ char	*error_free(t_expand_type *exp)
 		free(exp->res);
 		exp->res = NULL;
 	}
-	return (NULL);
+	return (1);
 }

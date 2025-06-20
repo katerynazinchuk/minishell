@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 12:13:41 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 16:19:45 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /* змінна від експорта запишеться в env_list */
 /* expand в процесі парсинга, щоб ми не розгорнули деліметр */
 /* set flag need to clean - better to change from void to return like write */
+
+static int	process_var(char *raw, t_expand_type *exp, t_shell *shell);
 
 int	expand_segments(t_session *session)//треба почистити результат від expand_value
 {
@@ -35,6 +37,7 @@ int	expand_segments(t_session *session)//треба почистити резу�
 		{
 			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
 			{
+				
 				if (check_subs(seg->value))
 				{
 					
@@ -132,24 +135,39 @@ char	*expand_value(char *raw, t_shell *shell)
 	{
 		if (raw[exp.i] == '$')
 		{
-			exp.i++;
-			extract_var(raw + exp.i, &exp);
-			if (!exp.var)
-				return (error_free(&exp));
-			expand_var(&exp, shell);
-			if (!exp.str)
-				return (error_free(&exp));
-			append_exp_str(&exp);
-			if (!exp.res)
-				return (error_free(&exp));
-			exp.i+=exp.len_var;
-			free_exp(&exp);
+			if (raw[exp.i +1 ] == '$' || is_whitespace(raw[exp.i + 1]) || raw[exp.i + 1] == '\0')
+			{
+				while(raw[exp.i + 1] && raw[exp.i + 1] == '$')
+					exp.res[exp.j++] = raw[exp.i++];
+				exp.res[exp.j++] = raw[exp.i++];
+			}
+			else
+			{
+				exp.i++;
+				process_var(raw, &exp, shell);
+				exp.i+=exp.len_var;
+				free_exp(&exp);
+			}
 		}
 		else
 			exp.res[exp.j++] = raw[exp.i++];
 	}
 	exp.res[exp.j] = '\0';
 	return (exp.res);
+}
+
+static int	process_var(char *raw, t_expand_type *exp, t_shell *shell)
+{
+	extract_var(raw + exp->i, exp);
+	if (!exp->var)
+		return (error_free(exp));
+	expand_var(exp, shell);
+	if (!exp->str)
+		return (error_free(exp));
+	append_exp_str(exp);
+	if (!exp->res)
+		return (error_free(exp));
+	return (0);
 }
 
 //somethinf after $ {} or just var_name
