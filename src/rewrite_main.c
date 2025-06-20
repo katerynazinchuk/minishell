@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:33:12 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:42:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ int	parser(t_session *session)
 	{
 		return (1);
 	}
-	print_node(session->ast, 0);
+	// print_node(session->ast, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 19:17:32 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:48:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)
 		malloc_error(exit_status);
 		return (NULL);
 	}
-	filename = ft_strjoin("/tmp/heredoc_", id_str);
+	filename = ft_strjoin("/tmp/heredoc_", id_str);//TODO valgrind
 	free(id_str);
 	if(!filename)
 	{

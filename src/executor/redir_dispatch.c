@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/16 12:36:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:53:37 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	apply_append(t_redir *redir);
 static bool	apply_heredoc(t_redir *redir);
 
 /* hash map, acces via key*/
-bool	apply_redir(t_redir *redir_list)
+int	apply_redir(t_redir *redir_list)
 {
 	static t_redir_handler handlers[] = {
 		[RED_IN] = apply_in,
@@ -30,15 +30,15 @@ bool	apply_redir(t_redir *redir_list)
 	t_redir_handler	f;
 	
 	if (!redir_list)
-		return (true);
+		return (0);
 	while (redir_list)
 	{
 		f = handlers[redir_list->type];
 		if (!f || !f(redir_list))
-			return (false);
+			return (1);
 		redir_list = redir_list->next;
 	}
-	return (true);
+	return (0);
 	}
 
 /* we need to manage correct errors for open */

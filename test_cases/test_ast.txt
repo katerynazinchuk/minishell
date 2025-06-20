@@ -593,3 +593,40 @@ exit
 --102962-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,102 bytes in 7 blocks
 ==102962== 
 ==102962== ERROR SUMMARY: 14 errors from 12 contexts (suppressed: 0 from 0)
+
+
+
+
+
+________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________
+
+
+
+==29671== 1 bytes in 1 blocks are definitely lost in loss record 2 of 71
+==29671==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29671==    by 0x48AEBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==29671==    by 0x488C694: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==29671==    by 0x4896D2A: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==29671==    by 0x404BD5: write_heredoc_lines (heredoc.c:52)
+==29671==    by 0x404DA5: expand_heredoc (heredoc.c:101)
+==29671==    by 0x404F1E: heredoc_foreach_redir (utils.c:21)
+==29671==    by 0x404EA4: heredoc_foreach_ast (utils.c:32)
+==29671==    by 0x404ED3: heredoc_foreach_ast (utils.c:36)
+==29671==    by 0x404E46: heredoc (heredoc.c:118)
+==29671==    by 0x406407: process_line (rewrite_main.c:85)
+==29671==    by 0x406373: shell_loop (rewrite_main.c:73)
+==29671== 
+==29671== 15 bytes in 1 blocks are definitely lost in loss record 11 of 71
+==29671==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29671==    by 0x406AC7: ft_strjoin (ft_strjoin.c:24)
+==29671==    by 0x404B4E: create_heredoc_filename (heredoc.c:33)
+==29671==    by 0x404D34: expand_heredoc (heredoc.c:90)
+==29671==    by 0x404F1E: heredoc_foreach_redir (utils.c:21)
+==29671==    by 0x404EA4: heredoc_foreach_ast (utils.c:32)
+==29671==    by 0x404ED3: heredoc_foreach_ast (utils.c:36)
+==29671==    by 0x404E46: heredoc (heredoc.c:118)
+==29671==    by 0x406407: process_line (rewrite_main.c:85)
+==29671==    by 0x406373: shell_loop (rewrite_main.c:73)
+==29671==    by 0x4062AC: run_shell (rewrite_main.c:54)
+==29671==    by 0x406259: main (rewrite_main.c:40)

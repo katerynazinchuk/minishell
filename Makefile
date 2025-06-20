@@ -38,7 +38,7 @@ PARSER = src/parser/parser.c \
 			src/parser/parser_debug.c \
 			src/parser/free_parser.c
 HEREDOC = src/heredoc/heredoc.c \
-			src/heredoc/utils.c \
+			src/heredoc/utils_heredoc.c \
 			src/heredoc/heredoc_cleanup.c
 MY_SIGNAL = src/signals/signal.c
 UTILS = src/utils/utils.c \
