@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 16:37:45 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:49:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ int	parser(t_session *session)
 	//print_tokens(session);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
-	{
-		write(1, "no ast\n", 8);
 		return (1);
-	}
 	// print_node(session->ast, 0);
 	return (0);
 }

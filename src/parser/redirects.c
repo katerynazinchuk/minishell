@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 15:49:04 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:49:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+void free_for_struct(t_command_parsing *structure);
 
 t_red_type	define_redirection(t_tok_type token_type)
 {
@@ -45,7 +46,10 @@ t_com_tokens *extract_args(t_token *current)
 
 	new_ref = malloc(sizeof(t_com_tokens));
 	if(!new_ref)
+	{
+		check_error(ENOMEM, "create arguments");
 		return (NULL);
+	}
 	new_ref->word = current;
 	new_ref->next = NULL;
 	return (new_ref);
@@ -59,7 +63,7 @@ t_redir	*extract_redirect(t_token *current)
 	next = current->next;
 	if(!next || next->type != T_WORD)
 	{
-		check_error(SYNTAX_ERROR, "near unexpected token `newline'");//TODO  text for error
+		check_error(SYNTAX_ERROR, "near unexpected token `newline'");
 		return (NULL);
 	}
 	new_redir = create_redirect_node(
@@ -80,11 +84,7 @@ int	append_redirect(t_token *current, t_command_parsing *structure)
 
 	new_red = extract_redirect(current);
 	if(!new_red)
-	{
-		write(1, "1\n", 2);
 		return (1);
-	}
-	
 	if(!structure->redirect)
 		structure->redirect = new_red;
 	else
@@ -104,8 +104,7 @@ int	append_args(t_token *current, t_command_parsing *structure)
 
 	new_ref = extract_args(current);
 	if(!new_ref)
-		return (0);
-	
+		return (1);
 	if(!structure->args)
 		structure->args = new_ref;
 	else
@@ -115,7 +114,7 @@ int	append_args(t_token *current, t_command_parsing *structure)
 			tmp = tmp->next;
 		tmp->next = new_ref;
 	}
-	return (1);
+	return (0);
 }
 
 t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
@@ -127,7 +126,10 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 		return (NULL);
 	structure = malloc(sizeof(t_command_parsing));
 	if(!structure)
+	{
+		check_error(ENOMEM, "Command parsing 1");
 		return (NULL);
+	}
 	structure->redirect = NULL;
 	structure->args = NULL;
 	
@@ -139,17 +141,16 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 		{
 			if (append_redirect(current, structure))
 			{
-				write(1, "no redd\n", 9);
-				// free(structure);
+				free_structure(structure);
 				return (NULL);
 			}
 			current = current->next;
 		}
 		else 
 		{
-			if(!append_args(current, structure))
+			if(append_args(current, structure))
 			{
-				write(1, "no node\n", 9);
+				free_structure(structure);
 				return (NULL);
 			}
 		}
@@ -157,3 +158,36 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 	}
 	return (structure);
 }
+
+// int extract_red_and_args(t_token *head, t_token *end, t_command_parsing **structure)
+// {
+// 	t_token				*current;
+	
+// 	if(!head || !end)
+// 		return (1);
+// 	current = head;
+// 	while(current != end)
+// 	{
+// 		if(current->type == T_APPEND || current->type == T_HEREDOC ||
+// 			current->type == T_IN || current->type == T_OUT )
+// 		{
+// 			if (append_redirect(current, *structure))
+// 			{
+// 				free_structure(*structure);
+// 				return (check_error(ENOMEM, "Command parsing"));
+// 			}
+// 			current = current->next;
+// 		}
+// 		else 
+// 		{
+// 			if(append_args(current, *structure))
+// 			{
+// 				free_structure(*structure);
+// 				return (check_error(ENOMEM, "Command parsing"));
+// 			}
+// 		}
+// 		current = current->next;
+// 	}
+// 	return (0);
+// }
+

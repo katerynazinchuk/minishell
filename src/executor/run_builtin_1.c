@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 16:39:17 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:37:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,6 @@ int	builtin_cd(char **argv, t_env_list *env_list)
 	(void)env_list;
 	if (!argv[1])
 		return (check_error(CD_ERR, "path required"));
-    // {
-    //     ft_putstr_fd("cd: path required\n", 2);
-	// 	return (1);
-    // }
 	if (argv[2])
 		return (check_error(CD_ERR, " too many arguments"));
 	if(!getcwd(old_pwd, sizeof(old_pwd)))

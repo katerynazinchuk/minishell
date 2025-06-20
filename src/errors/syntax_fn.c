@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_fn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:23:30 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/19 21:10:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:43 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	handle_syntax_error(int code, char *context)
 	ft_putstr_fd("minishel: syntax error: ", 2);
 	if (context)
 		ft_putstr_fd(context, 2);
+	ft_putstr_fd("\n", 2);
 	return (1);
 }
 int	handle_token_error(int code, char *context)

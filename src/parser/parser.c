@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 14:23:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:46:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ t_ast_node	*create_ast_node(t_ast_type type, char **command)
 	t_ast_node	*ast_node;
 
 	ast_node = (t_ast_node *)malloc(sizeof(t_ast_node));
+	if(!ast_node)
+	{
+		check_error(ENOMEM, "minishell : ast_node");
+		return (NULL);
+	}
 	ast_node->type = type;
 	ast_node->value = command;
 	ast_node->redir = NULL;
@@ -35,24 +40,18 @@ t_ast_node *parse_command(t_token *head, t_token *end)
 	current = head;
 	new_ast_node = create_ast_node(AST_COMMAND, NULL);
 	if (!new_ast_node)
-	{
-		printf("minishell: memory allocation error\n");
 		return (NULL);
-	}
 	structure = extract_red_and_args(head, end);
 	if (!structure)
 	{
-		write(1, "no struct\n", 11);
 		free_ast(&new_ast_node);
 		return (NULL);
 	}
 	new_ast_node->value = tokens_to_argv(structure->args);
 	if(!new_ast_node->value)
-		return (NULL);//??
-	new_ast_node->redir = structure->redirect;
-	
+		return (NULL);
+	new_ast_node->redir = structure->redirect;	
 	free_structure(structure);
-	// free(structure);
 	return (new_ast_node);
 }
 
@@ -116,7 +115,10 @@ char	**tokens_to_argv(t_com_tokens *head)
 	}
 	argv = malloc(sizeof(char *) * (count + 1));
 	if(!argv)
+	{
+		check_error(ENOMEM, "minishell: command parsing: ");
 		return(NULL);
+	}
 	main = head;
 	count = 0;
 	while(main && main->word != NULL && main->word->type == T_WORD)
@@ -127,6 +129,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 			while(--count >= 0)
 				free(argv[count]);
 			free(argv);
+			check_error(ENOMEM, "minishell: command parsing: ");
 			return (NULL);
 		}
 		count++;

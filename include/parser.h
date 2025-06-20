@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:32:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:46:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void				free_ast(t_ast_node **ast);
 t_red_type			define_redirection(t_tok_type token_type);
 t_redir				*create_redirect_node(t_red_type red, char *connection, t_quoted quoted);
 
-t_command_parsing	*extract_red_and_args(t_token *head, t_token *end);
+t_command_parsing 	*extract_red_and_args(t_token *head, t_token *end);
 t_com_tokens		*extract_args(t_token *current);
 t_redir				*extract_redirect(t_token *current);
 int					append_redirect(t_token *current, t_command_parsing *structure);
