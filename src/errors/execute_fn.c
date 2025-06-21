@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:30:21 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/20 16:34:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:35:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	handle_cmd_not_found(int code, char *context)
 int	handle_cd_error(int code, char *context)
 {
 	(void)code;
-	ft_putstr_fd("cd :", 2);
+	ft_putstr_fd("cd : ", 2);
 	ft_putstr_fd(context, 2);
 	ft_putstr_fd("\n", 2);
 	return (1);

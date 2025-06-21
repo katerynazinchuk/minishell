@@ -6,12 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:31:28 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:32:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:25:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 #define PARSER_H
+# include "token.h"
+
 
 typedef enum	s_ast_type
 {

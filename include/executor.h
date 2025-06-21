@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 12:20:40 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:51:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		find_path(char **value, t_env_list *env_list);
 void	free_arr(char **arr);
 void	close_pipe_fd(int *pipe_fd);
 void	restore_fd(t_session *session);
-void	free_in_fork(t_session *session, char **env_arr);
+int		free_in_fork(t_session *session, char **env_arr);
 bool	is_new_line(char *str);
 
 /* Builtin */

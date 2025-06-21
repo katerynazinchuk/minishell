@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:01:07 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/16 17:34:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:34:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		builtin_exit(char **argv, t_env_list *env_list)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(argv[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(255);
+			exit(2);
 		}
 	}
 	exit (0);

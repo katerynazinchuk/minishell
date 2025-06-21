@@ -87,6 +87,6 @@ fclean: clean
 re: fclean all
 
 valgrind: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=valgrind.log ./$(NAME)
 
 .PHONY: all clean fclean re valgrind

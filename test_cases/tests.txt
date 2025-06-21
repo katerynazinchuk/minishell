@@ -9,3 +9,4 @@ minishell> "$USER biugb $PWD $PWD"
 
 AST_COMMAND: [tchernia biugb /home/tchernia/Downloads/4_Minishell /home/tchernia/Downloads/4_Minishell] 
 minishell> 
+

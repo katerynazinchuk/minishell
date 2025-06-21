@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 17:23:31 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:55:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	check_pathes(t_env_list *env_list, char ***pathes)
 		return (1);//execve will process error with "path not found"
 	*pathes = ft_split(env_value, ':');
 	if (!*pathes)
-		return (1);//malloc error
+		return (check_error(ENOMEM, "minishell : execute"));
 	return (0);
 }
 

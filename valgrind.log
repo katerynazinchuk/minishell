@@ -1,0 +1,194 @@
+==66569== Memcheck, a memory error detector
+==66569== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==66569== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==66569== Command: ./minishell
+==66569== Parent PID: 66568
+==66569== 
+==66702== 
+==66702== HEAP SUMMARY:
+==66702==     in use at exit: 208,215 bytes in 225 blocks
+==66702==   total heap usage: 759 allocs, 534 frees, 236,871 bytes allocated
+==66702== 
+==66702== LEAK SUMMARY:
+==66702==    definitely lost: 0 bytes in 0 blocks
+==66702==    indirectly lost: 0 bytes in 0 blocks
+==66702==      possibly lost: 0 bytes in 0 blocks
+==66702==    still reachable: 0 bytes in 0 blocks
+==66702==         suppressed: 208,215 bytes in 225 blocks
+==66702== 
+==66702== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--66702-- 
+--66702-- used_suppression:     62 <Readline> readline.supp:2 suppressed: 204,155 bytes in 221 blocks
+--66702-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,060 bytes in 4 blocks
+==66702== 
+==66702== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==66701== 
+==66701== Process terminating with default action of signal 13 (SIGPIPE)
+==66701==    at 0x4A37887: write (write.c:26)
+==66701==    by 0x40568D: sigint_main (signal.c:25)
+==66701==    by 0x496551F: ??? (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==66701==    by 0x4A0D3E7: wait4 (wait4.c:30)
+==66701==    by 0x406E7A: run_external (run_external.c:43)
+==66701==    by 0x4059D4: run_cmd (executor.c:48)
+==66701==    by 0x405805: run_ast (executor.c:29)
+==66701==    by 0x405A6B: child_left (executor.c:99)
+==66701==    by 0x40586F: run_pipe (executor.c:62)
+==66701==    by 0x4057F0: run_ast (executor.c:27)
+==66701==    by 0x40578C: executor (executor.c:17)
+==66701==    by 0x4073B0: process_line (rewrite_main.c:90)
+==66701== 
+==66701== HEAP SUMMARY:
+==66701==     in use at exit: 221,860 bytes in 549 blocks
+==66701==   total heap usage: 759 allocs, 210 frees, 236,871 bytes allocated
+==66701== 
+==66701== 3 bytes in 1 blocks are still reachable in loss record 1 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x407A44: ft_strdup (ft_strdup.c:20)
+==66701==    by 0x404658: tokens_to_argv (parser.c:124)
+==66701==    by 0x4044FA: parse_command (parser.c:49)
+==66701==    by 0x4047F4: parse_pipe (parser.c:93)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 4 bytes in 1 blocks are still reachable in loss record 2 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x407A44: ft_strdup (ft_strdup.c:20)
+==66701==    by 0x404658: tokens_to_argv (parser.c:124)
+==66701==    by 0x4044FA: parse_command (parser.c:49)
+==66701==    by 0x40483E: parse_pipe (parser.c:101)
+==66701==    by 0x4047B3: parse_pipe (parser.c:87)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 4 bytes in 4 blocks are still reachable in loss record 3 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x407A44: ft_strdup (ft_strdup.c:20)
+==66701==    by 0x407AEE: ft_substr (ft_substr.c:38)
+==66701==    by 0x40349C: fill_env_node (env_operations.c:86)
+==66701==    by 0x403308: fill_env_list (env_operations.c:29)
+==66701==    by 0x402638: init_shell (init_shell.c:17)
+==66701==    by 0x407196: main (rewrite_main.c:35)
+==66701== 
+==66701== 16 bytes in 1 blocks are still reachable in loss record 19 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x4045DA: tokens_to_argv (parser.c:117)
+==66701==    by 0x4044FA: parse_command (parser.c:49)
+==66701==    by 0x40483E: parse_pipe (parser.c:101)
+==66701==    by 0x4047B3: parse_pipe (parser.c:87)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 16 bytes in 1 blocks are still reachable in loss record 20 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x4045DA: tokens_to_argv (parser.c:117)
+==66701==    by 0x4044FA: parse_command (parser.c:49)
+==66701==    by 0x4047F4: parse_pipe (parser.c:93)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 24 bytes in 1 blocks are still reachable in loss record 22 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x403371: init_env_list (env_operations.c:45)
+==66701==    by 0x4032C0: fill_env_list (env_operations.c:23)
+==66701==    by 0x402638: init_shell (init_shell.c:17)
+==66701==    by 0x407196: main (rewrite_main.c:35)
+==66701== 
+==66701== 40 bytes in 1 blocks are still reachable in loss record 29 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x404408: create_ast_node (parser.c:19)
+==66701==    by 0x40478A: parse_pipe (parser.c:84)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 40 bytes in 1 blocks are still reachable in loss record 30 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x404408: create_ast_node (parser.c:19)
+==66701==    by 0x404475: parse_command (parser.c:36)
+==66701==    by 0x40483E: parse_pipe (parser.c:101)
+==66701==    by 0x4047B3: parse_pipe (parser.c:87)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 40 bytes in 1 blocks are still reachable in loss record 31 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x404408: create_ast_node (parser.c:19)
+==66701==    by 0x404475: parse_command (parser.c:36)
+==66701==    by 0x4047F4: parse_pipe (parser.c:93)
+==66701==    by 0x407416: parser (rewrite_main.c:99)
+==66701==    by 0x407344: process_line (rewrite_main.c:83)
+==66701==    by 0x4072EF: shell_loop (rewrite_main.c:74)
+==66701==    by 0x40722C: run_shell (rewrite_main.c:54)
+==66701==    by 0x4071D9: main (rewrite_main.c:40)
+==66701== 
+==66701== 1,319 bytes in 97 blocks are still reachable in loss record 60 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x407B42: ft_substr (ft_substr.c:41)
+==66701==    by 0x40343A: fill_env_node (env_operations.c:80)
+==66701==    by 0x403308: fill_env_list (env_operations.c:29)
+==66701==    by 0x402638: init_shell (init_shell.c:17)
+==66701==    by 0x407196: main (rewrite_main.c:35)
+==66701== 
+==66701== 2,328 bytes in 97 blocks are still reachable in loss record 65 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x40340F: fill_env_node (env_operations.c:77)
+==66701==    by 0x403308: fill_env_list (env_operations.c:29)
+==66701==    by 0x402638: init_shell (init_shell.c:17)
+==66701==    by 0x407196: main (rewrite_main.c:35)
+==66701== 
+==66701== 3,427 bytes in 93 blocks are still reachable in loss record 66 of 92
+==66701==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==66701==    by 0x407B42: ft_substr (ft_substr.c:41)
+==66701==    by 0x40349C: fill_env_node (env_operations.c:86)
+==66701==    by 0x403308: fill_env_list (env_operations.c:29)
+==66701==    by 0x402638: init_shell (init_shell.c:17)
+==66701==    by 0x407196: main (rewrite_main.c:35)
+==66701== 
+==66701== LEAK SUMMARY:
+==66701==    definitely lost: 0 bytes in 0 blocks
+==66701==    indirectly lost: 0 bytes in 0 blocks
+==66701==      possibly lost: 0 bytes in 0 blocks
+==66701==    still reachable: 7,261 bytes in 299 blocks
+==66701==         suppressed: 214,599 bytes in 250 blocks
+==66701== 
+==66701== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--66701-- 
+--66701-- used_suppression:     76 <Readline> readline.supp:2 suppressed: 210,539 bytes in 246 blocks
+--66701-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,060 bytes in 4 blocks
+==66701== 
+==66701== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==66569== 
+==66569== HEAP SUMMARY:
+==66569==     in use at exit: 208,267 bytes in 228 blocks
+==66569==   total heap usage: 817 allocs, 589 frees, 237,800 bytes allocated
+==66569== 
+==66569== LEAK SUMMARY:
+==66569==    definitely lost: 0 bytes in 0 blocks
+==66569==    indirectly lost: 0 bytes in 0 blocks
+==66569==      possibly lost: 0 bytes in 0 blocks
+==66569==    still reachable: 0 bytes in 0 blocks
+==66569==         suppressed: 208,267 bytes in 228 blocks
+==66569== 
+==66569== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--66569-- 
+--66569-- used_suppression:     62 <Readline> readline.supp:2 suppressed: 204,167 bytes in 221 blocks
+--66569-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,100 bytes in 7 blocks
+==66569== 
+==66569== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

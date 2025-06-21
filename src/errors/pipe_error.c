@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 12:57:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:51:46 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,40 +66,60 @@ bool first_pipe_error(char *line)
 	return (false);
 }
 
-char *join_input(char *line)
+char *join_input(char *line, int *flag, t_shell *shell)
 {
 	char *next_line;
 	char *joined_line;
 
-	next_line = readline("minishell> ");
+	setsignal(HEREDOC_SIG);
+	rl_event_hook = event_handler;
+	next_line = readline("pipe> ");
 	if (!next_line)
 	{
 		free(line);
+		check_error(errno, "minishell");
+		return (NULL);
+	}
+	if (g_signal != 0)
+	{
+		add_history(line);
+		shell->status = 128 + g_signal;
+		setsignal(MAIN_SIG);
+		free(line);
+		*flag = 1;
 		return (NULL);
 	}
 	joined_line = ft_strjoin(line, next_line);
 	free(next_line);
 	if (!joined_line)
+	{
+		check_error(ENOMEM, "minishell : create line");
 		return (NULL);
+	}
 	free(line);
 	return (joined_line);
 }
 
-int	check_input(char *line, char **result_line)
+int	check_input(char *line, t_session *session)
 {
+	int	flag;
+
 	if(!line)
 		return (1);
 	if (check_unmached_quotes(line))
 		return (2);
 	if (first_pipe_error(line))
 		return (2);
-	while (last_pipe_error(line))
+	flag = 0;
+	if (last_pipe_error(line))
 	{
-		line = join_input(line);
+		line = join_input(line, &flag, session->shell);
+		if (!line && flag)
+			return (2);
 		if(!line)
 			return (check_error(ENOMEM, "Join fail"));
 	}
-	*result_line = line;
+	session->line = line;
 	return (0);
 }
 

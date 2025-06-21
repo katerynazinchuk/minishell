@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 14:21:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:46:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ int	shell_loop(t_session *session)
 	int	input_status;
 	
 	if (update_prompt(&session->prompt))
-		return (0);//track enomem to comtinue loop
-	input_status = check_input(readline(session->prompt), &session->line);
+		return (0);//track enomem to continue loop
+	input_status = check_input(readline(session->prompt), session);
+	// input_status = check_input(readline(session->prompt), &session->line, session->shell);
 	if (input_status == 1)
 		return(shell_exit(session));
 	else if (input_status != 0)
@@ -94,13 +95,13 @@ int	parser(t_session *session)
 {
 	if(lexer(session))
 		return (1);
-	print_tokens(session);
+	// print_tokens(session);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
 		write(1, "no ast\n", 8);
 		return (1);
 	}
-	print_node(session->ast, 0);
+	// print_node(session->ast, 0);
 	return (0);
 }

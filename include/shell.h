@@ -6,13 +6,17 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/19 19:33:25 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:50:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 # include "parser.h"
+# include "env.h"
+# include "token.h"
+
+
 
 typedef struct s_shell
 {

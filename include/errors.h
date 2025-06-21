@@ -6,14 +6,16 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 16:35:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:44:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-#include "minishell.h"
+# include "minishell.h"
+# include "shell.h"
+
 
 //typedef int (*t_error_fn)(int errno, char *context, int exit_status, int should_return);
 typedef int (*t_error_fn)(int code, char *context);
@@ -31,9 +33,8 @@ typedef struct s_error
 bool	check_unmached_quotes(char *line);
 bool	last_pipe_error(char *line);
 bool	first_pipe_error(char *line);
-char	*join_input(char *line);
-int		check_input(char *line, char **session_line);
-
+char	*join_input(char *line, int *flag, t_shell *shell);
+int		check_input(char *line, t_session *session);
 
 
 /* ________________________________ */

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 17:06:42 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:29:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,13 +210,10 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
 	{
+		write(1, "1234\n", 5);
+		ft_putnbr_fd(shell->status, 1);
+		write(1, "\n", 1);
 		exp->str = ft_itoa(shell->status);
-		if (exp->len_var != 1)
-		{
-			tmp = ft_strjoin(exp->str, exp->var +1);
-			free(exp->str);
-			exp->str = tmp;
-		}
 	}
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 17:23:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:53:11 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,15 @@ int	run_external(t_ast_node *node, t_session *session)
 	{
 		env_arr = env_to_arr(session->shell->env_list);
 		if (!env_arr)
-		{
-			free_in_fork(session, NULL);
-			errno = ENOMEM;
-			perror("minishell executor ");
-			exit (1);
-		}
+			exit (free_in_fork(session, NULL));
 		if (!find_path(node->value, session->shell->env_list))
-		{
-			free_in_fork(session, env_arr);
-			exit(check_error(ENOMEM, NULL));
-			// errno = ENOMEM;
-			// perror("minishell executor ");
-			// exit(1);
-		}
+			exit(free_in_fork(session, NULL));
 		if(execve(node->value[0], node->value, env_arr) == -1)
 		{
 			if (errno == ENOENT)
 				exit_status = check_error(CMD_NOT_FOUND, node->value[0]);
 			else
-				exit_status = check_error(errno, "execve error");
-				// perror("minishel execute ");
+				exit_status = check_error(errno, "minishell : execve error");
 			free_in_fork(session, env_arr);
 			exit (exit_status);
 		}
