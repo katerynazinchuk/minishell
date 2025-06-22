@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/21 18:51:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:04:03 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ bool check_unmached_quotes(char *line)
 		i++;
 	}
 	if(quote != 0)
-	{
-		return (check_error(SYNTAX_ERROR, "unclosed quote\n"));
-		// printf("minishell: syntax error: unclosed quote\n");
-		// return (true);
-	}
+		return (check_error(SYNTAX_ERROR, "unclosed quote", GENERAL));
 	return (false);
 }
 
@@ -58,11 +54,8 @@ bool first_pipe_error(char *line)
 	while (line[i] && is_whitespace(line[i]))
 		i++;
 	if (line[i] == '|')
-		return (check_error(SYNTAX_ERROR, "unexpected token `|'\n"));
-	// {
-	// 	printf("minishell: syntax error: unexpected token `|'\n");
-	// 	return (true);
-	// }
+		return (check_error(SYNTAX_ERROR, "unexpected token `|'", GENERAL));
+
 	return (false);
 }
 
@@ -70,30 +63,32 @@ char *join_input(char *line, int *flag, t_shell *shell)
 {
 	char *next_line;
 	char *joined_line;
+	(void)flag;
+	(void)shell;
 
-	setsignal(HEREDOC_SIG);
-	rl_event_hook = event_handler;
+	// setsignal(HEREDOC_SIG);
+	// rl_event_hook = event_handler;
 	next_line = readline("pipe> ");
 	if (!next_line)
 	{
 		free(line);
-		check_error(errno, "minishell");
+		check_error(ENOMEM, NULL, GENERAL);//TODO track this
 		return (NULL);
 	}
-	if (g_signal != 0)
-	{
-		add_history(line);
-		shell->status = 128 + g_signal;
-		setsignal(MAIN_SIG);
-		free(line);
-		*flag = 1;
-		return (NULL);
-	}
+	// if (g_signal != 0)
+	// {
+	// 	add_history(line);
+	// 	shell->status = 128 + g_signal;
+	// 	setsignal(MAIN_SIG);
+	// 	free(line);
+	// 	*flag = 1;
+	// 	return (NULL);
+	// }
 	joined_line = ft_strjoin(line, next_line);
 	free(next_line);
 	if (!joined_line)
 	{
-		check_error(ENOMEM, "minishell : create line");
+		check_error(ENOMEM, "Create line", GENERAL);
 		return (NULL);
 	}
 	free(line);
@@ -117,7 +112,7 @@ int	check_input(char *line, t_session *session)
 		if (!line && flag)
 			return (2);
 		if(!line)
-			return (check_error(ENOMEM, "Join fail"));
+			return (check_error(ENOMEM, "Join fail", GENERAL));
 	}
 	session->line = line;
 	return (0);

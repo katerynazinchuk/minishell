@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/21 16:46:36 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:16:02 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 	
 	init_shell(&shell, env);
 	if (!shell.env_list)
-		return (check_error(ENOMEM, "can't create env_list"));
+		return (check_error(ENOMEM, "can't create env_list", GENERAL));
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
@@ -99,7 +99,6 @@ int	parser(t_session *session)
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
-		write(1, "no ast\n", 8);
 		return (1);
 	}
 	// print_node(session->ast, 0);

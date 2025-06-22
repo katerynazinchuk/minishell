@@ -6,24 +6,33 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/21 18:55:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:55:57 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
 
-static int	verify_cmd_path(char **pathes, char **val, const char *cmd, int *f);
+static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f);
 static int	check_pathes(t_env_list *env_list, char ***pathes);
+static int	check_access(char *cmd);
 
 /* need to decide with return value to track malloc errors */
 int	find_path(char **value, t_env_list *env_list)
 {
 	char		**pathes;
 	char		**keep_start;
-	const char	*cmd;
+	char		*cmd;
 	int			flag;
+	int			status;
 
 	cmd = value[0];
+	if (ft_strchr(cmd, '/'))
+	{
+		status = check_access(cmd);
+		if (status)
+			return (status);
+	}
 	if (check_pathes(env_list, &pathes))
 		return (0);
 	keep_start = pathes;
@@ -48,12 +57,12 @@ static int	check_pathes(t_env_list *env_list, char ***pathes)
 		return (1);//execve will process error with "path not found"
 	*pathes = ft_split(env_value, ':');
 	if (!*pathes)
-		return (check_error(ENOMEM, "minishell : execute"));
+		return (check_error(ENOMEM, "execute", GENERAL));
 	return (0);
 }
 
 
-static int	verify_cmd_path(char **pathes, char **val, const char *cmd, int *f)
+static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f)
 {
 	char		full_path[PATH_MAX];
 	int			len_path;
@@ -77,114 +86,19 @@ static int	verify_cmd_path(char **pathes, char **val, const char *cmd, int *f)
 	return (0);
 }
 
-/* static char	*build_and_check_path(char **pathes, char *cmd, int *error_code);
-
-bool	find_path(char **value, t_env_list *env_list)
+static int	check_access(char *cmd)
 {
-	char	**pathes;
-	char	*full_path;
-	char	**keep_start;
-	char	*env_value;
+	struct stat sb;
 
-	if (!get_env_value("PATH", env_list, &env_value))
-		return (NULL);
-	pathes = ft_split(env_value, ':');
-	if (!pathes || !pathes[0])//TODO do we need to set error code?
-		return (NULL);
-	keep_start = pathes;
-	full_path = NULL;
-	while (*pathes)
-	{
-		full_path = build_and_check_path(pathes, value);
-		if (full_path)
-			break ;
-		pathes++;
-	}
-	free(env_value);
-	free_arr(keep_start);
-	return (full_path);
-} */
-
-/*  we need to track error_codes 
-static char	*build_and_check_path(char **pathes, char *cmd, int *error_code)
-{
-	char	path[PATH_MAX];
-	char	*full_path;
-	
-	ft_strlcpy(path, *pathes, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
-	ft_strlcat(path, cmd, PATH_MAX);
-	if (access(path, X_OK) == 0)
-	{
-		full_path = ft_strdup(path);
-		if(!full_path)
-		{
-			*error_code = ENOMEM;
-			return(NULL);
-		}
-		*error_code = 0;
-		return (full_path);
-	}
-	else
-	{
-		*error_code = 200;//our personal error code for "command not found"
-		return (NULL);
-	}
-} */
-
-/* static char	*build_and_check_path(char **pathes, char *cmd, int *error_code);
-
-char	*find_path(char *cmd, t_env_list *env_list, int error_code)
-{
-	char	**pathes;
-	char	*full_path;
-	char	**keep_start;
-	char	*env_value;
-
-	if (!get_env_value("PATH", env_list, &env_value))
-		return (NULL);
-	pathes = ft_split(env_value, ':');
-	if (!pathes || !pathes[0])//TODO do we need to set error code?
-		return (NULL);
-	keep_start = pathes;
-	full_path = NULL;
-	while (*pathes)
-	{
-		full_path = build_and_check_path(pathes, cmd, &error_code);
-		if (full_path)
-			break ;
-		pathes++;
-	}
-	free(env_value);
-	free_arr(keep_start);
-	return (full_path);
+	if (stat(cmd, &sb) == -1)
+		return (check_error(errno, cmd, EXEC));
+	if (S_ISDIR(sb.st_mode))
+		return (check_error(IS_DIR, cmd, EXEC));
+	if (access(cmd, X_OK) == -1)
+		return (check_error(EACCES, cmd, EXEC));
+	return (0);
 }
 
- we need to track error_codes 
-static char	*build_and_check_path(char **pathes, char *cmd, int *error_code)
-{
-	char	path[PATH_MAX];
-	char	*full_path;
-	
-	ft_strlcpy(path, *pathes, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
-	ft_strlcat(path, cmd, PATH_MAX);
-	if (access(path, X_OK) == 0)
-	{
-		full_path = ft_strdup(path);
-		if(!full_path)
-		{
-			*error_code = ENOMEM;
-			return(NULL);
-		}
-		*error_code = 0;
-		return (full_path);
-	}
-	else
-	{
-		*error_code = 200;//our personal error code for "command not found"
-		return (NULL);
-	}
-} */
+
 
 

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:21:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:58:05 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int fill_tokens(char *line, t_token_list **tokens)
 	
 	list = init_token_list();
 	if (!list)
-		return (check_error(ENOMEM, "create tokens: "));
+		return (check_error(ENOMEM, "create tokens", GENERAL));
 	init_lexer_state(&lexer, line);
 	while (lexer.input[lexer.current])//str[i]
 	{
@@ -107,14 +107,14 @@ int fill_tokens(char *line, t_token_list **tokens)
 		else if(!add_word_token(list, &lexer))
 		{
 			free_token_list(list);
-			return (check_error(ENOMEM, "create tokens :"));
+			return (check_error(ENOMEM, "create tokens", GENERAL));
 		}
 	}
 	eof = create_token("eof", T_EOF, UNQUOTED);
 	if (!eof)
 	{
 		free_token_list(list);
-		return (check_error(ENOMEM, "create tokens :"));
+		return (check_error(ENOMEM, "create tokens", GENERAL));
 	}
 	add_to_token_list(list, eof);
 	*tokens = list;
@@ -151,7 +151,7 @@ int	move_to_token_expand(t_token_list *list)
 		{
 			current->expanded = join_segments(current->segment, &current->quoted);
 			if(!current->expanded)
-				return (check_error(ENOMEM, "create tokens: "));
+				return (check_error(ENOMEM, "create tokens", GENERAL));
 		}
 		current = current->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 15:49:04 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:10:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_redir	*extract_redirect(t_token *current)
 	next = current->next;
 	if(!next || next->type != T_WORD)
 	{
-		check_error(SYNTAX_ERROR, "near unexpected token `newline'");//TODO  text for error
+		check_error(SYNTAX_ERROR, "near unexpected token `newline'", GENERAL);//TODO  text for error
 		return (NULL);
 	}
 	new_redir = create_redirect_node(
@@ -67,7 +67,7 @@ t_redir	*extract_redirect(t_token *current)
 		next->quoted);
 	if(!new_redir)
 	{
-		check_error(ENOMEM, "create redirection");
+		check_error(ENOMEM, "create redirection", GENERAL);
 		return (NULL);//only allocate error
 	}
 	return(new_redir);

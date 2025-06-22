@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/21 17:02:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:10:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)//TODO do we need
 	id_str = ft_itoa(heredoc_id);
 	if (!id_str)
 	{
-		*exit_status = check_error(ENOMEM, "minishell : heredoc");
+		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
 	filename = ft_strjoin("/tmp/heredoc_", id_str);//TODO valgrind
 	free(id_str);
 	if(!filename)
 	{
-		*exit_status = check_error(ENOMEM, "minishell : heredoc");
+		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
 	return(filename);

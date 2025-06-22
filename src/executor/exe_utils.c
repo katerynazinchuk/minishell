@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/21 18:45:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:13:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*to_str(t_env_type *cur)
 	str = ft_calloc(sizeof(char), len + 1);//1 for '\0'
 	if (!str)
 	{
-		check_error(ENOMEM, "minishell : executor");
+		check_error(ENOMEM, "executor", GENERAL);
 		return (NULL);
 	}
 	ft_strlcat(str, cur->key, len + 1);
@@ -39,7 +39,7 @@ char	**env_to_arr(t_env_list *env_list)
 	env_arr = (char **)ft_calloc(sizeof(char *), env_list->size + 1);
 	if (!env_arr)
 	{
-		check_error(ENOMEM, "minishell : executor");
+		check_error(ENOMEM, "executor", GENERAL);
 		return (NULL);
 	}
 	current = env_list->head;

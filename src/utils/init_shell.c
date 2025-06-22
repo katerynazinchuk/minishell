@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/21 18:50:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:59:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	update_prompt(char **prompt)
 	if (!log_name)
 		log_name = ft_strdup("unknown");
 	if (!log_name)
-		return (check_error(ENOMEM, "prompt: "));//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
 	new_prompt = ft_strjoin(log_name, ":~$ ");
 	free(log_name);
 	if (!new_prompt)
-		return (check_error(ENOMEM, "prompt: "));//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
 	free(*prompt);
 	*prompt = new_prompt;
 	return (0);

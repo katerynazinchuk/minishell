@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   segment.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/04 12:33:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:17:44 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
 
 t_segment *create_segment(char *value, t_q_type q_type)
 {

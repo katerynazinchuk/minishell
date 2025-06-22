@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 12:20:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:02:14 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int	run_cmd(t_ast_node *node, t_session *session)
 	
 	if (apply_redir(node->redir))
 		return (1);
-	// {
-	// 	write(2, "Error redirect\n", 16);
-	// 	return (1);
-	// }
 	if (!node->value[0])
 		return (0);
 	builtin_fn = get_builtin_fn(node->value[0]);

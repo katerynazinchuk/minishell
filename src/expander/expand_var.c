@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/21 18:29:34 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:09:22 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,8 @@ int	expand_segments(t_session *session)//треба почистити резу�
 		{
 			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
 			{
-				
 				if (check_subs(seg->value))
-				{
-					
-					return (check_error(BAD_SUBS, seg->value));
-				}
+					return (check_error(BAD_SUBS, seg->value, GENERAL));
 				else
 					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
 			}
@@ -51,7 +47,7 @@ int	expand_segments(t_session *session)//треба почистити резу�
 			if (!tmp)
 			{
 				free(seg->value);
-				return (check_error(ENOMEM, "create tokens: "));
+				return (check_error(ENOMEM, "create tokens: ", GENERAL));
 			}
 			free(seg->value);
 			seg->value = tmp;
@@ -130,7 +126,8 @@ char	*expand_value(char *raw, t_shell *shell)
 {
 	t_expand_type	exp;
 
-	init_exp(&exp, raw);
+	if (init_exp(&exp, raw))
+		return (NULL);
 	while (raw[exp.i])
 	{
 		if (raw[exp.i] == '$')
@@ -144,7 +141,11 @@ char	*expand_value(char *raw, t_shell *shell)
 			else
 			{
 				exp.i++;
-				process_var(raw, &exp, shell);
+				if (process_var(raw, &exp, shell))
+				{
+					error_free(&exp);
+					return (NULL);
+				}
 				exp.i+=exp.len_var;
 				free_exp(&exp);
 			}
@@ -183,7 +184,11 @@ void	extract_var(char *raw, t_expand_type *exp)
 	{
 		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var])
 			&& !is_quote(raw[exp->len_var]))
+		{
 			exp->len_var++;
+			if (raw[exp->len_var] != '?')
+				break ;
+		}
 		exp->var = ft_strndup(raw, exp->len_var);
 	}
 }
@@ -209,12 +214,7 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 	else if (ft_isdigit(*exp->var))
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
-	{
-		write(1, "1234\n", 5);
-		ft_putnbr_fd(shell->status, 1);
-		write(1, "\n", 1);
 		exp->str = ft_itoa(shell->status);
-	}
 	else
 		exp->str = ft_strdup("");//неіснуюча змінна
 }

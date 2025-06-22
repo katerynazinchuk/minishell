@@ -47,8 +47,7 @@ UTILS = src/utils/utils.c \
 		src/utils/utils_main.c \
 		src/utils/shell_debug.c
 
-ERRORS = src/errors/lexer_error.c \
-		src/errors/dispatch_errors.c \
+ERRORS = src/errors/dispatch_errors.c \
 		src/errors/common_errors.c \
 		src/errors/pipe_error.c \
 		src/errors/syntax_fn.c \
@@ -86,7 +85,14 @@ fclean: clean
 
 re: fclean all
 
+#valgrind: $(NAME)
+#	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=valgrind.log ./$(NAME)
+
+LOG_DIR := valgrind_logs
+
 valgrind: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=valgrind.log ./$(NAME)
+	@mkdir -p $(LOG_DIR)
+	@VALGRIND_LOG_FILE=$(LOG_DIR)/valgrind_$(shell date +"%Y%m%d_%H%M%S").log; \
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=$$VALGRIND_LOG_FILE ./$(NAME)
 
 .PHONY: all clean fclean re valgrind
