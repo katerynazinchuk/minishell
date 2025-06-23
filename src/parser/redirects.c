@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:16:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:56:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_com_tokens *extract_args(t_token *current)
 	new_ref = malloc(sizeof(t_com_tokens));
 	if(!new_ref)
 	{
-		check_error(ENOMEM, "create arguments");
+		check_error(ENOMEM, "create arguments", GENERAL);
 		return (NULL);
 	}
 	new_ref->word = current;
@@ -127,7 +127,7 @@ t_command_parsing *extract_red_and_args(t_token *head, t_token *end)
 	structure = malloc(sizeof(t_command_parsing));
 	if(!structure)
 	{
-		check_error(ENOMEM, "Command parsing 1");
+		check_error(ENOMEM, "Command parsing ", GENERAL);
 		return (NULL);
 	}
 	structure->redirect = NULL;

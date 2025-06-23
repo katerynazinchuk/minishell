@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:49:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 18:55:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:53:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token_list *init_token_list(void)
 	list = (t_token_list *)malloc(sizeof(t_token_list));
 	if (!list)
 	{
-		check_error(ENOMEM, "minishell : token list");
+		check_error(ENOMEM, "minishell : token list", GENERAL);
 		return (NULL);
 	}
 	list->head = NULL;

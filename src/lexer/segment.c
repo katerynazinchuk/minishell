@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   segment.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:15:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:54:01 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_segment *create_segment(char *value, t_q_type q_type)
 	t_segment *segment = malloc(sizeof(t_segment));
 	if(!segment)
 	{
-		check_error(ENOMEM, "minishell : segment");
+		check_error(ENOMEM, "minishell : segment", GENERAL);
 		return (NULL);
 	}
 	segment->value = value;

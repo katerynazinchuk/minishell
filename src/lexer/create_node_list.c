@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 19:13:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:53:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token *create_token(char *value, t_tok_type types, t_quoted quoted)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if(!new_token)
 	{
-		check_error(ENOMEM, "minishell : lexer");
+		check_error(ENOMEM, "minishell : lexer", GENERAL);
 		return (NULL);
 	}
 	if(value)
@@ -28,7 +28,7 @@ t_token *create_token(char *value, t_tok_type types, t_quoted quoted)
 		new_token->expanded = NULL;
 	if (!new_token->expanded && value)
 	{
-		check_error(ENOMEM, "minishell : lexer");
+		check_error(ENOMEM, "minishell : lexer", GENERAL);
 		free(new_token);
 		return (NULL);
 	}

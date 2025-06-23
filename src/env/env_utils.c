@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 19:52:27 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:55:48 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	get_env_value(const char *var, t_env_list *env_list, char **result)
 	{
 		// write(1, "9\n", 2);
 		return (0);
+	}
 	*result = cur->value;
 	return (1);
 }
@@ -74,6 +75,7 @@ int	update_env_list(const char *var, t_env_list *env_list, char *new_data)
 		return (ENOMEM);
 	return (0);//success
 }
+
 int set_env(t_env_list *env_list, const char *var, const char *value)
 {
 	t_env_type	*node;

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:51:36 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:56:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ast_node	*create_ast_node(t_ast_type type, char **command)
 	ast_node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if(!ast_node)
 	{
-		check_error(ENOMEM, "minishell : ast_node");
+		check_error(ENOMEM, "minishell : ast_node", GENERAL);
 		return (NULL);
 	}
 	ast_node->type = type;
@@ -108,7 +108,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 	argv = malloc(sizeof(char *) * (count + 1));
 	if(!argv)
 	{
-		check_error(ENOMEM, "minishell: command parsing: ");
+		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
 		return(NULL);
 	}
 	cur = head;
@@ -123,7 +123,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 				while(--count >= 0)
 					free(argv[count]);
 				free(argv);
-				check_error(ENOMEM, "minishell: command parsing: ");
+				check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
 			return (NULL);
 			}
 			count++;
