@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 12:31:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:15:30 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ t_segment *create_segment(char *value, t_q_type q_type)
 {
 	t_segment *segment = malloc(sizeof(t_segment));
 	if(!segment)
+	{
+		check_error(ENOMEM, "minishell : segment");
 		return (NULL);
+	}
 	segment->value = value;
 	segment->q_type = q_type;
 	segment->next = NULL;
@@ -79,7 +82,7 @@ char *join_segments(t_segment *segment, t_quoted *quoted)
 	result = malloc(total_len + 1);
 	if(!result)
 		return (NULL);
-	result[0] = '\0'; // Initialize the result string to an empty string
+	result[0] = '\0';
 	while(segment)
 	{
 		if(segment->q_type == Q_SINGLE || segment->q_type == Q_DOUBLE)

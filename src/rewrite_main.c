@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/22 18:16:02 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:13:57 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ int	parser(t_session *session)
 {
 	if(lexer(session))
 		return (1);
+	//print_tokens(session);
 	// print_tokens(session);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
 		return (1);
+	// print_node(session->ast, 0);
 	}
 	// print_node(session->ast, 0);
 	return (0);

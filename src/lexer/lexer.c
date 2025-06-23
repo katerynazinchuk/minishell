@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/22 17:58:05 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:12:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int fill_tokens(char *line, t_token_list **tokens)
 		else if (lexer.input[lexer.current] == '<' \
 			|| lexer.input[lexer.current] == '>')
 			add_redirection_token(list, &lexer);
-		else if(!add_word_token(list, &lexer))
+		else if(add_word_token(list, &lexer))
 		{
 			free_token_list(list);
 			return (check_error(ENOMEM, "create tokens", GENERAL));
