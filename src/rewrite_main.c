@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:23:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:52:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 	
 	init_shell(&shell, env);
 	if (!shell.env_list)
-		return (check_error(ENOMEM, "can't create env_list"));
+		return (check_error(ENOMEM, "can't create env_list", GENERAL));
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
@@ -63,8 +63,9 @@ int	shell_loop(t_session *session)
 	int	input_status;
 	
 	if (update_prompt(&session->prompt))
-		return (0);//track enomem to comtinue loop
-	input_status = check_input(readline(session->prompt), &session->line);
+		return (0);//track enomem to continue loop
+	input_status = check_input(readline(session->prompt), session);
+	// input_status = check_input(readline(session->prompt), &session->line, session->shell);
 	if (input_status == 1)
 		return(shell_exit(session));
 	else if (input_status != 0)
@@ -98,9 +99,10 @@ int	parser(t_session *session)
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
-		write(1, "no ast\n", 8);
 		return (1);
+	// print_node(session->ast, 0);
 	}
+	// print_node(session->ast, 0);
 	// print_node(session->ast, 0);
 	return (0);
 }

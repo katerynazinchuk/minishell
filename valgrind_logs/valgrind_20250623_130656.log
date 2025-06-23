@@ -1,0 +1,204 @@
+==26755== Memcheck, a memory error detector
+==26755== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==26755== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==26755== Command: ./minishell
+==26755== Parent PID: 26754
+==26755== 
+==26772== 
+==26772== HEAP SUMMARY:
+==26772==     in use at exit: 213,152 bytes in 307 blocks
+==26772==   total heap usage: 774 allocs, 467 frees, 240,358 bytes allocated
+==26772== 
+==26772== 656 bytes in 1 blocks are still reachable in loss record 28 of 68
+==26772==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26772==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26772==    by 0x405CC1: env_to_arr (exe_utils.c:39)
+==26772==    by 0x406EFD: run_external (run_external.c:27)
+==26772==    by 0x405B24: run_cmd (executor.c:44)
+==26772==    by 0x405955: run_ast (executor.c:29)
+==26772==    by 0x4058DC: executor (executor.c:17)
+==26772==    by 0x407620: process_line (rewrite_main.c:90)
+==26772==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26772==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26772==    by 0x40744B: main (rewrite_main.c:40)
+==26772== 
+==26772== 4,271 bytes in 81 blocks are still reachable in loss record 54 of 68
+==26772==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26772==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26772==    by 0x405DEC: to_str (exe_utils.c:21)
+==26772==    by 0x405D1A: env_to_arr (exe_utils.c:49)
+==26772==    by 0x406EFD: run_external (run_external.c:27)
+==26772==    by 0x405B24: run_cmd (executor.c:44)
+==26772==    by 0x405955: run_ast (executor.c:29)
+==26772==    by 0x4058DC: executor (executor.c:17)
+==26772==    by 0x407620: process_line (rewrite_main.c:90)
+==26772==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26772==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26772==    by 0x40744B: main (rewrite_main.c:40)
+==26772== 
+==26772== LEAK SUMMARY:
+==26772==    definitely lost: 0 bytes in 0 blocks
+==26772==    indirectly lost: 0 bytes in 0 blocks
+==26772==      possibly lost: 0 bytes in 0 blocks
+==26772==    still reachable: 4,927 bytes in 82 blocks
+==26772==         suppressed: 208,225 bytes in 225 blocks
+==26772== 
+==26772== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--26772-- 
+--26772-- used_suppression:     62 <Readline> readline.supp:2 suppressed: 204,167 bytes in 221 blocks
+--26772-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,058 bytes in 4 blocks
+==26772== 
+==26772== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==26826== 
+==26826== HEAP SUMMARY:
+==26826==     in use at exit: 213,200 bytes in 310 blocks
+==26826==   total heap usage: 818 allocs, 508 frees, 275,434 bytes allocated
+==26826== 
+==26826== 656 bytes in 1 blocks are still reachable in loss record 28 of 68
+==26826==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26826==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26826==    by 0x405CC1: env_to_arr (exe_utils.c:39)
+==26826==    by 0x406EFD: run_external (run_external.c:27)
+==26826==    by 0x405B24: run_cmd (executor.c:44)
+==26826==    by 0x405955: run_ast (executor.c:29)
+==26826==    by 0x4058DC: executor (executor.c:17)
+==26826==    by 0x407620: process_line (rewrite_main.c:90)
+==26826==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26826==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26826==    by 0x40744B: main (rewrite_main.c:40)
+==26826== 
+==26826== 4,271 bytes in 81 blocks are still reachable in loss record 54 of 68
+==26826==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26826==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26826==    by 0x405DEC: to_str (exe_utils.c:21)
+==26826==    by 0x405D1A: env_to_arr (exe_utils.c:49)
+==26826==    by 0x406EFD: run_external (run_external.c:27)
+==26826==    by 0x405B24: run_cmd (executor.c:44)
+==26826==    by 0x405955: run_ast (executor.c:29)
+==26826==    by 0x4058DC: executor (executor.c:17)
+==26826==    by 0x407620: process_line (rewrite_main.c:90)
+==26826==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26826==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26826==    by 0x40744B: main (rewrite_main.c:40)
+==26826== 
+==26826== LEAK SUMMARY:
+==26826==    definitely lost: 0 bytes in 0 blocks
+==26826==    indirectly lost: 0 bytes in 0 blocks
+==26826==      possibly lost: 0 bytes in 0 blocks
+==26826==    still reachable: 4,927 bytes in 82 blocks
+==26826==         suppressed: 208,273 bytes in 228 blocks
+==26826== 
+==26826== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--26826-- 
+--26826-- used_suppression:     62 <Readline> readline.supp:2 suppressed: 204,167 bytes in 221 blocks
+--26826-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,106 bytes in 7 blocks
+==26826== 
+==26826== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==26844== 
+==26844== HEAP SUMMARY:
+==26844==     in use at exit: 213,243 bytes in 313 blocks
+==26844==   total heap usage: 841 allocs, 528 frees, 275,836 bytes allocated
+==26844== 
+==26844== 656 bytes in 1 blocks are still reachable in loss record 28 of 68
+==26844==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26844==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26844==    by 0x405CC1: env_to_arr (exe_utils.c:39)
+==26844==    by 0x406EFD: run_external (run_external.c:27)
+==26844==    by 0x405B24: run_cmd (executor.c:44)
+==26844==    by 0x405955: run_ast (executor.c:29)
+==26844==    by 0x4058DC: executor (executor.c:17)
+==26844==    by 0x407620: process_line (rewrite_main.c:90)
+==26844==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26844==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26844==    by 0x40744B: main (rewrite_main.c:40)
+==26844== 
+==26844== 4,271 bytes in 81 blocks are still reachable in loss record 54 of 68
+==26844==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26844==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==26844==    by 0x405DEC: to_str (exe_utils.c:21)
+==26844==    by 0x405D1A: env_to_arr (exe_utils.c:49)
+==26844==    by 0x406EFD: run_external (run_external.c:27)
+==26844==    by 0x405B24: run_cmd (executor.c:44)
+==26844==    by 0x405955: run_ast (executor.c:29)
+==26844==    by 0x4058DC: executor (executor.c:17)
+==26844==    by 0x407620: process_line (rewrite_main.c:90)
+==26844==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==26844==    by 0x40749C: run_shell (rewrite_main.c:54)
+==26844==    by 0x40744B: main (rewrite_main.c:40)
+==26844== 
+==26844== LEAK SUMMARY:
+==26844==    definitely lost: 0 bytes in 0 blocks
+==26844==    indirectly lost: 0 bytes in 0 blocks
+==26844==      possibly lost: 0 bytes in 0 blocks
+==26844==    still reachable: 4,927 bytes in 82 blocks
+==26844==         suppressed: 208,316 bytes in 231 blocks
+==26844== 
+==26844== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--26844-- 
+--26844-- used_suppression:     62 <Readline> readline.supp:2 suppressed: 204,167 bytes in 221 blocks
+--26844-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,149 bytes in 10 blocks
+==26844== 
+==26844== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==27275== 
+==27275== HEAP SUMMARY:
+==27275==     in use at exit: 213,567 bytes in 321 blocks
+==27275==   total heap usage: 867 allocs, 546 frees, 275,000 bytes allocated
+==27275== 
+==27275== 656 bytes in 1 blocks are still reachable in loss record 33 of 73
+==27275==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27275==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==27275==    by 0x405CC1: env_to_arr (exe_utils.c:39)
+==27275==    by 0x406EFD: run_external (run_external.c:27)
+==27275==    by 0x405B24: run_cmd (executor.c:44)
+==27275==    by 0x405955: run_ast (executor.c:29)
+==27275==    by 0x4058DC: executor (executor.c:17)
+==27275==    by 0x407620: process_line (rewrite_main.c:90)
+==27275==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==27275==    by 0x40749C: run_shell (rewrite_main.c:54)
+==27275==    by 0x40744B: main (rewrite_main.c:40)
+==27275== 
+==27275== 4,271 bytes in 81 blocks are still reachable in loss record 59 of 73
+==27275==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27275==    by 0x407C2E: ft_calloc (ft_calloc.c:22)
+==27275==    by 0x405DEC: to_str (exe_utils.c:21)
+==27275==    by 0x405D1A: env_to_arr (exe_utils.c:49)
+==27275==    by 0x406EFD: run_external (run_external.c:27)
+==27275==    by 0x405B24: run_cmd (executor.c:44)
+==27275==    by 0x405955: run_ast (executor.c:29)
+==27275==    by 0x4058DC: executor (executor.c:17)
+==27275==    by 0x407620: process_line (rewrite_main.c:90)
+==27275==    by 0x40755F: shell_loop (rewrite_main.c:74)
+==27275==    by 0x40749C: run_shell (rewrite_main.c:54)
+==27275==    by 0x40744B: main (rewrite_main.c:40)
+==27275== 
+==27275== LEAK SUMMARY:
+==27275==    definitely lost: 0 bytes in 0 blocks
+==27275==    indirectly lost: 0 bytes in 0 blocks
+==27275==      possibly lost: 0 bytes in 0 blocks
+==27275==    still reachable: 4,927 bytes in 82 blocks
+==27275==         suppressed: 208,640 bytes in 239 blocks
+==27275== 
+==27275== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--27275-- 
+--27275-- used_suppression:     67 <Readline> readline.supp:2 suppressed: 204,449 bytes in 226 blocks
+--27275-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,191 bytes in 13 blocks
+==27275== 
+==27275== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==26755== 
+==26755== HEAP SUMMARY:
+==26755==     in use at exit: 208,659 bytes in 240 blocks
+==26755==   total heap usage: 823 allocs, 583 frees, 270,638 bytes allocated
+==26755== 
+==26755== LEAK SUMMARY:
+==26755==    definitely lost: 0 bytes in 0 blocks
+==26755==    indirectly lost: 0 bytes in 0 blocks
+==26755==      possibly lost: 0 bytes in 0 blocks
+==26755==    still reachable: 0 bytes in 0 blocks
+==26755==         suppressed: 208,659 bytes in 240 blocks
+==26755== 
+==26755== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--26755-- 
+--26755-- used_suppression:     65 <Readline> readline.supp:2 suppressed: 204,424 bytes in 224 blocks
+--26755-- used_suppression:      4 <Readline/AddHistory> readline.supp:10 suppressed: 4,235 bytes in 16 blocks
+==26755== 
+==26755== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

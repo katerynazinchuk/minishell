@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/05 12:14:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:07:08 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	check_subs(char *raw)
 	return (false);
 }
 
-void	init_exp(t_expand_type *exp, char *raw)
+int	init_exp(t_expand_type *exp, char *raw)
 {
 	exp->len_var = 0;
 	exp->len_raw = ft_strlen(raw);
@@ -31,9 +31,10 @@ void	init_exp(t_expand_type *exp, char *raw)
 	exp->j = 0;
 	exp->res = ft_calloc(exp->len_raw + 1, sizeof(char));
 	if (!exp->res)
-		return ;//what we need to free ?
+		return (1);
 	exp->var = NULL;
 	exp->str = NULL;
+	return (0);
 }
 
 bool	is_valid_var(char *var)

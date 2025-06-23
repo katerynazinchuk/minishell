@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 14:43:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:16:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int add_pipe_token(t_token_list *list, t_str_pos *lexer)
 	t_token	*new_token;
 	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
-		return (check_error(ENOMEM, "create token"));
+		return (check_error(ENOMEM, "create token", GENERAL));
 	add_to_token_list(list, new_token);//TODO check !!!
 	lexer->current++;
 	return (0);
 }
 
-void add_redirection_token(t_token_list *list, t_str_pos *lexer)
+void add_redirection_token(t_token_list *list, t_str_pos *lexer)//change to int
 {
 	if (lexer->input[lexer->current + 1] == '>' && lexer->input[lexer->current] == '>')
 	{
@@ -53,7 +53,7 @@ void add_redirection_token(t_token_list *list, t_str_pos *lexer)
 	}
 	else 
 	{
-		check_error(TOKEN_ERROR, &lexer->input[lexer->current]);//TODO test case
+		check_error(TOKEN_ERROR, &lexer->input[lexer->current], GENERAL);//TODO test case
 		// printf("minishell: syntax error near unexpected token `%c`\n", lexer->input[lexer->current]);
 		lexer->current++;
 	}
@@ -69,21 +69,21 @@ void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type
 	add_to_token_list(list, new_token);
 }	
 
-bool add_word_token(t_token_list *list, t_str_pos *lexer)
+int add_word_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token *token;
 
 	token = create_token(NULL, T_WORD, UNQUOTED);
 	if(!token)
-		return (false);
+		return (1);
 	token->segment = build_segment_list(lexer);//TODO what kind or errors are here?
 	if(!token->segment)
 	{
 		free(token);
-		return (false);
+		return (1);
 	}
 	add_to_token_list(list, token);
-	return (true);
+	return (0);
 }
 
 //echo "a|b" 'c>d' "<input" >output | grep "hello|world"

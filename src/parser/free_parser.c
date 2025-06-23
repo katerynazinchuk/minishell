@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:00:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/19 21:30:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:53:37 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void free_redirects(t_redir *redir)
 	while (current)
 	{
 		next = current->next;
-		free(current->connection); // assumes connection is dynamically allocated
+		free(current->connection);
 		free(current);
 		current = next;
 	}

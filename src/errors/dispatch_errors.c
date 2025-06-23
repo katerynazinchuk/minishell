@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/20 16:33:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:03:18 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,25 @@
 static t_error_fn	get_error_fn(int err_code);
 static t_error_fn	get_syntax_fn(int err_code);
 static t_error_fn	get_execute_fn(int err_code);
+static int			handle_std_error(int err_code, char *context, t_err_ctx ctx);
 
-//maybe when I have malloc_error I need to set errno inside function to show exaxtly malloc? like if (errno == ENOMEM) {errno = ENOMEM} perror(context); 
-// or always I can set errno = code;
-int	check_error(int err_code, char *context)
+int	check_error(int err_code, char *context, t_err_ctx ctx)
 {
 	t_error_fn	fn;
-	
+
 	if (err_code >= 200)
 	{
 		fn = get_error_fn(err_code);
 		if (fn)
 			return (fn(err_code, context));
 		else
-			return (1);//ft_putstr("Error not found\n");
+		{
+			ft_putstr_fd("Error not found\n", 2);
+			return (1);
+		}
 	}
 	else
-	{
-		if (err_code == ENOMEM)
-			errno = ENOMEM;
-		perror(context);
-		// if (err_code == ENOMEM)
-		// 	return (ENOMEM);//i need to track critical error to make exit from my minishell
-		return (1);//need to track how I go upper in code to finish this cycle and clean all
-	}
- 
+		return (handle_std_error(err_code, context, ctx));
 }
 // hash map (?) hash table
 static t_error_fn	get_error_fn(int err_code)
@@ -51,7 +45,6 @@ static t_error_fn	get_error_fn(int err_code)
 	return (NULL);
 }
 
-/* here we set syntax errors */
 static t_error_fn	get_syntax_fn(int err_code)
 {
 	static const t_error error[] = {
@@ -79,6 +72,7 @@ static t_error_fn	get_execute_fn(int err_code)
 		{REDIRECT_FAIL, handle_redirect_fail},
 		{CMD_NOT_FOUND, handle_cmd_not_found},
 		{CD_ERR, handle_cd_error},
+		{IS_DIR, handle_is_dir},
 		{0, NULL}
 		};
 	int							i;
@@ -92,31 +86,44 @@ static t_error_fn	get_execute_fn(int err_code)
 	}
 	return (NULL);
 }
-/* here we set execute errors 
-static t_error_fn	get_execute_fn(int err_code)
-{
-	static const t_error error[] = {
-		{200, command_not_found},
-		{201, bad_subs},
-		{202, syntax_error},
-		{NULL, NULL}
-		};
-	int							i;
-	
-	i = 0;
-	while (error[i].code)
-	{
-		if (error[i].code == err_code)
-			return (error[i].fn);
-		i++;
-	}
-	return (NULL);
-} */
 
-/* static const t_error_fn error[] = {
-	[SYNTAX_ERROR] = syntax_error
-	[BAD_SUBS] = bad_subs,
-	[EXECUTE_ERROR] = execute_error,
-	[REDIRECT_FAIL] = redirect_fail,
-	[CMD_NOT_FOUND] = command_not_found,
-	}; */
+static int	handle_std_error(int err_code, char *context, t_err_ctx ctx)
+{
+	int		status;
+	char	msg[PATH_MAX];
+
+	ft_strlcpy(msg, "minishell : ", PATH_MAX);
+	if (err_code == ENOMEM)
+		errno = ENOMEM;
+	if (ctx == GENERAL)
+		status = 1;
+	else
+	{
+		if (errno == ENOENT)
+			status = 127;
+		else
+			status = 126;
+	}
+	if (context)
+		ft_strlcat(msg, context, ft_strlen(context));
+	perror(msg);
+	return (status);
+}
+
+/* static int	handle_std_error(int err_code, char *context)
+{
+	int	status;
+
+	status = 1;
+	if (err_code == ENOMEM)
+		errno = ENOMEM;
+	if (errno == EACCES)
+		status = 126;
+	if (errno == ENOENT)
+		status = 127;
+	if (!context)
+		perror("minishell");
+	else
+		perror(context);
+	return (status);
+} */

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 12:44:06 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:10:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int event_handler(void)
 	return 0;
 }
 
-char *create_heredoc_filename(int heredoc_id, int *exit_status)
+char *create_heredoc_filename(int heredoc_id, int *exit_status)//TODO do we need exit status like this ?
 {
 	char *id_str;
 	char *filename;
@@ -27,14 +27,14 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)
 	id_str = ft_itoa(heredoc_id);
 	if (!id_str)
 	{
-		malloc_error(exit_status);
+		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
 	filename = ft_strjoin("/tmp/heredoc_", id_str);//TODO valgrind
 	free(id_str);
 	if(!filename)
 	{
-		malloc_error(exit_status);
+		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
 	return(filename);
