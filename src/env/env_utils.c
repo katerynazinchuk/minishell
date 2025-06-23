@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 17:33:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:09:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ int	get_env_value(const char *var, t_env_list *env_list, char **result)
 
 	cur = get_node(var, env_list);
 	if (!cur || !cur->value)
-	{
-		// write(1, "9\n", 2);
 		return (0);
-	}
 	*result = cur->value;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/22 18:09:22 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:07:38 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,17 +180,20 @@ void	extract_var(char *raw, t_expand_type *exp)
 		exp->len_var = (size_t)(ft_strchr(raw, '}') - raw + 1);// + 1 щоб урахувати {}
 		exp->var = ft_strndup(raw + 1, exp->len_var - 2);// - 2 щоб не забрати останній символ '}'
 	}
+	else if (raw[exp->len_var] == '?')
+	{
+		exp->len_var = 1;
+		exp->var = ft_strndup(raw, exp->len_var);
+	}
 	else
 	{
 		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var])
 			&& !is_quote(raw[exp->len_var]))
-		{
 			exp->len_var++;
-			if (raw[exp->len_var] != '?')
-				break ;
-		}
 		exp->var = ft_strndup(raw, exp->len_var);
 	}
+	if (!exp->var)
+		check_error(ENOMEM, "expand variable", GENERAL);
 }
 
 /* how we track here malloc errors */
