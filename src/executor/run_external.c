@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 13:35:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:35:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	run_cmd_in_child(t_ast_node *node, t_session *session, int exit_stat
 	}
 	if(execve(node->value[0], node->value, env_arr) == -1)
 	{
-		if (errno == ENOENT)
+		if (errno == ENOENT || errno == EACCES)
 			exit_status = check_error(CMD_NOT_FOUND, node->value[0], GENERAL);
 		else
 			exit_status = check_error(errno, node->value[0], EXEC);

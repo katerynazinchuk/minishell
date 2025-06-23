@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 13:10:25 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:51:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	check_access(char *cmd)
 	struct stat sb;
 
 	if (stat(cmd, &sb) == -1)
-		return (check_error(errno, cmd, EXEC));
+		return (check_error(errno, cmd, EXEC));//cmd doesnt showed up
 	if (S_ISDIR(sb.st_mode))
 		return (check_error(IS_DIR, cmd, EXEC));
 	if (access(cmd, X_OK) == -1)
