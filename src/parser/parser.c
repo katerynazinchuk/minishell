@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 14:23:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:26:06 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,33 +104,37 @@ t_ast_node *parse_pipe(t_token *head, t_token *end)
 char	**tokens_to_argv(t_com_tokens *head)
 {
 	int count;
-	t_com_tokens *main;
+	t_com_tokens *cur;
 	char **argv;
 
-	main = head;
+	cur = head;
 	count = 0;
-	while(main && main->word != NULL && main->word->type == T_WORD)
+	while(cur && cur->word != NULL && cur->word->type == T_WORD)
 	{
-		count++;
-		main = main->next;
+		if (cur->word->expanded && cur->word->expanded[0] != '\0')
+			count++;
+		cur = cur->next;
 	}
 	argv = malloc(sizeof(char *) * (count + 1));
 	if(!argv)
 		return(NULL);
-	main = head;
+	cur = head;
 	count = 0;
-	while(main && main->word != NULL && main->word->type == T_WORD)
+	while(cur && cur->word != NULL && cur->word->type == T_WORD)
 	{
-		argv[count] = ft_strdup(main->word->expanded);
-		if(!argv[count])
+		if (cur->word->expanded && cur->word->expanded[0] != '\0')
 		{
-			while(--count >= 0)
-				free(argv[count]);
-			free(argv);
-			return (NULL);
+			argv[count] = ft_strdup(cur->word->expanded);
+			if(!argv[count])
+			{
+				while(--count >= 0)
+					free(argv[count]);
+				free(argv);
+				return (NULL);
+			}
+			count++;
 		}
-		count++;
-		main = main->next;
+		cur = cur->next;
 	}
 	argv[count] = NULL;
 	return (argv);
