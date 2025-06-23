@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/22 18:17:44 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:31:26 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_segment *build_segment_list(t_str_pos *lexer)
 		{
 			if(!check_quotes(lexer))
 			{
-				quotes_error(lexer);
+				check_error(SYNTAX_ERROR, "No matching quotes", GENERAL);
 				return (NULL);
 			}
 			new_seg = add_quoted_segment(lexer);
