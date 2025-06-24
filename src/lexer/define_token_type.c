@@ -6,78 +6,78 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:37:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:02:42 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void skip_whitespace(t_str_pos *lexer)
+void	skip_whitespace(t_str_pos *lexer)
 {
-	while(lexer->input[lexer->current] && is_whitespace(lexer->input[lexer->current]))
-		lexer->current++;
+	while (lexer->input[lexer->cur] && is_whitespace(lexer->input[lexer->cur]))
+		lexer->cur++;
 }
 
-int add_pipe_token(t_token_list *list, t_str_pos *lexer)
+int	add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
 	t_token	*new_token;
+
 	new_token = create_token("|", T_PIPE, UNQUOTED);
 	if (!new_token)
 		return (check_error(ENOMEM, "create token", GENERAL));
-	add_to_token_list(list, new_token);//TODO check !!!
-	lexer->current++;
+	add_to_token_list(list, new_token);
+	lexer->cur++;
 	return (0);
 }
 
-void add_redirection_token(t_token_list *list, t_str_pos *lexer)//change to int
+void	add_red_token(t_token_list *list, t_str_pos *lexer)//change to int
 {
-	if (lexer->input[lexer->current + 1] == '>' && lexer->input[lexer->current] == '>')
+	if (lexer->input[lexer->cur + 1] == '>' && lexer->input[lexer->cur] == '>')
 	{
-		create_redirection_token(list, ">>", T_APPEND);
-		lexer->current += 2;
+		create_red_token(list, ">>", T_APPEND);
+		lexer->cur += 2;
 	}
-	else if (lexer->input[lexer->current + 1] == '<' && lexer->input[lexer->current] == '<')
+	else if (lexer->input[lexer->cur + 1] == '<' && lexer->input[lexer->cur] == '<')
 	{
-		create_redirection_token(list, "<<", T_HEREDOC);
-		lexer->current += 2;
+		create_red_token(list, "<<", T_HEREDOC);
+		lexer->cur += 2;
 	}
-	else if (lexer->input[lexer->current] == '>')
+	else if (lexer->input[lexer->cur] == '>')
 	{
-		create_redirection_token(list, ">", T_OUT);
-		lexer->current++;
+		create_red_token(list, ">", T_OUT);
+		lexer->cur++;
 	}
-	else if (lexer->input[lexer->current] == '<')
+	else if (lexer->input[lexer->cur] == '<')
 	{
-		create_redirection_token(list, "<", T_IN);
-		lexer->current++;
+		create_red_token(list, "<", T_IN);
+		lexer->cur++;
 	}
-	else 
+	else
 	{
-		check_error(TOKEN_ERROR, &lexer->input[lexer->current], GENERAL);//TODO test case
-		// printf("minishell: syntax error near unexpected token `%c`\n", lexer->input[lexer->current]);
-		lexer->current++;
+		check_error(TOKEN_ERROR, &lexer->input[lexer->cur], GENERAL);
+		lexer->cur++;
 	}
 }
 
-void create_redirection_token(t_token_list *list, char * symbol, t_tok_type type)
+void	create_red_token(t_token_list *list, char *symbol, t_tok_type type)
 {
 	t_token	*new_token;
 
 	new_token = create_token(symbol, type, UNQUOTED);
 	if (!new_token)
-		return;
+		return ;
 	add_to_token_list(list, new_token);
-}	
+}
 
-int add_word_token(t_token_list *list, t_str_pos *lexer)
+int	add_word_token(t_token_list *list, t_str_pos *lexer)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = create_token(NULL, T_WORD, UNQUOTED);
-	if(!token)
+	if (!token)
 		return (1);
-	token->segment = build_segment_list(lexer);//TODO what kind or errors are here?
-	if(!token->segment)
+	token->segment = build_segment_list(lexer);
+	if (!token->segment)
 	{
 		free(token);
 		return (1);

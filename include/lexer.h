@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 19:10:55 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:02:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 //help track the current position in the string, if we have multiple tokens
 typedef struct s_str_pos
 {
-	char	*input;
-	int		start;
-	int		current;
+	char		*input;
+	int			start;
+	int			cur;
 	size_t		len;
 }	t_str_pos;
 
@@ -48,10 +48,10 @@ char 			*join_segments(t_segment *segment, t_quoted *quoted);
 /* -------------------------------------------------------------------------- */
 
 void			skip_whitespace(t_str_pos *lexer);
-int			add_pipe_token(t_token_list *list, t_str_pos *lexer);
-void			add_redirection_token(t_token_list *list, t_str_pos *lexer);
-void			create_redirection_token(t_token_list *list, char *symbol, t_tok_type type);
-int			add_word_token(t_token_list *list, t_str_pos *lexer);
+int				add_pipe_token(t_token_list *list, t_str_pos *lexer);
+void			add_red_token(t_token_list *list, t_str_pos *lexer);
+void			create_red_token(t_token_list *list, char *symbol, t_tok_type type);
+int				add_word_token(t_token_list *list, t_str_pos *lexer);
 
 /* -------------------------------------------------------------------------- */
 

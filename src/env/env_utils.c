@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 19:55:48 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:50:13 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@
 // 	return (0);//variable not found
 // }
 
-
 /* Be carefull: there is malloc */
 t_env_type	*get_node(const char *var, t_env_list *env_list)
 {
 	t_env_type	*cur;
 
 	cur = env_list->head;
-	while(cur)
+	while (cur)
 	{
 		if (ft_strcmp(var, cur->key) == 0)
 			return (cur);
@@ -52,10 +51,7 @@ int	get_env_value(const char *var, t_env_list *env_list, char **result)
 
 	cur = get_node(var, env_list);
 	if (!cur || !cur->value)
-	{
-		// write(1, "9\n", 2);
 		return (0);
-	}
 	*result = cur->value;
 	return (1);
 }
@@ -64,10 +60,10 @@ int	update_env_list(const char *var, t_env_list *env_list, char *new_data)
 {
 	t_env_type	*cur;
 
-	if(!new_data)
+	if (!new_data)
 		return (0);
 	cur = get_node(var, env_list);
-	if(!cur)
+	if (!cur)
 		return (ENOENT); //malloc error
 	free(cur->value);
 	cur->value = ft_strdup(new_data);
@@ -76,13 +72,13 @@ int	update_env_list(const char *var, t_env_list *env_list, char *new_data)
 	return (0);//success
 }
 
-int set_env(t_env_list *env_list, const char *var, const char *value)
+int	set_env(t_env_list *env_list, const char *var, const char *value)
 {
 	t_env_type	*node;
 
 	node = get_node(var, env_list);
 	if (node)
-		return update_env_list(var, env_list, (char *)value);
+		return (update_env_list(var, env_list, (char *)value));
 	node = (t_env_type *)malloc(sizeof(t_env_type));
 	if (!node)
 		return (ENOMEM);
@@ -92,7 +88,7 @@ int set_env(t_env_list *env_list, const char *var, const char *value)
 		free(node);
 		return (ENOMEM);
 	}
-	if(value)
+	if (value)
 	{
 		node->value = ft_strdup(value);
 		if (!node->value)
@@ -108,7 +104,7 @@ int set_env(t_env_list *env_list, const char *var, const char *value)
 	return (0); //success
 }
 
-void unset_env(t_env_list *env_list, const char *var)
+void	unset_env(t_env_list *env_list, const char *var)
 {
 	t_env_type	*cur;
 	t_env_type	*prev;

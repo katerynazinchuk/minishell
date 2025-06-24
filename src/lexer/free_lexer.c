@@ -6,19 +6,19 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:49:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:34:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:00:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_segment_list(t_segment *head)
+void	free_segment_list(t_segment *head)
 {
-	t_segment *current;
-	t_segment *next;
-	current = head;
+	t_segment	*current;
+	t_segment	*next;
 
-	while(current)
+	current = head;
+	while (current)
 	{
 		next = current->next;
 		free(current->value);
@@ -26,24 +26,25 @@ void free_segment_list(t_segment *head)
 		current = next;
 	}
 }
-void free_token(t_token *token)
+
+void	free_token(t_token *token)
 {
 	if (!token)
-		return;
+		return ;
 	if (token->expanded)
 		free(token->expanded);
-	if(token->segment)
+	if (token->segment)
 		free_segment_list(token->segment);
 	free(token);
 }
 
-void free_token_list(t_token_list *list)
+void	free_token_list(t_token_list *list)
 {
 	t_token	*current;
 	t_token	*next;
 
 	if (!list)
-		return;
+		return ;
 	current = list->head;
 	while (current)
 	{
@@ -53,4 +54,3 @@ void free_token_list(t_token_list *list)
 	}
 	free(list);
 }
-

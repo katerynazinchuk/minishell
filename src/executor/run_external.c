@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 18:35:32 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:59:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	run_cmd_in_child(t_ast_node *node, t_session *session, int exit_stat
 	if(execve(node->value[0], node->value, env_arr) == -1)
 	{
 		if (errno == ENOENT || errno == EACCES)
-			exit_status = check_error(CMD_NOT_FOUND, node->value[0], GENERAL);
+			exit_status = check_error(CMD_NOT_FOUND, node->value[0], EXEC);
 		else
 			exit_status = check_error(errno, node->value[0], EXEC);
 		free_in_fork(session, env_arr);

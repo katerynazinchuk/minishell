@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/22 18:03:18 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:04:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static int	handle_std_error(int err_code, char *context, t_err_ctx ctx)
 			status = 126;
 	}
 	if (context)
-		ft_strlcat(msg, context, ft_strlen(context));
+		ft_strlcat(msg, context, PATH_MAX);
 	perror(msg);
 	return (status);
 }

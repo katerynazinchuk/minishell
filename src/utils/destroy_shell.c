@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   destroy_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 15:03:54 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:21:08 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/24 17:17:14 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/24 17:23:12 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "minishell.h"
 
-char *ft_strndup(const char *s, size_t n);
-int	is_whitespace(char c);
-int	is_special_char(char c);
-void	ignore_args(int argc, char **argv);
-// int	print_str_fd(const char *str, )
-#endif
+void	destroy_shell(t_shell *shell)
+{
+	close(shell->fd[0]);
+	close(shell->fd[1]);
+}

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:45:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:28:18 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ int	main(int argc, char **argv, char **env)
 	
 	init_shell(&shell, env);
 	if (!shell.env_list)
+	{
+		destroy_shell(&shell);
 		return (check_error(ENOMEM, "can't create env_list", GENERAL));
+	}
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
+	destroy_shell(&shell);
 	return(shell.status);
 }
 
@@ -90,7 +94,7 @@ int	process_line(t_session *session)
 	add_history(session->line);
 	heredoc(session->ast, session);//переписати на int
 	if (g_signal != 0)
-		return (g_signal = 0);//, 1
+		return (g_signal = 0, 1);//, 1
 	free_for_fork(session);
 	executor(session);
 	return (0);

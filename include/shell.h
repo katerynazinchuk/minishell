@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/21 18:50:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:22:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_session
 }	t_session;
 
 void	init_shell(t_shell *shell, char **env);
+void	destroy_shell(t_shell *shell);
 void	run_shell(t_shell *shell);
 int		shell_loop(t_session *session);
 void	init_session(t_session *session, t_shell *shell);

@@ -1,9 +1,9 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g 
+CFLAGS = -Wall -Wextra -Werror -g3 -O0
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-# CFLAGS += -fsanitize=address,undefined
+# CFLAGS += -fsanitize=address,undefined,leak
 LFLAGS += -lreadline -lncurses 
 SRC_DIR = src
 BUILD_DIR = obj
@@ -50,7 +50,8 @@ MY_SIGNAL = src/signals/signal.c
 UTILS = src/utils/utils_general.c \
 		src/utils/init_shell.c \
 		src/utils/utils_main.c \
-		src/utils/shell_debug.c
+		src/utils/shell_debug.c \
+		src/utils/destroy_shell.c
 
 ERRORS = src/errors/dispatch_errors.c \
 		src/errors/common_errors.c \

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 14:42:42 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:43:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	executor(t_session *session)
 {
@@ -116,8 +117,9 @@ pid_t	child_right(t_ast_node *node, t_session *session, int *pipe_fd)
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close_pipe_fd(pipe_fd);
 		exit_status = run_cmd(node, session);
-		free_env_list(session->shell->env_list);
-		free_ast(&session->ast);
+		free_in_fork(session, NULL);
+		// free_env_list(session->shell->env_list);
+		// free_ast(&session->ast);
 		exit(exit_status);//or return ?
 	}
 	return (proc_id);

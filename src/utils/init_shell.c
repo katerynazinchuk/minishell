@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/22 17:59:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:22:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_shell(t_shell *shell, char **env)
 {
-	shell->env_list = fill_env_list(env);//TODO how we handle case if !shell->env_list ?
+	shell->env_list = fill_env_list(env);// TODO: how we handle case if !shell->env_list ?
 	shell->fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	shell->fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	shell->status = 0;
@@ -38,6 +38,7 @@ void	free_for_fork(t_session *session)
 		session->line = NULL;
 	}
 	session->heredoc_count = 0;
+	destroy_shell(session->shell);
 }
 
 void	init_session(t_session *session, t_shell *shell)

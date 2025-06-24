@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 13:30:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:33:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int	free_in_fork(t_session *session, char **env_arr)
 		free_arr(env_arr);
 	free_env_list(session->shell->env_list);
 	free_ast(&session->ast);
+	destroy_shell(session->shell);
 	return (1);
 }
