@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_fn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:23:30 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/23 19:14:50 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:28:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	handle_syntax_error(int code, char *context)
 {
 	(void)code;
-	ft_putstr_fd("minishel: syntax error: ", 2);
+	ft_putstr_fd("minishel: syntax error ", 2);
 	if (context)
 		ft_putstr_fd(context, 2);
 	ft_putstr_fd("\n", 2);

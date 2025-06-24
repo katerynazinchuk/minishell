@@ -24,11 +24,11 @@ EXECUTOR = src/executor/executor.c \
 		src/executor/run_builtin_2.c \
 		src/executor/run_external.c \
 		src/executor/path_parser.c
-LEXER = src/lexer/create_node_list.c \
-		src/lexer/initialize_structs.c \
-		src/lexer/token_types.c \
+LEXER = src/lexer/create_token_list.c \
+		src/lexer/free_lexer.c \
+		src/lexer/define_token_type.c \
 		src/lexer/lexer.c \
-		src/lexer/segment.c \
+		src/lexer/create_segment.c \
 		src/lexer/segment_utils.c \
 		src/lexer/lexer_debug.c 
 EXPANDER = src/expander/expand_var.c \
@@ -49,7 +49,7 @@ UTILS = src/utils/utils.c \
 
 ERRORS = src/errors/dispatch_errors.c \
 		src/errors/common_errors.c \
-		src/errors/pipe_error.c \
+		src/errors/input_syntax_error.c \
 		src/errors/syntax_fn.c \
 		src/errors/execute_fn.c
 

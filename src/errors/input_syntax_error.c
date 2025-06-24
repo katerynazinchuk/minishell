@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_error.c                                       :+:      :+:    :+:   */
+/*   input_syntax_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 11:49:04 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:28:32 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,41 +60,41 @@ bool first_pipe_error(char *line)
 	return (false);
 }
 
-char *join_input(char *line, int *flag, t_shell *shell)
-{
-	char *next_line;
-	char *joined_line;
-	(void)flag;
-	(void)shell;
+// char *join_input(char *line, int *flag, t_shell *shell)
+// {
+// 	char *next_line;
+// 	char *joined_line;
+// 	(void)flag;
+// 	(void)shell;
 
-	// setsignal(HEREDOC_SIG);
-	// rl_event_hook = event_handler;
-	next_line = readline("pipe> ");
-	if (!next_line)
-	{
-		free(line);
-		check_error(ENOMEM, NULL, GENERAL);//TODO track this
-		return (NULL);
-	}
-	// if (g_signal != 0)
-	// {
-	// 	add_history(line);
-	// 	shell->status = 128 + g_signal;
-	// 	setsignal(MAIN_SIG);
-	// 	free(line);
-	// 	*flag = 1;
-	// 	return (NULL);
-	// }
-	joined_line = ft_strjoin(line, next_line);
-	free(next_line);
-	if (!joined_line)
-	{
-		check_error(ENOMEM, "Create line", GENERAL);
-		return (NULL);
-	}
-	free(line);
-	return (joined_line);
-}
+// 	// setsignal(HEREDOC_SIG);
+// 	// rl_event_hook = event_handler;
+// 	next_line = readline("pipe> ");
+// 	if (!next_line)
+// 	{
+// 		free(line);
+// 		check_error(ENOMEM, NULL, GENERAL);//TODO track this
+// 		return (NULL);
+// 	}
+// 	// if (g_signal != 0)
+// 	// {
+// 	// 	add_history(line);
+// 	// 	shell->status = 128 + g_signal;
+// 	// 	setsignal(MAIN_SIG);
+// 	// 	free(line);
+// 	// 	*flag = 1;
+// 	// 	return (NULL);
+// 	// }
+// 	joined_line = ft_strjoin(line, next_line);
+// 	free(next_line);
+// 	if (!joined_line)
+// 	{
+// 		check_error(ENOMEM, "Create line", GENERAL);
+// 		return (NULL);
+// 	}
+// 	free(line);
+// 	return (joined_line);
+// }
 
 int	check_input(char *line, t_session *session)
 {

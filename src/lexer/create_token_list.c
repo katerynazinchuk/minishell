@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_node_list.c                                 :+:      :+:    :+:   */
+/*   create_token_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:53:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:37:28 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,44 +55,25 @@ void add_to_token_list(t_token_list *list, t_token *new_token)
 	list->tail = new_token;
 }
 
-void free_segment_list(t_segment *head)
+void init_lexer_state(t_str_pos *lexer, char *line)
 {
-	t_segment *current;
-	t_segment *next;
-	current = head;
-
-	while(current)
-	{
-		next = current->next;
-		free(current->value);
-		free(current);
-		current = next;
-	}
-}
-void free_token(t_token *token)
-{
-	if (!token)
-		return;
-	if (token->expanded)
-		free(token->expanded);
-	if(token->segment)
-		free_segment_list(token->segment);
-	free(token);
+	lexer->input = line;
+	lexer->start = 0;
+	lexer->current = 0;
+	lexer->len = 0;
 }
 
-void free_token_list(t_token_list *list)
+t_token_list *init_token_list(void)
 {
-	t_token	*current;
-	t_token	*next;
-
+	t_token_list	*list;
+	
+	list = (t_token_list *)malloc(sizeof(t_token_list));
 	if (!list)
-		return;
-	current = list->head;
-	while (current)
 	{
-		next = current->next;
-		free_token(current);
-		current = next;
+		check_error(ENOMEM, "minishell : token list", GENERAL);
+		return (NULL);
 	}
-	free(list);
+	list->head = NULL;
+	list->tail = NULL;
+	return (list);
 }
