@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/22 18:04:03 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:49:04 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ bool last_pipe_error(char *line)
 	while (i >= 0 && is_whitespace(line[i]))
 		i--;
 	if (i >= 0 && line[i] == '|')
-		return (true);
+		return (check_error(SYNTAX_ERROR, "near unexpected token `|'", GENERAL));
+		// return (true);
 	return (false);
 }
 
@@ -54,7 +55,7 @@ bool first_pipe_error(char *line)
 	while (line[i] && is_whitespace(line[i]))
 		i++;
 	if (line[i] == '|')
-		return (check_error(SYNTAX_ERROR, "unexpected token `|'", GENERAL));
+		return (check_error(SYNTAX_ERROR, "near unexpected token `|'", GENERAL));
 
 	return (false);
 }
@@ -97,7 +98,7 @@ char *join_input(char *line, int *flag, t_shell *shell)
 
 int	check_input(char *line, t_session *session)
 {
-	int	flag;
+	// int	flag;
 
 	if(!line)
 		return (1);
@@ -105,14 +106,14 @@ int	check_input(char *line, t_session *session)
 		return (2);
 	if (first_pipe_error(line))
 		return (2);
-	flag = 0;
+	// flag = 0;
 	if (last_pipe_error(line))
 	{
-		line = join_input(line, &flag, session->shell);
-		if (!line && flag)
+		// line = join_input(line, &flag, session->shell);
+		// if (!line && flag)
 			return (2);
-		if(!line)
-			return (check_error(ENOMEM, "Join fail", GENERAL));
+		// if(!line)
+		// 	return (check_error(ENOMEM, "Join fail", GENERAL));
 	}
 	session->line = line;
 	return (0);

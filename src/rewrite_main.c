@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:52:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:52:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ int	shell_loop(t_session *session)
 	if (update_prompt(&session->prompt))
 		return (0);//track enomem to continue loop
 	input_status = check_input(readline(session->prompt), session);
+	if (g_signal != 0)
+	{
+		session->shell->status = 128 + g_signal;
+		g_signal = 0;
+	}
 	// input_status = check_input(readline(session->prompt), &session->line, session->shell);
 	if (input_status == 1)
 		return(shell_exit(session));
@@ -85,7 +90,7 @@ int	process_line(t_session *session)
 	add_history(session->line);
 	heredoc(session->ast, session);//переписати на int
 	if (g_signal != 0)
-		return (g_signal = 0, 1);
+		return (g_signal = 0);//, 1
 	free_for_fork(session);
 	executor(session);
 	return (0);
