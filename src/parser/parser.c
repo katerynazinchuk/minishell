@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:56:22 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:41:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,16 +134,5 @@ char	**tokens_to_argv(t_com_tokens *head)
 	return (argv);
 }
 
-
-
-// Print errors:
-// if string starts with |
-// if string ends with | - than call readline and join results
-
-// return NULL or error struct if input is invalid
-
-
-// add debug function:
-// print_command_list(t_command *)
 
 

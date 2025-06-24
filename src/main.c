@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   old_main.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/20 12:09:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:45:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ int	main(int argc, char **argv, char **env)
 	
 	init_shell(&shell, env);
 	if (!shell.env_list)
-	{
-		malloc_error(&shell.status);
-		return (shell.status);
-	}
-	(void)argc;
-	(void)argv;
+		return (check_error(ENOMEM, "can't create env_list", GENERAL));
+	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
 	free_env_list(shell.env_list);
@@ -52,54 +48,66 @@ void	run_shell(t_shell *shell)
 	t_session	session;
 
 	init_session(&session, shell);
-	
 	while(1)
 	{
-		update_prompt(&session.prompt);
-		session.line = check_input(readline(session.prompt));
-		if (!session.line)
-		{
-			write(1, "exit\n", 5);
-			free_for_fork(&session);
+		errno = 0;
+		if (shell_loop(&session))
 			break ;
-		}
-		if (SIGINT == 2)
-		{
-			setsignal(MAIN_SIG);
-		}
-		if (!process_line(&session))
-		{
-			free_for_fork(&session);
-			free_ast(session.ast);
-			continue ;
-		}
-		if(session.ast)
-			free_ast(session.ast);
+		if (errno == ENOMEM)
+			break ;
 	}
 }
 
-bool	process_line(t_session *session)
+int	shell_loop(t_session *session)
 {
-	if (!parser(session))
-		return (false);
-	add_history(session->line);
-	heredoc(session->ast, session);
+	int	input_status;
+	
+	if (update_prompt(&session->prompt))
+		return (0);//track enomem to continue loop
+	input_status = check_input(readline(session->prompt), session);
 	if (g_signal != 0)
-		return (g_signal = 0, false);
-	free_for_fork(session);
-	executor(session);
-	return (true);
+	{
+		session->shell->status = 128 + g_signal;
+		g_signal = 0;
+	}
+	// input_status = check_input(readline(session->prompt), &session->line, session->shell);
+	if (input_status == 1)
+		return(shell_exit(session));
+	else if (input_status != 0)
+		return (0);
+	setsignal(MAIN_SIG);
+	if (process_line(session))
+		free_for_fork(session);
+	if (session->ast)
+		free_ast(&session->ast);
+	return (0);
 }
 
-bool	parser(t_session *session)
+int	process_line(t_session *session)
 {
-	if(!lexer(session))
-		return (false);
+	if (parser(session))
+		return (1);
+	add_history(session->line);
+	heredoc(session->ast, session);//переписати на int
+	if (g_signal != 0)
+		return (g_signal = 0);//, 1
+	free_for_fork(session);
+	executor(session);
+	return (0);
+}
+
+int	parser(t_session *session)
+{
+	if(lexer(session))
+		return (1);
+	// print_tokens(session);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
-		return (false);
+		return (1);
+	// print_node(session->ast, 0);
 	}
 	// print_node(session->ast, 0);
-	return (true);
+	// print_node(session->ast, 0);
+	return (0);
 }

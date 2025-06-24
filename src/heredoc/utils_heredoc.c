@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:54 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/03 12:16:43 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:46:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,3 @@ void heredoc_foreach_ast(t_ast_node *node, t_session *ctx ,void (*func)(t_redir 
 		heredoc_foreach_ast(node->right, ctx, func);	
 	}
 }
-
-// char * expand_herdoc_line()
-// {
-	
-// }

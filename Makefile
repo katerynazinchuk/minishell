@@ -24,25 +24,30 @@ EXECUTOR = src/executor/executor.c \
 		src/executor/run_builtin_2.c \
 		src/executor/run_external.c \
 		src/executor/path_parser.c
+
 LEXER = src/lexer/create_token_list.c \
 		src/lexer/free_lexer.c \
 		src/lexer/define_token_type.c \
 		src/lexer/lexer.c \
 		src/lexer/create_segment.c \
-		src/lexer/segment_utils.c \
-		src/lexer/lexer_debug.c 
+		src/lexer/utils_segments.c \
+		src/lexer/lexer_debug.c
+
 EXPANDER = src/expander/expand_var.c \
-			src/expander/utils.c \
+			src/expander/utils_expander.c \
 			src/expander/free_exp.c
+
 PARSER = src/parser/parser.c \
 			src/parser/redirects.c \
 			src/parser/parser_debug.c \
 			src/parser/free_parser.c
+
 HEREDOC = src/heredoc/heredoc.c \
-			src/heredoc/utils_heredoc.c \
-			src/heredoc/heredoc_cleanup.c
+			src/heredoc/utils_heredoc.c
+
 MY_SIGNAL = src/signals/signal.c
-UTILS = src/utils/utils.c \
+
+UTILS = src/utils/utils_general.c \
 		src/utils/init_shell.c \
 		src/utils/utils_main.c \
 		src/utils/shell_debug.c
@@ -54,8 +59,7 @@ ERRORS = src/errors/dispatch_errors.c \
 		src/errors/execute_fn.c
 
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/rewrite_main.c 
-#signal.c
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/main.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
 

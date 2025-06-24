@@ -6,12 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/23 19:56:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:42:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void free_for_struct(t_command_parsing *structure);
 
 t_red_type	define_redirection(t_tok_type token_type)
 {

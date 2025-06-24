@@ -84,7 +84,3 @@ void setsignal(t_sigtype type)
 
 // sigaction, sigemptyset, sigadd
 
-//  0010
-//  0001
-// |0011
-

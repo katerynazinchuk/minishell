@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_general.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/19 19:25:29 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:45:56 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_strndup(const char *s, size_t n)
 
 int	ft_strcmp(const char *str1, const char *str2)
 {
-	while (*str1 && *str1 == *str2)// && *str2)
+	while (*str1 && *str1 == *str2)
 	{
 		str1++;
 		str2++;

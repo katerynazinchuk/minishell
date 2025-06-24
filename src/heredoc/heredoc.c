@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/22 18:10:48 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:46:29 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int event_handler(void)
 	return 0;
 }
 
-char *create_heredoc_filename(int heredoc_id, int *exit_status)//TODO do we need exit status like this ?
+char *create_heredoc_filename(int heredoc_id, int *exit_status)
 {
 	char *id_str;
 	char *filename;
@@ -30,7 +30,7 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)//TODO do we need
 		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
-	filename = ft_strjoin("/tmp/heredoc_", id_str);//TODO valgrind
+	filename = ft_strjoin("/tmp/heredoc_", id_str);
 	free(id_str);
 	if(!filename)
 	{
