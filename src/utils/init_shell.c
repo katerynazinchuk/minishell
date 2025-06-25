@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 13:21:42 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:34:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,27 @@ void	init_session(t_session *session, t_shell *shell)
 
 int	update_prompt(char **prompt)
 {
-	char	*log_name;
-	char	*new_prompt;
+	char		*tmp_name;
+	char		*new_prompt;
+	const char	*color = "\001\033[1;35m\002";
+	
 
-	log_name = ft_strdup(getenv("LOGNAME"));
-	if (!log_name)
-		log_name = ft_strdup("unknown");
-	if (!log_name)
-		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
-	new_prompt = ft_strjoin(log_name, ":~$ ");
-	free(log_name);
+	tmp_name = ft_strdup(getenv("LOGNAME"));
+	if (!tmp_name)
+		tmp_name = ft_strdup("unknown");
+	if (!tmp_name)
+		return (check_error(ENOMEM, "prompt", GENERAL));
+	new_prompt = ft_strjoin(color, tmp_name);
+	free(tmp_name);
+	tmp_name = NULL;
 	if (!new_prompt)
 		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
+	tmp_name = ft_strjoin(new_prompt, ":~$ \001\033[0m\002");
+	free(new_prompt);
+	if (!tmp_name)
+		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
 	free(*prompt);
-	*prompt = new_prompt;
+	*prompt = tmp_name;
 	return (0);
 }
 

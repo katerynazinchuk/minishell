@@ -6,17 +6,17 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:32:54 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/20 12:28:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:50:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* dup2(fd_what_I_already_have, fd_what_I_want_to_make) */
-static bool	apply_in(t_redir *redir);
-static bool	apply_out(t_redir *redir);
-static bool	apply_append(t_redir *redir);
-static bool	apply_heredoc(t_redir *redir);
+static int	apply_in(t_redir *redir);
+static int	apply_out(t_redir *redir);
+static int	apply_append(t_redir *redir);
+static int	apply_heredoc(t_redir *redir);
 
 /* hash map, acces via key*/
 int	apply_redir(t_redir *redir_list)
@@ -34,112 +34,62 @@ int	apply_redir(t_redir *redir_list)
 	while (redir_list)
 	{
 		f = handlers[redir_list->type];
-		if (!f || !f(redir_list))
+		if (!f || f(redir_list))
 			return (1);
 		redir_list = redir_list->next;
 	}
 	return (0);
 	}
 
-/* we need to manage correct errors for open */
-static bool	apply_in(t_redir *redir)
+static int	apply_in(t_redir *redir)
 {
 	int	fd;
 
 	fd = open(redir->connection, O_RDONLY);
 	if (fd < 0)
-	{
-		write(2, "Error open file\n", 17);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		write(2, "Error dup2\n", 12);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	close(fd);
-	return (true);
+	return (0);
 }
 
-static bool	apply_out(t_redir *redir)
+static int	apply_out(t_redir *redir)
 {
 	int	fd;
 
 	fd = open(redir->connection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-	{
-		write(2, "Error open file\n", 17);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		write(2, "Error dup2\n", 12);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	close(fd);
-	return (true);
+	return (0);
 }
 
-static bool	apply_append(t_redir *redir)
+static int	apply_append(t_redir *redir)
 {
 	int	fd;
 	
 	fd = open(redir->connection, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-	{
-		write(2, "Error open file\n", 17);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		write(2, "Error dup2\n", 12);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	close(fd);
-	return(true);
+	return(0);
 }
 
-static bool	apply_heredoc(t_redir *redir)
+static int	apply_heredoc(t_redir *redir)
 {
 	int	fd;
 
 	fd = open(redir->connection, O_RDONLY);
 	if (fd < 0)
-		{
-		write(2, "Error open file\n", 17);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		write(2, "Error dup2\n", 12);
-		return (false);
-	}
+		return (check_error(errno, redir->connection, GENERAL));
 	close(fd);
 	unlink(redir->connection);
-	return (true);
+	return (0);
 }
-
-/* bool apply_red(t_redir *head)
-{
-	static t_redir_handler redmap[] = {
-		applay_in,
-		applay_out,
-		applay_append,
-		NULL
-	};
-
-	while (head)
-	{
-		if (redmap[red->type](head) == false)
-			return (false);
-		head = head->next;
-	}
-	return (true);
-} */
-
-	/* 		if (redir_list->type != RED_HEREDOC && redir_list > 0)//check with Katia when *redir_list can return -1
-			{
-				f = handlers[redir_list->type];
-				if (!f || !f(redir_list))
-					return (false);
-			} */

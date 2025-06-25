@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/21 18:51:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:26:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <linux/limits.h>
 
 
-typedef bool	(*t_redir_handler)(t_redir *redir_list);
+typedef int	(*t_redir_handler)(t_redir *redir_list);
 typedef int		(*t_builtin_fn)(char **argv, t_env_list *env_list);
 
 typedef struct s_builtin
