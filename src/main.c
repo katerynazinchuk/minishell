@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 14:14:49 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:38:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	shell_loop(t_session *session)
 	if (update_prompt(&session->prompt))
 		return (0);//track enomem to continue loop
 	input_status = check_input(readline(session->prompt), session);
+	add_history(session->line);
 	if (g_signal != 0)
 	{
 		session->shell->status = 128 + g_signal;
@@ -93,7 +94,6 @@ int	process_line(t_session *session)
 {
 	if (parser(session))
 		return (1);
-	add_history(session->line);
 	heredoc(session->ast, session);//переписати на int
 	if (g_signal != 0)
 		return (g_signal = 0, 1);//, 1

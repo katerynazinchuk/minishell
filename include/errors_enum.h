@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_enum.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/25 17:04:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:47:39 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum s_error_code
 	CMD_NOT_FOUND,
 	CD_ERR,
 	IS_DIR
+	
 }	t_error_code;
 
 #endif
