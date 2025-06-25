@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:00:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:29:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_segment	*build_segment_list(t_str_pos *lexer)
 		{
 			if (!check_quotes(lexer))
 			{
-				check_error(SYNTAX_ERROR, "No matching quotes", GENERAL);
+				check_error(SYNTAX_ERR, "No matching quotes", GENERAL);
 				return (NULL);
 			}
 			new_seg = add_quoted_segment(lexer);

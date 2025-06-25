@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 14:07:38 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:31:34 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	extract_var(char *raw, t_expand_type *exp)
 	else
 	{
 		while (raw[exp->len_var] && !is_whitespace(raw[exp->len_var])
-			&& !is_quote(raw[exp->len_var]))
+			&& !is_quote(raw[exp->len_var]) && raw[exp->len_var] != '$')
 			exp->len_var++;
 		exp->var = ft_strndup(raw, exp->len_var);
 	}

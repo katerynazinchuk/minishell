@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:42:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:29:05 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_redir	*extract_redirect(t_token *current)
 	next = current->next;
 	if(!next || next->type != T_WORD)
 	{
-		check_error(SYNTAX_ERROR, "near unexpected token `newline'", GENERAL);//TODO  text for error
+		check_error(SYNTAX_ERR, "near unexpected token `newline'", GENERAL);//TODO  text for error
 		return (NULL);
 	}
 	new_redir = create_redirect_node(

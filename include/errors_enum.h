@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_enum.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/22 17:40:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:29:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 
 typedef enum s_error_code
 {
-	SYNTAX_ERROR = 200,
-	TOKEN_ERROR,
+	SYNTAX_ERR = 200,
+	TOKEN_ERR,
 	BAD_SUBS,
-	
-	
-	EXECUTE_ERROR = 250,
+	EXECUTE_ERR = 250,
 	REDIRECT_FAIL,
 	CMD_NOT_FOUND,
 	CD_ERR,
 	IS_DIR
 }	t_error_code;
-
 
 #endif

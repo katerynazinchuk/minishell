@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/24 18:04:14 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:29:22 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	check_error(int err_code, char *context, t_err_ctx ctx)
 	else
 		return (handle_std_error(err_code, context, ctx));
 }
-// hash map (?) hash table
-static t_error_fn	get_error_fn(int err_code)
+
+static	t_error_fn	get_error_fn(int err_code)
 {
 	if (err_code < 250)
 		return (get_syntax_fn(err_code));
@@ -47,14 +47,14 @@ static t_error_fn	get_error_fn(int err_code)
 
 static t_error_fn	get_syntax_fn(int err_code)
 {
-	static const t_error error[] = {
-		{SYNTAX_ERROR, handle_syntax_error},
-		{TOKEN_ERROR, handle_token_error},
-		{BAD_SUBS, handle_bad_subs},
-		{0, NULL}
-		};
-	int							i;
-	
+	static const t_error	error[] = {
+	{SYNTAX_ERR, handle_syntax_error},
+	{TOKEN_ERR, handle_token_error},
+	{BAD_SUBS, handle_bad_subs},
+	{0, NULL}
+	};
+	int						i;
+
 	i = 0;
 	while (error[i].code)
 	{
@@ -67,16 +67,16 @@ static t_error_fn	get_syntax_fn(int err_code)
 
 static t_error_fn	get_execute_fn(int err_code)
 {
-	static const t_error error[] = {
-		{EXECUTE_ERROR, handle_execute_error},
-		{REDIRECT_FAIL, handle_redirect_fail},
-		{CMD_NOT_FOUND, handle_cmd_not_found},
-		{CD_ERR, handle_cd_error},
-		{IS_DIR, handle_is_dir},
-		{0, NULL}
-		};
-	int							i;
-	
+	static const t_error	error[] = {
+	{EXECUTE_ERR, handle_execute_error},
+	{REDIRECT_FAIL, handle_redirect_fail},
+	{CMD_NOT_FOUND, handle_cmd_not_found},
+	{CD_ERR, handle_cd_error},
+	{IS_DIR, handle_is_dir},
+	{0, NULL}
+	};
+	int						i;
+
 	i = 0;
 	while (error[i].code)
 	{
@@ -109,21 +109,3 @@ static int	handle_std_error(int err_code, char *context, t_err_ctx ctx)
 	perror(msg);
 	return (status);
 }
-
-/* static int	handle_std_error(int err_code, char *context)
-{
-	int	status;
-
-	status = 1;
-	if (err_code == ENOMEM)
-		errno = ENOMEM;
-	if (errno == EACCES)
-		status = 126;
-	if (errno == ENOENT)
-		status = 127;
-	if (!context)
-		perror("minishell");
-	else
-		perror(context);
-	return (status);
-} */

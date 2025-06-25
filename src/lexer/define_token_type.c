@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:02:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:29:14 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	add_red_token(t_token_list *list, t_str_pos *lexer)//change to int
 	}
 	else
 	{
-		check_error(TOKEN_ERROR, &lexer->input[lexer->cur], GENERAL);
+		check_error(TOKEN_ERR, &lexer->input[lexer->cur], GENERAL);
 		lexer->cur++;
 	}
 }

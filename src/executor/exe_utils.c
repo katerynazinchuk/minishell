@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 13:22:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:23:10 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static char	*to_str(t_env_type *cur)
 	size_t	len;
 	char	*str;
 
-	len = ft_strlen(cur->key) + ft_strlen(cur->value) + 1;//1 for =
-	str = ft_calloc(sizeof(char), len + 1);//1 for '\0'
+	len = ft_strlen(cur->key) + ft_strlen(cur->value) + 1;
+	str = ft_calloc(sizeof(char), len + 1);
 	if (!str)
 	{
 		check_error(ENOMEM, "executor", GENERAL);
@@ -35,7 +35,7 @@ char	**env_to_arr(t_env_list *env_list)
 	char		**env_arr;
 	t_env_type	*current;
 	size_t		i;
-	
+
 	env_arr = (char **)ft_calloc(sizeof(char *), env_list->size + 1);
 	if (!env_arr)
 	{
@@ -51,7 +51,7 @@ char	**env_to_arr(t_env_list *env_list)
 		{
 			env_arr[i] = NULL;
 			free_arr(env_arr);
-			return(NULL);
+			return (NULL);
 		}
 		i++;
 		current = current->next;

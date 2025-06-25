@@ -6,12 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/24 17:43:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:23:39 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	executor(t_session *session)
 {
@@ -19,13 +18,12 @@ void	executor(t_session *session)
 	restore_fd(session);
 }
 
-
 int	run_ast(t_ast_node *ast, t_session *session)
 {
 	if (!ast)
 		return (0);
 	if (ast->type == AST_PIPE)
-		return(run_pipe(ast, session));
+		return (run_pipe(ast, session));
 	else
 		return(run_cmd(ast, session));
 }
