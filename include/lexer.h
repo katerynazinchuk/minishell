@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:02:20 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:15:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				fill_tokens(char *line, t_token_list **tokens);
 // t_token_list	*fill_tokens(char *line);
 int				lexer(t_session *session);
 int			move_to_token_expand(t_token_list *list);
-// void			print_tokens(t_session *session);
+void			print_tokens(t_token_list *list);
 
 /* -------------------------------------------------------------------------- */
 

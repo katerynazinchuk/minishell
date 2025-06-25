@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:28:18 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:14:49 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp ./minishell
 
+
+--track-fds=yes
 */
 
 int	main(int argc, char **argv, char **env)
@@ -104,7 +106,7 @@ int	parser(t_session *session)
 {
 	if(lexer(session))
 		return (1);
-	// print_tokens(session);
+	// print_tokens(session->tokens);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if(!session->ast)
 	{
