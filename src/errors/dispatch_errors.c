@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/24 18:04:14 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:21:34 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,20 +110,3 @@ static int	handle_std_error(int err_code, char *context, t_err_ctx ctx)
 	return (status);
 }
 
-/* static int	handle_std_error(int err_code, char *context)
-{
-	int	status;
-
-	status = 1;
-	if (err_code == ENOMEM)
-		errno = ENOMEM;
-	if (errno == EACCES)
-		status = 126;
-	if (errno == ENOENT)
-		status = 127;
-	if (!context)
-		perror("minishell");
-	else
-		perror(context);
-	return (status);
-} */

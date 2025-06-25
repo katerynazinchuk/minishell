@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 19:14:42 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:26:26 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,17 @@ int	builtin_cd(char **argv, t_env_list *env_list)
 {
 	char	old_pwd[PATH_MAX];
 	char	new_pwd[PATH_MAX];
-	
+
 	(void)env_list;
 	if (!argv[1])
 		return (check_error(CD_ERR, "path required", GENERAL));
-    // {
-    //     ft_putstr_fd("cd: path required\n", 2);
-	// 	return (1);
-    // }
 	if (argv[2])
 		return (check_error(CD_ERR, "too many arguments", GENERAL));
 	if(!getcwd(old_pwd, sizeof(old_pwd)))
-		return (1);
+		return (check_error(errno, \
+			"cannot access current directory", GENERAL));
 	if (chdir(argv[1]) == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": ", 2);
-		perror("");
-		return (1);
-	}
+		return (check_error(errno, argv[1], GENERAL));
 	if (getcwd(new_pwd, sizeof(new_pwd)))
 	{
 		set_env(env_list, "OLDPWD", old_pwd);
