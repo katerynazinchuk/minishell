@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/24 17:22:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:21:42 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_for_fork(t_session *session)
 		session->line = NULL;
 	}
 	session->heredoc_count = 0;
-	destroy_shell(session->shell);
+	// destroy_shell(session->shell);
 }
 
 void	init_session(t_session *session, t_shell *shell)
