@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:11:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:15:06 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static bool	is_redirection_char(char c)
 int	fill_tokens(char *line, t_token_list **tokens)
 {
 	t_token_list	*list;
-	t_token			*eof;
 	t_str_pos		lexer;
 
 	list = init_token_list();
@@ -40,18 +39,11 @@ int	fill_tokens(char *line, t_token_list **tokens)
 		if (errno == ENOMEM)
 			return (1);
 	}
-	eof = create_token("EOF", T_EOF, UNQUOTED);
-	if (!eof)
-	{
-		free_token_list(list);
+	if (add_eof_token(list))
 		return (1);
-	}
-	add_to_token_list(list, eof);
 	*tokens = list;
 	return (0);
 }
-
-
 
 int	lexer(t_session *session)
 {
@@ -59,14 +51,9 @@ int	lexer(t_session *session)
 		return (1);
 	if (!session->tokens)
 		return (1);
-	// free_segment_list(session->tokens->head->segment);
 	if (expand_segments(session))
-	{
-		// free_token_list(session->tokens); level up free
 		return (1);
-	}
 	if (move_to_token_expand(session->tokens))
 		return (1);
-	//print_tokens(session->tokens);
 	return (0);
 }

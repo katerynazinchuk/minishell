@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:01:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:14:52 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,19 @@ int	add_word_token(t_token_list *list, t_str_pos *lexer)
 		return (1);
 	}
 	add_to_token_list(list, token);
+	return (0);
+}
+
+int	add_eof_token(t_token_list *list)
+{
+	t_token	*eof;
+
+	eof = create_token("EOF", T_EOF, UNQUOTED);
+	if (!eof)
+	{
+		free_token_list(list);
+		return (1);
+	}
+	add_to_token_list(list, eof);
 	return (0);
 }
