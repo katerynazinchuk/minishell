@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/24 13:46:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:51:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	}
 	return (new_ptr);
 }
+
 int	is_quote(char c)
 {
-	return(c == '\'' || c == '\"');
+	return (c == '\'' || c == '\"');
 }

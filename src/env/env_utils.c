@@ -6,31 +6,12 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:51:59 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/24 15:50:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:07:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Be carefull: there is malloc */
-// int	get_env_value(const char *var, t_env_list *env_list, char **result)
-// {
-// 	t_env_type	*cur;
-
-// 	cur = env_list->head;
-// 	while(cur)
-// 	{
-// 		if (ft_strcmp(var, cur->key) == 0)
-// 		{
-// 			*result = cur->value;
-// 			return (1);//success
-// 		}
-// 		cur = cur->next;
-// 	}
-// 	return (0);//variable not found
-// }
-
-/* Be carefull: there is malloc */
 t_env_type	*get_node(const char *var, t_env_list *env_list)
 {
 	t_env_type	*cur;
@@ -64,12 +45,12 @@ int	update_env_list(const char *var, t_env_list *env_list, char *new_data)
 		return (0);
 	cur = get_node(var, env_list);
 	if (!cur)
-		return (ENOENT); //malloc error
+		return (ENOENT);
 	free(cur->value);
 	cur->value = ft_strdup(new_data);
 	if (!cur->value)
 		return (ENOMEM);
-	return (0);//success
+	return (0);
 }
 
 int	set_env(t_env_list *env_list, const char *var, const char *value)
@@ -98,10 +79,10 @@ int	set_env(t_env_list *env_list, const char *var, const char *value)
 		}
 	}
 	else
-		node->value = NULL; // if value is NULL, we set it to NULL
+		node->value = NULL;
 	node->next = NULL;
 	add_env_node(env_list, node);
-	return (0); //success
+	return (0);
 }
 
 void	unset_env(t_env_list *env_list, const char *var)

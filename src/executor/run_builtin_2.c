@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:01:07 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 19:15:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:23:49 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		builtin_unset(char **argv, t_env_list *env_list)
+int	builtin_unset(char **argv, t_env_list *env_list)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	i = 1;
 	status = 0;
-	while(argv[i])
+	while (argv[i])
 	{
 		if (ft_strchr(argv[i], '=') != NULL)
 		{
@@ -34,10 +34,11 @@ int		builtin_unset(char **argv, t_env_list *env_list)
 	}
 	return (status);
 }
-int		builtin_env(char **argv, t_env_list *env_list)
+
+int	builtin_env(char **argv, t_env_list *env_list)
 {
 	t_env_type	*current;
-	
+
 	if (argv[1])
 	{
 		ft_putstr_fd("env: ", 2);
@@ -60,13 +61,12 @@ int		builtin_env(char **argv, t_env_list *env_list)
 	return (0);
 }
 
-int		builtin_exit(char **argv, t_env_list *env_list)
+int	builtin_exit(char **argv, t_env_list *env_list)
 {
 	(void)argv;
 	(void)env_list;
-
 	ft_putendl_fd("exit", 1);
-	if(argv[1])
+	if (argv[1])
 	{
 		if (is_numeric(argv[1]))
 		{

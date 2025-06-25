@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/23 17:51:10 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:19:38 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f);
 static int	check_pathes(t_env_list *env_list, char ***pathes);
 static int	check_access(char *cmd);
 
-/* need to decide with return value to track malloc errors */
 int	find_path(char **value, t_env_list *env_list)
 {
 	char		**pathes;
@@ -45,22 +44,21 @@ int	find_path(char **value, t_env_list *env_list)
 	}
 	free_arr(keep_start);
 	if (flag)
-		return (1);//malloc error
+		return (1);
 	return (0);
 }
 
 static int	check_pathes(t_env_list *env_list, char ***pathes)
 {
 	char	*env_value;
-	
+
 	if (!get_env_value("PATH", env_list, &env_value))
-		return (1);//execve will process error with "path not found"
+		return (1);
 	*pathes = ft_split(env_value, ':');
 	if (!*pathes)
 		return (check_error(ENOMEM, "execute", GENERAL));
 	return (0);
 }
-
 
 static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f)
 {
@@ -78,7 +76,7 @@ static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f)
 		if (!*val)
 		{
 			*f = 1;
-			return (2);//як трекати помилку маллок.
+			return (2);
 		}
 		ft_strlcpy(*val, full_path, len_path);
 		return (1);
@@ -88,17 +86,13 @@ static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f)
 
 static int	check_access(char *cmd)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	if (stat(cmd, &sb) == -1)
-		return (check_error(errno, cmd, EXEC));//cmd doesnt showed up
+		return (check_error(errno, cmd, EXEC));
 	if (S_ISDIR(sb.st_mode))
 		return (check_error(IS_DIR, cmd, EXEC));
 	if (access(cmd, X_OK) == -1)
 		return (check_error(EACCES, cmd, EXEC));
 	return (0);
 }
-
-
-
-

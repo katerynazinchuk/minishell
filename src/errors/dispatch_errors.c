@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 23:41:32 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/25 16:29:22 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/12 23:41:32 by tchernia          #+#    #+#             */
+/*   Updated: 2025/06/25 17:08:48 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static t_error_fn	get_error_fn(int err_code);
 static t_error_fn	get_syntax_fn(int err_code);
 static t_error_fn	get_execute_fn(int err_code);
-static int			handle_std_error(int err_code, char *context, t_err_ctx ctx);
+static int			handle_std_error(int err_code, char *context, \
+										t_err_ctx ctx);
 
 int	check_error(int err_code, char *context, t_err_ctx ctx)
 {

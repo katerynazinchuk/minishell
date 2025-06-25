@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/16 17:37:07 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:06:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_env_type	*fill_env_node(char *str)
 
 	j = 0;
 	while (str[j] != '=')
-			j++;
+		j++;
 	node = (t_env_type *)malloc(sizeof(t_env_type));
 	if (!node)
 		return (NULL);
@@ -92,4 +92,3 @@ t_env_type	*fill_env_node(char *str)
 	node->next = NULL;
 	return (node);
 }
-

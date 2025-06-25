@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:46:29 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:27:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 #include "heredoc.h"
 #include <fcntl.h>
 
-int event_handler(void)
+int	event_handler(void)
 {
-	return 0;
+	return (0);
 }
 
-char *create_heredoc_filename(int heredoc_id, int *exit_status)
+char	*create_heredoc_filename(int heredoc_id, int *exit_status)
 {
-	char *id_str;
-	char *filename;
+	char	*id_str;
+	char	*filename;
 
 	id_str = ft_itoa(heredoc_id);
 	if (!id_str)
@@ -32,18 +32,19 @@ char *create_heredoc_filename(int heredoc_id, int *exit_status)
 	}
 	filename = ft_strjoin("/tmp/heredoc_", id_str);
 	free(id_str);
-	if(!filename)
+	if (!filename)
 	{
 		*exit_status = check_error(ENOMEM, "heredoc", GENERAL);
 		return (NULL);
 	}
-	return(filename);
+	return (filename);
 }
 
-int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
+int	write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 {
-	char *line;
-	char *tmp;
+	char	*line;
+	char	*tmp;
+
 	setsignal(HEREDOC_SIG);
 	rl_event_hook = event_handler;
 	while (1)
@@ -51,7 +52,7 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		tmp = NULL;
 		line = readline("heredoc> ");
 		if (!line)
-			break;
+			break ;
 		if (g_signal != 0)
 		{
 			session->shell->status = 128 + g_signal;
@@ -62,13 +63,13 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 		if (ft_strcmp(line, redir->connection) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
-		if(redir->quoted != QUOTED)
+		if (redir->quoted != QUOTED)
 		{
 			tmp = expand_value(line, session->shell);
 			free(line);
-			if(!tmp)
+			if (!tmp)
 				return (2);
 			line = tmp;
 		}
@@ -80,16 +81,16 @@ int write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 	return (0);
 }
 
-void expand_heredoc(t_redir *redir, t_session *session)
-{	
-	int heredoc_id;
-	char *heredoc_filename;
-	int fd;
-	int status;
+void	expand_heredoc(t_redir *redir, t_session *session)
+{
+	int		heredoc_id;
+	char	*heredoc_filename;
+	int		fd;
+	int		status;
 
 	heredoc_id = session->heredoc_count++;
 	heredoc_filename = create_heredoc_filename(heredoc_id, &session->shell->status);
-	if(!heredoc_filename)
+	if (!heredoc_filename)
 		return ;
 	fd = open(heredoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
@@ -97,10 +98,10 @@ void expand_heredoc(t_redir *redir, t_session *session)
 		perror("minishell: open");
 		free(heredoc_filename);
 		session->shell->status = 1;
-		return;
+		return ;
 	}
 	status = write_heredoc_lines(redir, session, fd);
-	if(status == 2)
+	if (status == 2)
 	{
 		malloc_error(&session->shell->status);
 		close(fd);
@@ -118,7 +119,7 @@ void expand_heredoc(t_redir *redir, t_session *session)
 	redir->connection = heredoc_filename;
 }
 
-void heredoc(t_ast_node *node, t_session *session)
+void	heredoc(t_ast_node *node, t_session *session)
 {
 	heredoc_foreach_ast(node, session, expand_heredoc);
 }

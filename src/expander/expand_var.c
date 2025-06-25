@@ -6,36 +6,32 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 16:31:34 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:26:18 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* змінна від експорта запишеться в env_list */
-/* expand в процесі парсинга, щоб ми не розгорнули деліметр */
-/* set flag need to clean - better to change from void to return like write */
-
 static int	process_var(char *raw, t_expand_type *exp, t_shell *shell);
 
-int	expand_segments(t_session *session)//треба почистити результат від expand_value
+int	expand_segments(t_session *session)
 {
-	t_token	*cur;
-	t_segment *seg;
-	char *tmp;
+	t_token		*cur;
+	t_segment	*seg;
+	char		*tmp;
 
 	cur = session->tokens->head;
 	while (cur)
 	{
-		if(cur->prev && cur->prev->type == T_HEREDOC)
+		if (cur->prev && cur->prev->type == T_HEREDOC)
 		{
 			cur = cur->next;
-			continue;
+			continue ;
 		}
 		seg = cur->segment;
-		while(seg)
+		while (seg)
 		{
-			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
+			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)
 			{
 				if (check_subs(seg->value))
 					return (check_error(BAD_SUBS, seg->value, GENERAL));
@@ -58,70 +54,6 @@ int	expand_segments(t_session *session)//треба почистити резу�
 	return (0);
 }
 
-/* bool	expand_segments(t_session *session)//треба почистити результат від expand_value
-{
-	t_token	*cur;
-	t_segment *seg;
-	char *tmp;
-
-	cur = session->tokens->head;
-	while (cur)
-	{
-		if(cur->prev && cur->prev->type == T_HEREDOC)
-		{
-			cur = cur->next;
-			continue;
-		}
-		seg = cur->segment;
-		while(seg)
-		{
-			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)///start from here
-			{
-				if (check_subs(seg->value))
-				{
-					session->tokens->error = 1;
-					return (false);
-				}	
-				else
-					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
-			}
-			else
-				tmp = ft_strdup(seg->value);
-			if (!tmp)
-			{
-				free(seg->value);
-				return (false);
-			}
-			free(seg->value);
-			seg->value = tmp;
-			seg = seg->next;
-		}
-		cur = cur->next;
-	}
-	return (true);
-} */
-
-
-/* void	expand_tokens(t_shell *shell)//треба почистити результат від expand_value
-{
-	t_token	*current;
-
-	current = shell->tokens->head;
-	while (current)
-	{
-		if (ft_strchr(current->value, '$') && current->q_type != Q_SINGLE)///start from here
-		{
-			if (check_subs(current->value))
-				current->bad_subs = 1;
-			else
-				current->expanded = expand_value(current->value, shell);//TODO what happens if there will be NULL?
-		}
-		else
-			current->expanded = ft_strdup(current->value);
-		current = current->next;
-	}
-} */
-
 char	*expand_value(char *raw, t_shell *shell)
 {
 	t_expand_type	exp;
@@ -132,9 +64,10 @@ char	*expand_value(char *raw, t_shell *shell)
 	{
 		if (raw[exp.i] == '$')
 		{
-			if (raw[exp.i +1 ] == '$' || is_whitespace(raw[exp.i + 1]) || raw[exp.i + 1] == '\0')
+			if (raw[exp.i + 1] == '$' || is_whitespace(raw[exp.i + 1]) \
+				|| raw[exp.i + 1] == '\0')
 			{
-				while(raw[exp.i + 1] && raw[exp.i + 1] == '$')
+				while (raw[exp.i + 1] && raw[exp.i + 1] == '$')
 					exp.res[exp.j++] = raw[exp.i++];
 				exp.res[exp.j++] = raw[exp.i++];
 			}
@@ -146,7 +79,7 @@ char	*expand_value(char *raw, t_shell *shell)
 					error_free(&exp);
 					return (NULL);
 				}
-				exp.i+=exp.len_var;
+				exp.i += exp.len_var;
 				free_exp(&exp);
 			}
 		}
@@ -171,14 +104,13 @@ static int	process_var(char *raw, t_expand_type *exp, t_shell *shell)
 	return (0);
 }
 
-//somethinf after $ {} or just var_name
 void	extract_var(char *raw, t_expand_type *exp)
 {
 	exp->len_var = 0;
 	if (*raw == '{' && ft_strchr(raw, '}') != 0)
 	{
-		exp->len_var = (size_t)(ft_strchr(raw, '}') - raw + 1);// + 1 щоб урахувати {}
-		exp->var = ft_strndup(raw + 1, exp->len_var - 2);// - 2 щоб не забрати останній символ '}'
+		exp->len_var = (size_t)(ft_strchr(raw, '}') - raw + 1);
+		exp->var = ft_strndup(raw + 1, exp->len_var - 2);
 	}
 	else if (raw[exp->len_var] == '?')
 	{
@@ -196,17 +128,16 @@ void	extract_var(char *raw, t_expand_type *exp)
 		check_error(ENOMEM, "expand variable", GENERAL);
 }
 
-/* how we track here malloc errors */
 void	expand_var(t_expand_type *exp, t_shell *shell)
 {
 	int		flag;
 	char	*tmp;
-	
+
 	if (is_valid_var(exp->var))
 	{
 		flag = get_env_value(exp->var, shell->env_list, &tmp);
 		if (!flag)
-			exp->str = ft_strdup("");//неіснуюча змінна
+			exp->str = ft_strdup("");
 		else
 		{
 			exp->str = ft_strdup(tmp);
@@ -219,7 +150,7 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 	else if (*exp->var == '?')
 		exp->str = ft_itoa(shell->status);
 	else
-		exp->str = ft_strdup("");//неіснуюча змінна
+		exp->str = ft_strdup("");
 }
 
 void	append_exp_str(t_expand_type *exp)
@@ -240,5 +171,3 @@ void	append_exp_str(t_expand_type *exp)
 	}
 	exp->res[exp->j] = '\0';
 }
-
-//  echo "$bkbli $$$$ $? $?nln;mj;p"

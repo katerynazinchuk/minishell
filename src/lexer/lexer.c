@@ -6,11 +6,16 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:02:49 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:11:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	is_redirection_char(char c)
+{
+	return (c == '<' || c == '>');
+}
 
 int	fill_tokens(char *line, t_token_list **tokens)
 {
@@ -20,36 +25,33 @@ int	fill_tokens(char *line, t_token_list **tokens)
 
 	list = init_token_list();
 	if (!list)
-		return (check_error(ENOMEM, "create tokens", GENERAL));
+		return (1);
 	init_lexer_state(&lexer, line);
 	while (lexer.input[lexer.cur])
 	{
 		if (is_whitespace(lexer.input[lexer.cur]))
 			skip_whitespace(&lexer);
 		else if (lexer.input[lexer.cur] == '|')
-		{
-			if (add_pipe_token(list, &lexer))
-				return (1);
-		}
-		else if (lexer.input[lexer.cur] == '<' \
-			|| lexer.input[lexer.cur] == '>')
+			add_pipe_token(list, &lexer);
+		else if (is_redirection_char(lexer.input[lexer.cur]))
 			add_red_token(list, &lexer);
 		else if (add_word_token(list, &lexer))
-		{
 			free_token_list(list);
-			return (check_error(ENOMEM, "create tokens", GENERAL));
-		}
+		if (errno == ENOMEM)
+			return (1);
 	}
-	eof = create_token("eof", T_EOF, UNQUOTED);
+	eof = create_token("EOF", T_EOF, UNQUOTED);
 	if (!eof)
 	{
 		free_token_list(list);
-		return (check_error(ENOMEM, "create tokens", GENERAL));
+		return (1);
 	}
 	add_to_token_list(list, eof);
 	*tokens = list;
 	return (0);
 }
+
+
 
 int	lexer(t_session *session)
 {

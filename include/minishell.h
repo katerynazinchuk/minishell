@@ -1,22 +1,14 @@
-/* Дозволені функції
-a: access, add_history
-c: chdir, close, closedir
-d: dup, dup2
-e: execve, exit
-f: fork, free, fstat
-g: getcwd, getenv
-i: ioctl, isatty
-k: kill
-l: lstat
-m: malloc
-o: open, opendir
-p: perror, pipe, printf
-r: read, readdir, readline, rl_clear_history, rl_on_new_line, rl_redisplay, rl_replace_line
-s: sigaction, sigaddset, sigemptyset, signal, stat, strerror
-t: tcgetattr, tcsetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs, ttyname, ttyslot
-u: unlink
-w: wait, wait3, wait4, waitpid, write 
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/25 16:58:48 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/25 17:05:12 by kzinchuk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -48,7 +40,7 @@ w: wait, wait3, wait4, waitpid, write
 # include <pwd.h>
 # include <sys/types.h>
 
-extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 int	ft_strcmp(const char *str1, const char *str2);
 

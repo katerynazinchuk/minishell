@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/09 15:36:39 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:53:13 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ typedef enum e_tok_type
 {
 	T_WORD,
 	T_PIPE,
-	T_IN,//<
-	T_OUT,//>
-	T_APPEND,//>>
-	T_HEREDOC,//<<
+	T_IN,
+	T_OUT,
+	T_APPEND,
+	T_HEREDOC,
 	T_EOF,
 }	t_tok_type;
 
@@ -39,13 +39,13 @@ typedef enum e_quoted
 
 typedef struct s_token
 {
-	char			*expanded;
-	int				bad_subs;
-	t_tok_type		type;
-	t_quoted		quoted; // to track if the token is quoted for heredoc expansion
+	char				*expanded;
+	int					bad_subs;
+	t_tok_type			type;
+	t_quoted			quoted;
 	struct s_segment	*segment;
-	struct s_token	*next;
-	struct s_token	*prev; // to track the last token for heredoc
+	struct s_token		*next;
+	struct s_token		*prev;
 }	t_token;
 
 typedef struct s_segment
@@ -55,12 +55,9 @@ typedef struct s_segment
 	struct s_segment	*next;
 }	t_segment;
 
-//if any of the segments is quoted, the whole token is considered quoted - logic for heredoc var expansion
-//expand heredoc content only if unquoted
-
 typedef struct s_token_list
 {
-	int 		error;// to track errors (not sure yet)
+	int			error;
 	t_token		*head;
 	t_token		*tail;
 }	t_token_list;
