@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 17:26:26 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:13:50 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	builtin_cd(char **argv, t_env_list *env_list)
 int		builtin_pwd(char **argv, t_env_list *env_list)
 {
 	char	cwd[PATH_MAX];
-	
+
 	(void)argv;
 	(void)env_list;
 	if (getcwd(cwd, sizeof(cwd)))
@@ -94,8 +94,7 @@ int		builtin_pwd(char **argv, t_env_list *env_list)
 		ft_putendl_fd(cwd, 1);
 		return (0);
 	}
-	perror("pwd");
-	return (1);
+	return (check_error(errno, "cannot access current directory", GENERAL));
 }
 void print_export(t_env_list *env_list);
 int is_valid_input(char *var);
