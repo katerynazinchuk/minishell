@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:30:21 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/26 18:39:25 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:10:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	handle_is_dir(int code, char *context)
 int	handle_export_err(int code, char *context)
 {
 	(void)code;
-
 	ft_putstr_fd("minishell: export: `", 2);
 	ft_putstr_fd(context, 2);
 	ft_putendl_fd("': not a valid identifier", 2);
 	return (1);
 }
+

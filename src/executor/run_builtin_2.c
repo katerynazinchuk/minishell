@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:01:07 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:27:06 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:10:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,17 @@
 int	builtin_unset(char **argv, t_env_list *env_list)
 {
 	int	i;
-	int	status;
 
 	i = 1;
-	status = 0;
 	while (argv[i])
 	{
 		if (ft_strchr(argv[i], '=') != NULL)
-		{
-			ft_putstr_fd("unset: `", 2);
-			ft_putstr_fd(argv[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			status = 1;
-		}
+			return (0);
 		else
 			unset_env(env_list, argv[i]);
 		i++;
 	}
-	return (status);
+	return (0);
 }
 
 int	builtin_env(char **argv, t_env_list *env_list)
