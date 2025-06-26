@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:17:14 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:23:12 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:03:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_shell(t_shell *shell)
+void	destroy_fd(int *fd)
 {
-	close(shell->fd[0]);
-	close(shell->fd[1]);
+	close(fd[0]);
+	close(fd[1]);
 }
