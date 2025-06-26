@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:16:23 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:41:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:46:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ int	error_free(t_expand_type *exp)
 		exp->res = NULL;
 	}
 	return (1);
+}
+
+int	handle_expansion_error(t_segment *seg)
+{
+	free(seg->value);
+	return (check_error(ENOMEM, "create tokens: ", GENERAL));
 }

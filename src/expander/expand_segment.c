@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 14:04:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:46:37 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,9 @@ int	expand_segments(t_session *session)
 		seg = cur->segment;
 		while (seg)
 		{
-			if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)
-			{
-				if (check_subs(seg->value))
-					return (check_error(BAD_SUBS, seg->value, GENERAL));
-				else
-					tmp = expand_value(seg->value, session->shell);//TODO what happens if there will be NULL?
-			}
-			else
-				tmp = ft_strdup(seg->value);
+			tmp = expand_seg_value(seg, session->shell);//TODO what happens if there will be NULL?
 			if (!tmp)
-			{
-				free(seg->value);
-				return (check_error(ENOMEM, "create tokens: ", GENERAL));
-			}
+				return (handle_expansion_error(seg));
 			free(seg->value);
 			seg->value = tmp;
 			seg = seg->next;
@@ -50,6 +39,20 @@ int	expand_segments(t_session *session)
 		cur = cur->next;
 	}
 	return (0);
+}
+
+char	*expand_seg_value(t_segment *seg, t_shell *shell)
+{
+	if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)
+	{
+		if (check_subs(seg->value))
+		{
+			check_error(BAD_SUBS, seg->value, GENERAL);
+			return (NULL);
+		}
+		return (expand_value(seg->value, shell));
+	}
+	return (ft_strdup(seg->value));
 }
 
 int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *init_shell)
