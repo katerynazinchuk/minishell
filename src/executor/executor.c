@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:32:51 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:03:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 	int		pipe_fd[2];
 
 	if (pipe(pipe_fd) < 0)
-		write(2, "Pipe error \n", 13);
+		return (check_error(errno, "pipe", GENERAL));
 	id_left = child_left(ast->left, session, pipe_fd);
 	if (id_left < 0)
 	{
