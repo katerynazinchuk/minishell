@@ -6,16 +6,16 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:00:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 13:41:25 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:24:08 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_redirects(t_redir *redir)
+void	free_redirects(t_redir *redir)
 {
-	t_redir *current;
-	t_redir *next;
+	t_redir	*current;
+	t_redir	*next;
 
 	current = redir;
 	while (current)
@@ -27,14 +27,13 @@ void free_redirects(t_redir *redir)
 	}
 }
 
-void free_structure(t_command_parsing *structure)
+void	free_structure(t_command_parsing *structure)
 {
-	t_com_tokens *current;
-	t_com_tokens *next;
+	t_com_tokens	*current;
+	t_com_tokens	*next;
 
 	if (!structure)
-		return;
-
+		return ;
 	current = structure->args;
 	while (current)
 	{
@@ -51,24 +50,22 @@ void	free_ast(t_ast_node **ast)
 {
 	int	i;
 
-	if(!ast || !*ast)
-		return;
+	if (!ast || !*ast)
+		return ;
 	free_ast(&(*ast)->left);
 	free_ast(&(*ast)->right);
 	i = 0;
-	if((*ast)->value)
+	if ((*ast)->value)
 	{
-		while((*ast)->value[i])
+		while ((*ast)->value[i])
 		{
 			free((*ast)->value[i]);
 			i++;
 		}
 		free((*ast)->value);
 	}
-	if((*ast)->redir)
+	if ((*ast)->redir)
 		free_redirects((*ast)->redir);
-
 	free((*ast));
 	*ast = NULL;
 }
-

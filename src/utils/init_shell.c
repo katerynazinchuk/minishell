@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 15:34:01 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:27:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_for_fork(t_session *session)
 		session->line = NULL;
 	}
 	session->heredoc_count = 0;
-	// destroy_shell(session->shell);
 }
 
 void	init_session(t_session *session, t_shell *shell)
@@ -56,7 +55,6 @@ int	update_prompt(char **prompt)
 	char		*tmp_name;
 	char		*new_prompt;
 	const char	*color = "\001\033[1;35m\002";
-	
 
 	tmp_name = ft_strdup(getenv("LOGNAME"));
 	if (!tmp_name)
@@ -76,4 +74,3 @@ int	update_prompt(char **prompt)
 	*prompt = tmp_name;
 	return (0);
 }
-

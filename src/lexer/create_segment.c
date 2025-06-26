@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 17:57:59 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:19:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	move_to_token_expand(t_token_list *list)
 	{
 		if (!current->expanded)
 		{
-			current->expanded = join_segments(current->segment, &current->quoted);
+			current->expanded = join_segments(current->segment, \
+												&current->quoted);
 			if (!current->expanded)
 				return (check_error(ENOMEM, "create tokens", GENERAL));
 		}

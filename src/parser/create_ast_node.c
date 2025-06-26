@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_debug.c                                      :+:      :+:    :+:   */
+/*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 19:27:03 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/26 19:31:44 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/26 19:32:23 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_shell(t_shell *shell)
+t_ast_node	*create_ast_node(t_ast_type type, char **command)
 {
-	if (shell->env_list)
-		print_env_list(shell->env_list);
-	printf("lsat exit status: %i\n", shell->status);
-}
+	t_ast_node	*ast_node;
 
-void	print_env_list(t_env_list *env_list)
-{
-	t_env_type	*current;
-
-	current = env_list->head;
-	while (current)
+	ast_node = (t_ast_node *)malloc(sizeof(t_ast_node));
+	if (!ast_node)
 	{
-		printf("key: %s\n value: %s\n\n", current->key, current->value);
-		current = current->next;
+		check_error(ENOMEM, "minishell : ast_node", GENERAL);
+		return (NULL);
 	}
+	ast_node->type = type;
+	ast_node->value = command;
+	ast_node->redir = NULL;
+	ast_node->left = NULL;
+	ast_node->right = NULL;
+	return (ast_node);
 }

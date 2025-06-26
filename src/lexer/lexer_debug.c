@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:51:46 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/24 17:01:44 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:22:54 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@ void	print_segments(t_segment *segment)
 	}
 }
 
-void	print_tokens(t_token_list *list)
-{
-	t_token	*current;
-	char	*map[7] = {"T_WORD", "T_PIPE", "T_IN", "T_OUT", "T_APPEND", "T_HEREDOC", "T_EOF"};
-
-	if (!list || !list->head)
-	{
-		printf("No tokens to print.\n");
-		return ;
-	}
-	current = list->head;
-	while (current)
-	{
-		printf("[%s] %s\n  ", map[current->type], current->expanded);
-		print_segments(current->segment);
-		printf("\n");
-		current = current->next;
-	}
-}
+// void	print_tokens(t_token_list *list)
+// {
+// 	t_token	*current;
+// 	char	*map[7] = {"T_WORD", "T_PIPE", "T_IN", "T_OUT",\
+//						 "T_APPEND", "T_HEREDOC", "T_EOF"};
+// 	if (!list || !list->head)
+// 	{
+// 		printf("No tokens to print.\n");
+// 		return ;
+// 	}
+// 	current = list->head;
+// 	while (current)
+// 	{
+// 		printf("[%s] %s\n  ", map[current->type], current->expanded);
+// 		print_segments(current->segment);
+// 		printf("\n");
+// 		current = current->next;
+// 	}
+// }

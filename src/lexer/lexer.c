@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:15:06 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:22:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 static bool	is_redirection_char(char c)
 {
 	return (c == '<' || c == '>');
+}
+
+void	skip_whitespace(t_str_pos *lexer)
+{
+	while (lexer->input[lexer->cur] && is_whitespace(lexer->input[lexer->cur]))
+		lexer->cur++;
 }
 
 int	fill_tokens(char *line, t_token_list **tokens)

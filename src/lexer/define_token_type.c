@@ -6,17 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:14:52 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:22:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	skip_whitespace(t_str_pos *lexer)
-{
-	while (lexer->input[lexer->cur] && is_whitespace(lexer->input[lexer->cur]))
-		lexer->cur++;
-}
 
 int	add_pipe_token(t_token_list *list, t_str_pos *lexer)
 {
@@ -30,14 +24,15 @@ int	add_pipe_token(t_token_list *list, t_str_pos *lexer)
 	return (0);
 }
 
-void	add_red_token(t_token_list *list, t_str_pos *lexer)//change to int
+void	add_red_token(t_token_list *list, t_str_pos *lexer)
 {
 	if (lexer->input[lexer->cur + 1] == '>' && lexer->input[lexer->cur] == '>')
 	{
 		create_red_token(list, ">>", T_APPEND);
 		lexer->cur += 2;
 	}
-	else if (lexer->input[lexer->cur + 1] == '<' && lexer->input[lexer->cur] == '<')
+	else if (lexer->input[lexer->cur + 1] == '<' \
+						&& lexer->input[lexer->cur] == '<')
 	{
 		create_red_token(list, "<<", T_HEREDOC);
 		lexer->cur += 2;

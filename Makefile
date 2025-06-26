@@ -43,7 +43,9 @@ EXPANDER = src/expander/expand_var.c \
 PARSER = src/parser/parser.c \
 			src/parser/redirects.c \
 			src/parser/parser_debug.c \
-			src/parser/free_parser.c
+			src/parser/free_parser.c \
+			src/parser/create_ast_node.c \
+			src/parser/divide_ast_comand.c
 
 HEREDOC = src/heredoc/heredoc.c \
 			src/heredoc/utils_heredoc.c

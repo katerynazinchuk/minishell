@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:08:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 17:34:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:27:07 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strndup(const char *s, size_t n)
 {
 	char	*new_str;
-	size_t		i;
+	size_t	i;
 
 	new_str = (char *)malloc(sizeof(char) * (n + 1));
 	if (!new_str)

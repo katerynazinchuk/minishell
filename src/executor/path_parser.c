@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 17:19:38 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:56:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	verify_cmd_path(char **pathes, char **val, char *cmd, int *f)
 {
 	char		full_path[PATH_MAX];
 	int			len_path;
-
+	// print a path to see what happen there if path is replaced
 	*f = 0;
 	ft_strlcpy(full_path, *pathes, PATH_MAX);
 	ft_strlcat(full_path, "/", PATH_MAX);
