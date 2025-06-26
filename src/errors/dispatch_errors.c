@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:30:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:34:53 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static t_error_fn	get_execute_fn(int err_code)
 	{CMD_NOT_FOUND, handle_cmd_not_found},
 	{CD_ERR, handle_cd_error},
 	{IS_DIR, handle_is_dir},
+	{EXPORT_ERR, handle_export_err},
 	{0, NULL}
 	};
 	int						i;

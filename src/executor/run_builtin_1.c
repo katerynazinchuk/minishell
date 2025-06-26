@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 18:47:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:36:47 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,7 @@ int	builtin_export(char **argv, t_env_list *env_list)
 	while (argv[i])
 	{
 		if (!is_valid_input(argv[i]))
-		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(argv[i], 2);
-			ft_putendl_fd("': not a valid identifier\n", 2);
-			return (1);
-		}
+			return (check_error(EXPORT_ERR, argv[i], GENERAL));
 		else
 		{
 			divider = ft_strchr(argv[i], '=');
