@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 12:26:01 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:05:43 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **env)
 	init_shell(&shell, env);
 	if (!shell.env_list)
 	{
-		destroy_shell(&shell);
+		destroy_fd(shell.fd);
 		return (check_error(ENOMEM, "can't create env_list", GENERAL));
 	}
 	ignore_args(argc, argv);
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 	run_shell(&shell);
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
-	destroy_shell(&shell);
+	destroy_fd(shell.fd);
 	return(shell.status);
 }
 

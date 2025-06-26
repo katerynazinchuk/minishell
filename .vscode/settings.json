@@ -71,7 +71,8 @@
     "errors.h": "c",
     "utils.h": "c",
     "env.h": "c",
-    "lexer.h": "c"
+    "lexer.h": "c",
+    "future": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
