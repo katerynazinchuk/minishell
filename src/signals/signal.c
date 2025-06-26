@@ -1,25 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 18:36:16 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/26 18:36:37 by kzinchuk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-/* Need correction/addition when we will work with fork
-we need to return signals back into default-system
-	pid==0
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	execve();
+volatile sig_atomic_t	g_signal = 0;
 
-ignore or process signals in parent to avoid fall down shell
-after finishing child proc we need to process status in good way
-	if (WIFSIGNALED(status))
-		g_exit_status = 128 + WTERMSIG(status);
-without it could kill shell or give back strange symbols insted prompt
-*/
-
-//Ctrl-C
-// g_signal = 0;
-volatile sig_atomic_t g_signal = 0;
-
-// For main readline
-void sigint_main(int signal_type)
+void	sigint_main(int signal_type)
 {
 	g_signal = signal_type;
 	write(1, "\n", 1);
@@ -28,13 +23,13 @@ void sigint_main(int signal_type)
 	rl_redisplay();
 }
 
-void sigint_heredoc(int signal_type)
+void	sigint_heredoc(int signal_type)
 {
 	g_signal = signal_type;
 	rl_done = 1;
 }
 
-void setsignal(t_sigtype type)
+void	setsignal(t_sigtype type)
 {
 	if (type == MAIN_SIG)
 	{
@@ -48,39 +43,7 @@ void setsignal(t_sigtype type)
 	}
 	else
 	{
-		signal(SIGINT,SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);		
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 	}
 }
-
-// int main (void)
-// {
-// 	char *line;
-// 	int exit_status = 0;
-// 	setsignal(HEREDOC_SIG);
-	
-// 	while(1)
-// 	{
-// 		rl_event_hook = event_handler;
-// 		line = readline("heredoc> ");
-// 		if (line == NULL)
-// 			break;
-// 		if (g_signal != 0)
-// 		{
-// 			exit_status = 128 + g_signal;
-// 			g_signal = 0;
-// 			break;
-// 		}
-// 		printf("%s\n", line);
-// 		free(line);
-// 	}
-// 	setsignal(MAIN_SIG);
-// 	return (0);
-
-// }
-// Ctrl+C → SIGINT
-// Ctrl+\ → SIGQUIT -> SIG_IGN,
-// Ctrl+D → EOF
-
-// sigaction, sigemptyset, sigadd
-
