@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 16:46:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:10:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,5 @@ void	expand_heredoc(t_redir *redir, t_session *session)
 
 void	heredoc(t_ast_node *node, t_session *session)
 {
-	heredoc_ast(node, session);//, expand_heredoc);
+	heredoc_ast(node, session);
 }
