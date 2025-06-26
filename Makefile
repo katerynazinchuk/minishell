@@ -57,7 +57,6 @@ UTILS = src/utils/utils_general.c \
 		src/utils/destroy_shell.c
 
 ERRORS = src/errors/dispatch_errors.c \
-		src/errors/common_errors.c \
 		src/errors/input_syntax_error.c \
 		src/errors/syntax_fn.c \
 		src/errors/execute_fn.c
