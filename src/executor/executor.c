@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 14:03:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:55:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,16 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 	if (id_left < 0)
 	{
 		free_in_fork(session, NULL);
+		close_pipe_fd(pipe_fd);
 		return (1);
 	}
 	id_right = child_right(ast->right, session, pipe_fd);
 	if (id_right < 0)
 	{
 		free_in_fork(session, NULL);
+		close_pipe_fd(pipe_fd);
 		waitpid(id_left, NULL, 0);
+		return (1);
 	}
 	close_pipe_fd(pipe_fd);
 	waitpid(id_left, NULL, 0);

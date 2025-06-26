@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_execute.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:34:55 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 13:35:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:03:28 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ int	free_in_fork(t_session *session, char **env_arr)
 		free_arr(env_arr);
 	free_env_list(session->shell->env_list);
 	free_ast(&session->ast);
-	destroy_shell(session->shell);
+	destroy_fd(session->shell->fd);
 	return (1);
 }
