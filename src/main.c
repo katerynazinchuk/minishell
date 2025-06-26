@@ -6,15 +6,11 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:38:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:26:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* [username@hostname current_working_directory]$ */
-
-//readline return NULL, so (!line) processing case when we use Ctrl+D
 
 /*
 --leak-check=full
@@ -69,7 +65,7 @@ int	shell_loop(t_session *session)
 	int	input_status;
 	
 	if (update_prompt(&session->prompt))
-		return (0);//track enomem to continue loop
+		return (0);
 	input_status = check_input(readline(session->prompt), session);
 	add_history(session->line);
 	if (g_signal != 0)
@@ -77,7 +73,6 @@ int	shell_loop(t_session *session)
 		session->shell->status = 128 + g_signal;
 		g_signal = 0;
 	}
-	// input_status = check_input(readline(session->prompt), &session->line, session->shell);
 	if (input_status == 1)
 		return(shell_exit(session));
 	else if (input_status != 0)
