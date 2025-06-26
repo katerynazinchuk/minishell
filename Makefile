@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -g3 -O0
+CFLAGS = -Wall -Wextra -Werror -g3 -O0
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
 # CFLAGS += -fsanitize=address,undefined,leak
@@ -25,9 +25,7 @@ EXECUTOR = src/executor/executor.c \
 		src/executor/run_builtin_1.c \
 		src/executor/run_builtin_2.c \
 		src/executor/run_external.c \
-		src/executor/path_parser.c \
-		src/executor/child_processes.c \
-		src/executor/free_execute.c
+		src/executor/path_parser.c 
 
 LEXER = src/lexer/create_token_list.c \
 		src/lexer/free_lexer.c \
