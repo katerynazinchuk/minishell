@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 12:40:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 15:24:19 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:46:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,47 +84,46 @@ int	write_heredoc_lines(t_redir *redir, t_session *session, int fd)
 	return (0);
 }
 
-/* int	write_heredoc_lines(t_redir *redir, t_session *session, int fd)
-{
-	char	*line;
-	char	*tmp;
+// int	write_heredoc_lines(t_redir *redir, t_session *session, int fd)
+// {
+// 	char	*line;
+// 	char	*tmp;
 
-	setsignal(HEREDOC_SIG);
-	rl_event_hook = event_handler;
-	while (1)
-	{
-		tmp = NULL;
-		line = readline("heredoc> ");
-		if (!line)
-			break ;
-		if (g_signal != 0)
-		{
-			session->shell->status = 128 + g_signal;
-			setsignal(MAIN_SIG);
-			free(line);
-			return (1);
-		}
-		if (ft_strcmp(line, redir->connection) == 0)
-		{
-			free(line);
-			break ;
-		}
-		if (redir->quoted != QUOTED)
-		{
-			tmp = expand_value(line, session->shell);
-			free(line);
-			if (!tmp)
-				return (2);
-			line = tmp;
-		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	setsignal(MAIN_SIG);
-	return (0);
-} */
-
+// 	setsignal(HEREDOC_SIG);
+// 	rl_event_hook = event_handler;
+// 	while (1)
+// 	{
+// 		tmp = NULL;
+// 		line = readline("heredoc> ");
+// 		if (!line)
+// 			break ;
+// 		if (g_signal != 0)
+// 		{
+// 			session->shell->status = 128 + g_signal;
+// 			setsignal(MAIN_SIG);
+// 			free(line);
+// 			return (1);
+// 		}
+// 		if (ft_strcmp(line, redir->connection) == 0)
+// 		{
+// 			free(line);
+// 			break ;
+// 		}
+// 		if (redir->quoted != QUOTED)
+// 		{
+// 			tmp = expand_value(line, session->shell);
+// 			free(line);
+// 			if (!tmp)
+// 				return (2);
+// 			line = tmp;
+// 		}
+// 		write(fd, line, ft_strlen(line));
+// 		write(fd, "\n", 1);
+// 		free(line);
+// 	}
+// 	setsignal(MAIN_SIG);
+// 	return (0);
+// }
 void	expand_heredoc(t_redir *redir, t_session *session)
 {
 	int		heredoc_id;
@@ -156,5 +155,5 @@ void	expand_heredoc(t_redir *redir, t_session *session)
 
 void	heredoc(t_ast_node *node, t_session *session)
 {
-	heredoc_foreach_ast(node, session, expand_heredoc);
+	heredoc_ast(node, session);//, expand_heredoc);
 }

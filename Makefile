@@ -100,6 +100,8 @@ LOG_DIR := valgrind_logs
 valgrind: $(NAME)
 	@mkdir -p $(LOG_DIR)
 	@VALGRIND_LOG_FILE=$(LOG_DIR)/valgrind_$(shell date +"%Y%m%d_%H%M%S").log; \
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=$$VALGRIND_LOG_FILE ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp --log-file=$$VALGRIND_LOG_FILE ./$(NAME)
 
-.PHONY: all clean fclean re valgrind
+nolog:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp ./minishell
+.PHONY: all clean fclean re valgrind nolog
