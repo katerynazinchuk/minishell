@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 18:49:34 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:09:09 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		handle_token_error(int code, char *context);
 int		handle_cd_error(int code, char *context);
 int		handle_is_dir(int code, char *context);
 int		handle_export_err(int code, char *context);
-int		handle_unset_err(int code, char *context);
+int		handle_env_err(int code, char *context);
+
 
 #endif
