@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:31:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 13:30:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:05:36 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ char	**tokens_to_argv(t_com_tokens *head)
 	argv[count] = NULL;
 	return (argv);
 }
-
