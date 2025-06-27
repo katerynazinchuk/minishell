@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   divide_ast_comand.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:04 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:38:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:34:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_command_parsing	*extract_red_and_args(t_token *head, t_token *end)
 	structure = malloc(sizeof(t_command_parsing));
 	if (!structure)
 	{
-		check_error(ENOMEM, "Command parsing ", GENERAL);
+		check_error(ENOMEM, "command parsing ", GENERAL);
 		return (NULL);
 	}
 	structure->redirect = NULL;

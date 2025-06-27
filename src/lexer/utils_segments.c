@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_segments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:23:05 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:31:59 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_segment	*add_quoted_segment(t_str_pos *lexer)
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
 	if (!new_seg)
 	{
-		check_error(ENOMEM, "minishell: segment", GENERAL);
+		check_error(ENOMEM, "segment", GENERAL);
 		return (NULL);
 	}
 	if (lexer->input[lexer->cur] == quote_char)
@@ -97,7 +97,7 @@ t_segment	*add_unquoted_segment(t_str_pos *lexer)
 	new_seg = ft_strndup(lexer->input + lexer->start, len);
 	if (!new_seg)
 	{
-		check_error(ENOMEM, "minishell: segment", GENERAL);
+		check_error(ENOMEM, "segment", GENERAL);
 		return (NULL);
 	}
 	return (create_segment(new_seg, Q_NONE));

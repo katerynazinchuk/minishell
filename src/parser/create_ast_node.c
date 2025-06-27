@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:31:44 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:32:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:30:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ast_node	*create_ast_node(t_ast_type type, char **command)
 	ast_node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if (!ast_node)
 	{
-		check_error(ENOMEM, "minishell : ast_node", GENERAL);
+		check_error(ENOMEM, "ast_node", GENERAL);
 		return (NULL);
 	}
 	ast_node->type = type;

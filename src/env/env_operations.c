@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_operations.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:30:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:46:15 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env_list	*init_env_list(void);
+static char			error_and_free_node(t_env_type	*node, int need_free);
 
 t_env_list	*fill_env_list(char **env)
 {
@@ -44,7 +45,10 @@ static t_env_list	*init_env_list(void)
 
 	env_list = (t_env_list *)malloc(sizeof(t_env_list));
 	if (!env_list)
+	{
+		check_error(ENOMEM, "create env list", GENERAL);
 		return (NULL);
+	}
 	env_list->head = NULL;
 	env_list->tail = NULL;
 	env_list->size = 0;
@@ -76,19 +80,21 @@ t_env_type	*fill_env_node(char *str)
 		j++;
 	node = (t_env_type *)malloc(sizeof(t_env_type));
 	if (!node)
-		return (NULL);
+		error_and_free_node(node, 0);
 	node->key = ft_substr(str, 0, j);
 	if (!node->key)
-	{
-		free_env_node(node);
-		return (NULL);
-	}
+		error_and_free_node(node, 1);
 	node->value = ft_substr(str, j + 1, ft_strlen(str) - j - 1);
 	if (!node->value)
-	{
-		free_env_node(node);
-		return (NULL);
-	}
+		error_and_free_node(node, 1);
 	node->next = NULL;
 	return (node);
+}
+
+static char	error_and_free_node(t_env_type *node, int need_free)
+{
+	check_error(ENOMEM, "create env node", GENERAL);
+	if (flag)
+		free_env_node(node);
+	return (NULL);
 }

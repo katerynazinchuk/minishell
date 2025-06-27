@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:01:07 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 11:11:53 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:48:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ int	builtin_exit(char **argv, t_env_list *env_list)
 		{
 			if (argv[2])
 			{
-				ft_putstr_fd("exit: too many arguments\n", 2);
+				ft_putstr_fd("minshell: exit: too many arguments\n", 2);
 				return (1);
 			}
 			exit(ft_atoi(argv[1]));
 		}
 		else
 		{
-			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(argv[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			ft_putstr_fd("numeric argument required\n", 2);
 			exit(2);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 19:27:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:35:09 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	update_prompt(char **prompt)
 	free(tmp_name);
 	tmp_name = NULL;
 	if (!new_prompt)
-		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt", GENERAL));
 	tmp_name = ft_strjoin(new_prompt, ":~$ \001\033[0m\002");
 	free(new_prompt);
 	if (!tmp_name)
-		return (check_error(ENOMEM, "prompt", GENERAL));//TODO set malloc_error
+		return (check_error(ENOMEM, "prompt", GENERAL));
 	free(*prompt);
 	*prompt = tmp_name;
 	return (0);
