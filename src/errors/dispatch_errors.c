@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 18:34:53 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:05:04 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static t_error_fn	get_execute_fn(int err_code)
 	{CD_ERR, handle_cd_error},
 	{IS_DIR, handle_is_dir},
 	{EXPORT_ERR, handle_export_err},
+	{ENV_ERR, handle_env_err},
 	{0, NULL}
 	};
 	int						i;

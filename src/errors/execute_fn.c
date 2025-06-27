@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 13:30:21 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/26 19:10:36 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:10:37 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,11 @@ int	handle_export_err(int code, char *context)
 	return (1);
 }
 
+int	handle_env_err(int code, char *context)
+{
+	(void)code;
+	ft_putstr_fd("env: ‘", 2);
+	ft_putstr_fd(context, 2);
+	ft_putendl_fd("’: No such file or directory", 2);
+	return (127);
+}
