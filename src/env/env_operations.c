@@ -6,14 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 13:46:15 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:59:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env_list	*init_env_list(void);
-static char			error_and_free_node(t_env_type	*node, int need_free);
+static char			*error_and_free_node(t_env_type	*node, int need_free);
 
 t_env_list	*fill_env_list(char **env)
 {
@@ -91,10 +91,10 @@ t_env_type	*fill_env_node(char *str)
 	return (node);
 }
 
-static char	error_and_free_node(t_env_type *node, int need_free)
+static char	*error_and_free_node(t_env_type *node, int need_free)
 {
 	check_error(ENOMEM, "create env node", GENERAL);
-	if (flag)
+	if (need_free)
 		free_env_node(node);
 	return (NULL);
 }

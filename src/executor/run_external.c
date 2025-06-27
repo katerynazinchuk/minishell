@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/25 17:41:56 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:04:02 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	run_external(t_ast_node *node, t_session *session)
 	exit_status = 0;
 	proc_id = fork();
 	if (proc_id < 0)
-		return (-1);//TODO check return for fork_error
+		return (-1);
 	if (proc_id == 0)
 		run_cmd_in_child(node, session, exit_status);
 	waitpid(proc_id, &exit_status, 0);
@@ -36,12 +36,11 @@ int	run_external(t_ast_node *node, t_session *session)
 static void	run_cmd_in_child(t_ast_node *node, t_session *session, int status)
 {
 	char	**env_arr;
-
 	env_arr = env_to_arr(session->shell->env_list);
 	if (!env_arr)
 		exit (free_in_fork(session, NULL));
 	status = find_path(node->value, session->shell->env_list);
-	if (status > 1)
+	if (status > 1 || errno == ENOMEM)
 	{
 		free_in_fork(session, env_arr);
 		exit (status);

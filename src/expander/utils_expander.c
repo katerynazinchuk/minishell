@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expander.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 14:46:55 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:53:13 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	new_ptr = ft_calloc(1, new_size);
 	if (!new_ptr)
 	{
+		check_error(ENOMEM, NULL, GENERAL);
 		if (ptr)
 			free(ptr);
 		return (NULL);
