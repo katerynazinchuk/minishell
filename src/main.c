@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 14:47:58 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:31:18 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	process_line(t_session *session)
 		return (g_signal = 0, 1);//, 1
 	free_for_fork(session);
 	executor(session);
+	if (session->shell->status == 131)
+		ft_putendl_fd("Quit", 1);
 	return (0);
 }
 

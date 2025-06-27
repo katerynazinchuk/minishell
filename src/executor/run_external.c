@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 16:04:02 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:30:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	run_cmd_in_child(t_ast_node *node, t_session *session, int status)
 		free_in_fork(session, env_arr);
 		exit (status);
 	}
+	setsignal(DEFAULT_SIG);
 	if (execve(node->value[0], node->value, env_arr) == -1)
 	{
 		if (errno == ENOENT || errno == EACCES)
