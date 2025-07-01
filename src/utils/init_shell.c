@@ -6,18 +6,31 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 16:19:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:31:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_shell(t_shell *shell, char **env)
+int	init_shell(t_shell *shell, char **env)
 {
-	shell->env_list = fill_env_list(env);
-	shell->fd[STDIN_FILENO] = dup(STDIN_FILENO);
-	shell->fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	shell->status = 0;
+	shell->env_list = fill_env_list(env);
+	if (!shell->env_list)
+		return (1);
+	shell->fd[STDIN_FILENO] = dup(STDIN_FILENO);
+	if (shell->fd[STDIN_FILENO] == -1)
+	{
+		free_env_list(shell.env_list);
+		return (check_error(errno, "dup stdin file descriptor", GENERAL));
+	}
+	shell->fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
+	if (shell->fd[STDOUT_FILENO] == -1)
+	{
+		free_env_list(shell.env_list);
+		close(shell->fd[STDIN_FILENO]);
+		return (check_error(errno, "dup stdout file descriptor", GENERAL));
+	}
 }
 
 void	free_for_fork(t_session *session)

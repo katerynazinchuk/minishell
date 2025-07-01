@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 16:18:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:30:37 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		if (!flag)
 			exp->str = ft_strdup("");
 		else
-		{
 			exp->str = ft_strdup(tmp);
 		}
 	}
@@ -73,6 +72,8 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		exp->str = ft_itoa(shell->status);
 	else
 		exp->str = ft_strdup("");
+	if (!exp->str)
+		check_error(ENOMEM, "expand variable", GENERAL);
 }
 
 void	append_exp_str(t_expand_type *exp)
@@ -85,6 +86,8 @@ void	append_exp_str(t_expand_type *exp)
 	len_str = ft_strlen(exp->str);
 	new_size = exp->j + ft_strlen(exp->str) + (exp->len_raw - exp->i) + 1;
 	exp->res = my_realloc(exp->res, ft_strlen(exp->res), new_size);
+	if (!exp->res)
+		return ;
 	while (k < len_str)
 	{
 		exp->res[exp->j] = exp->str[k];

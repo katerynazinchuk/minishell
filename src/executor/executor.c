@@ -6,13 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 16:20:00 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:29:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_builtin_fn	get_builtin_fn(char *cmd);
+static int	handle_fork_fail(t_session *session, int *pipe_fd, pid_t id_left);
 
 void	executor(t_session *session)
 {
@@ -58,23 +58,23 @@ int	run_pipe(t_ast_node *ast, t_session *session)
 		return (check_error(errno, "pipe", GENERAL));
 	id_left = child_left(ast->left, session, pipe_fd);
 	if (id_left < 0)
-	{
-		free_in_fork(session, NULL);
-		close_pipe_fd(pipe_fd);
-		return (1);
-	}
+		return (handle_fork_fail(session, pipe_fd, id_left));
 	id_right = child_right(ast->right, session, pipe_fd);
 	if (id_right < 0)
-	{
-		free_in_fork(session, NULL);
-		close_pipe_fd(pipe_fd);
-		waitpid(id_left, NULL, 0);
-		return (1);
-	}
+		return (handle_fork_fail(session, pipe_fd, id_left));
 	close_pipe_fd(pipe_fd);
 	waitpid(id_left, NULL, 0);
 	waitpid(id_right, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	return (1);
+}
+
+static int	handle_fork_fail(t_session *session, int *pipe_fd, pid_t id_left)
+{
+	free_in_fork(session, NULL);
+	close_pipe_fd(pipe_fd);
+	if (id_left > 0)
+		waitpid(id_left, NULL, 0);
 	return (1);
 }
