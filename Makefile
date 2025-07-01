@@ -11,7 +11,8 @@ INCLUDE_DIR = include
 LIBFT_DIR = libft
 LIBFT = libft.a
 
-BUILD_IN = src/builtins/
+
+
 ENV = src/env/env_errors_frees.c \
 		src/env/env_operations.c \
 		src/env/env_utils.c
@@ -21,11 +22,15 @@ EXECUTOR = src/executor/executor.c \
 		src/executor/free_execute.c \
 		src/executor/exe_utils.c \
 		src/executor/redir_dispatch.c \
-		src/executor/run_builtin_utils.c \
-		src/executor/run_builtin_1.c \
-		src/executor/run_builtin_2.c \
 		src/executor/run_external.c \
 		src/executor/path_parser.c 
+
+BUILT_IN = src/builtins/cd_pwd.c \
+			src/builtins/echo.c \
+			src/builtins/exit.c \
+			src/builtins/export.c \
+			src/builtins/get_builtin.c \
+			src/builtins/unset_env.c 
 
 LEXER = src/lexer/create_token_list.c \
 		src/lexer/free_lexer.c \
@@ -65,7 +70,7 @@ ERRORS = src/errors/dispatch_errors.c \
 		src/errors/execute_fn.c
 
 
-SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) src/main.c
+SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) $(BUILT_IN) src/main.c
 
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
 

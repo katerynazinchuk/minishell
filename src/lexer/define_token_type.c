@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:42:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:22:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:53:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	add_red_token(t_token_list *list, t_str_pos *lexer)
 		lexer->cur += 2;
 	}
 	else if (lexer->input[lexer->cur + 1] == '<' \
-						&& lexer->input[lexer->cur] == '<')
+&& lexer->input[lexer->cur] == '<')
 	{
 		create_red_token(list, "<<", T_HEREDOC);
 		lexer->cur += 2;

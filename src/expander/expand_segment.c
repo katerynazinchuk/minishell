@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 14:46:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:02:41 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	expand_segments(t_session *session)
 		seg = cur->segment;
 		while (seg)
 		{
-			tmp = expand_seg_value(seg, session->shell);//TODO what happens if there will be NULL?
+			tmp = expand_seg_value(seg, session->shell);//TODO what if NULL?
 			if (!tmp)
 				return (handle_expansion_error(seg));
 			free(seg->value);
@@ -62,7 +62,7 @@ int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *init_shell)
 		if (raw[exp->i] == '$')
 		{
 			if (raw[exp->i + 1] == '$' || is_whitespace(raw[exp->i + 1]) \
-				|| raw[exp->i + 1] == '\0')
+|| raw[exp->i + 1] == '\0')
 			{
 				handle_double_dollar_sign(raw, exp);
 			}

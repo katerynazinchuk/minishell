@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 16:31:18 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:52:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
-	
+
 	init_shell(&shell, env);
 	if (!shell.env_list)
 	{
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	free_env_list(shell.env_list);
 	shell.env_list = NULL;
 	destroy_fd(shell.fd);
-	return(shell.status);
+	return (shell.status);
 }
 
 void	run_shell(t_shell *shell)
@@ -50,7 +50,7 @@ void	run_shell(t_shell *shell)
 	t_session	session;
 
 	init_session(&session, shell);
-	while(1)
+	while (1)
 	{
 		errno = 0;
 		if (shell_loop(&session))
@@ -63,7 +63,7 @@ void	run_shell(t_shell *shell)
 int	shell_loop(t_session *session)
 {
 	int	input_status;
-	
+
 	if (update_prompt(&session->prompt))
 		return (0);
 	input_status = check_input(readline(session->prompt), session);
@@ -74,7 +74,7 @@ int	shell_loop(t_session *session)
 		g_signal = 0;
 	}
 	if (input_status == 1)
-		return(shell_exit(session));
+		return (shell_exit(session));
 	else if (input_status != 0)
 		return (0);
 	setsignal(MAIN_SIG);
@@ -91,7 +91,7 @@ int	process_line(t_session *session)
 		return (1);
 	heredoc(session->ast, session);//переписати на int
 	if (g_signal != 0)
-		return (g_signal = 0, 1);//, 1
+		return (g_signal = 0, 1);
 	free_for_fork(session);
 	executor(session);
 	if (session->shell->status == 131)
@@ -101,11 +101,11 @@ int	process_line(t_session *session)
 
 int	parser(t_session *session)
 {
-	if(lexer(session))
+	if (lexer(session))
 		return (1);
 	// print_tokens(session->tokens);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
-	if(!session->ast)
+	if (!session->ast)
 	{
 		return (1);
 	// print_node(session->ast, 0);

@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_builtin_utils.c                                :+:      :+:    :+:   */
+/*   get_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 17:08:03 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 13:27:05 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
+/*   Updated: 2025/07/01 12:23:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_numeric(const char *str)
+t_builtin_fn	get_builtin_fn(char *cmd)
 {
-	int	i;
+	static const t_builtin	builtin[] = {
+	{"echo", builtin_echo},
+	{"cd", builtin_cd},
+	{"pwd", builtin_pwd},
+	{"export", builtin_export},
+	{"unset", builtin_unset},
+	{"env", builtin_env},
+	{"exit", builtin_exit},
+	{NULL, NULL}
+	};
+	int						i;
 
 	i = 0;
-	if (!str || !str[i])
-		return (0);
-	if (str[i] == '-' || str[i] == '+')
+	while (builtin[i].name)
 	{
-		i++;
-		if (!str[i])
-			return (0);
-	}
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
+		if (ft_strcmp(cmd, builtin[i].name) == 0)
+			return (builtin[i].func);
 		i++;
 	}
-	return (1);
+	return (NULL);
 }

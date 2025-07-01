@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:19:47 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:53:21 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ t_segment	*build_segment_list(t_str_pos *lexer)
 	t_segment	*new_seg;
 
 	head = NULL;
-	while (lexer->input[lexer->cur] && \
-		!is_whitespace(lexer->input[lexer->cur]) && \
-		!ft_strchr("|<>", lexer->input[lexer->cur]))
+	while (lexer->input[lexer->cur] &&\
+!is_whitespace(lexer->input[lexer->cur]) &&\
+!ft_strchr("|<>", lexer->input[lexer->cur]))
 	{
 		if (use_quotes(lexer))
 		{
@@ -105,7 +105,7 @@ int	move_to_token_expand(t_token_list *list)
 		if (!current->expanded)
 		{
 			current->expanded = join_segments(current->segment, \
-												&current->quoted);
+&current->quoted);
 			if (!current->expanded)
 				return (check_error(ENOMEM, "create tokens", GENERAL));
 		}

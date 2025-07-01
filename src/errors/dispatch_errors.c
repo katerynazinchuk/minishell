@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 11:05:04 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:00:07 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_error_fn	get_error_fn(int err_code);
 static t_error_fn	get_syntax_fn(int err_code);
 static t_error_fn	get_execute_fn(int err_code);
 static int			handle_std_error(int err_code, char *context, \
-										t_err_ctx ctx);
+t_err_ctx ctx);
 
 int	check_error(int err_code, char *context, t_err_ctx ctx)
 {

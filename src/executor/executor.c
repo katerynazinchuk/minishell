@@ -6,11 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 11:41:43 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:21:40 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_builtin_fn	get_builtin_fn(char *cmd);
 
 void	executor(t_session *session)
 {

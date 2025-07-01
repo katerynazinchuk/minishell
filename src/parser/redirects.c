@@ -6,24 +6,11 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 13:33:24 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:51:39 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_red_type	define_redirection(t_tok_type token_type)
-{
-	if (token_type == T_IN)
-		return (RED_IN);
-	if (token_type == T_OUT)
-		return (RED_OUT);
-	if (token_type == T_APPEND)
-		return (RED_APPEND);
-	if (token_type == T_HEREDOC)
-		return (RED_HEREDOC);
-	return (-1);
-}
 
 t_redir	*create_redirect_node(t_red_type red, char *connection, t_quoted quoted)
 {
@@ -65,8 +52,8 @@ t_redir	*extract_redirect(t_token *current)
 		check_error(SYNTAX_ERR, "near unexpected token `newline'", GENERAL);
 		return (NULL);
 	}
-	new_redir = create_redirect_node(define_redirection \
-								(current->type), next->expanded, next->quoted);
+	new_redir = create_redirect_node(define_redirection(current->type), \
+next->expanded, next->quoted);
 	if (!new_redir)
 	{
 		check_error(ENOMEM, "create redirection", GENERAL);
