@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:52:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:26:54 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-	init_shell(&shell, env);
-	if (!shell.env_list)
-	{
-		destroy_fd(shell.fd);
-		return (check_error(ENOMEM, "can't create env_list", GENERAL));
-	}
+	if (init_shell(&shell, env))
+		return (1);
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);

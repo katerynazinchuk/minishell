@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:20:34 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:47:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ int				builtin_export(char **argv, t_env_list *env_list);
 int				builtin_unset(char **argv, t_env_list *env_list);
 int				builtin_env(char **argv, t_env_list *env_list);
 int				builtin_exit(char **argv, t_env_list *env_list);
-
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 16:28:19 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 11:09:09 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:14:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int		handle_cd_error(int code, char *context);
 int		handle_is_dir(int code, char *context);
 int		handle_export_err(int code, char *context);
 int		handle_env_err(int code, char *context);
-
 
 #endif

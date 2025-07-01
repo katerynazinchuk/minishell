@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 13:49:48 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:16:36 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	builtin_export(char **argv, t_env_list *env_list)
 			}
 			else
 			{
-				if(set_env(env_list, argv[i], NULL))
+				if (set_env(env_list, argv[i], NULL))
 					return (1);
 			}
 		}
