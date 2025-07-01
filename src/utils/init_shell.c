@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 16:31:02 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:35:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ int	init_shell(t_shell *shell, char **env)
 	shell->fd[STDIN_FILENO] = dup(STDIN_FILENO);
 	if (shell->fd[STDIN_FILENO] == -1)
 	{
-		free_env_list(shell.env_list);
+		free_env_list(shell->env_list);
 		return (check_error(errno, "dup stdin file descriptor", GENERAL));
 	}
 	shell->fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	if (shell->fd[STDOUT_FILENO] == -1)
 	{
-		free_env_list(shell.env_list);
+		free_env_list(shell->env_list);
 		close(shell->fd[STDIN_FILENO]);
 		return (check_error(errno, "dup stdout file descriptor", GENERAL));
 	}
+	return (0);
 }
 
 void	free_for_fork(t_session *session)

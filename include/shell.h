@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:21:44 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:24 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:35:16 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_session
 	int				heredoc_count;
 }	t_session;
 
-void	init_shell(t_shell *shell, char **env);
+int		init_shell(t_shell *shell, char **env);
 void	destroy_fd(int *fd);
 void	run_shell(t_shell *shell);
 int		shell_loop(t_session *session);
