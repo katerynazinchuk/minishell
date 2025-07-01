@@ -1,0 +1,13 @@
+/*
+--leak-check=full
+--track-origins=yes
+
+valgrind --leak-check=full --show-leak-kinds=all ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp ./minishell
+
+
+--track-fds=yes
+*/

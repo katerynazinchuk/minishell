@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 16:27:19 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:53:02 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*expand_seg_value(t_segment *seg, t_shell *shell)
 	{
 		if (check_subs(seg->value))
 		{
-			check_error(BAD_SUBS, seg->value, GENERAL);
+			//TODO need to set somewhere "bad subs" to track int in lexer
 			return (NULL);
 		}
 		return (expand_value(seg->value, shell));

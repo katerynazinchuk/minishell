@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 16:03:11 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:51:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ int	lexer(t_session *session)
 	if (!session->tokens)
 		return (1);
 	if (expand_segments(session))
+	{
+		if ()
+			check_error(BAD_SUBS, seg->value, GENERAL);
+		esle 
+			check_error(ENOMEM, "expand segmants", GENERAL);
 		return (1);
+	}
 	if (move_to_token_expand(session->tokens))
 		return (1);
 	return (0);
