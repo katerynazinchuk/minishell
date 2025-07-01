@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/28 14:48:25 by Amirre           ###   ########.fr       */
+/*   Updated: 2025/07/01 13:38:10 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	run_cmd_in_child(t_ast_node *node, t_session *session, int status)
 	char	**env_arr;
 	char	cmd[PATH_MAX];
 
-	ft_strlcpy(cmd, value[0], PATH_MAX);
+	ft_strlcpy(cmd, node->value[0], PATH_MAX);
 	env_arr = env_to_arr(session->shell->env_list);
 	if (!env_arr)
 		exit (free_in_fork(session, NULL));

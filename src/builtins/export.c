@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 12:23:23 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:49:48 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ int	builtin_export(char **argv, t_env_list *env_list)
 				key = ft_substr(argv[i], 0, divider - argv[i]);
 				value = ft_strdup(divider + 1);
 				if (!key || !value || set_env(env_list, key, value))
-					return (ENOMEM);
+					return (check_error(ENOMEM, NULL, GENERAL));
 				free(key);
 				free(value);
 			}
 			else
-				set_env(env_list, argv[i], NULL);
+			{
+				if(set_env(env_list, argv[i], NULL))
+					return (1);
+			}
 		}
 		i++;
 	}

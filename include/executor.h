@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 12:27:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:39:01 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int				builtin_export(char **argv, t_env_list *env_list);
 int				builtin_unset(char **argv, t_env_list *env_list);
 int				builtin_env(char **argv, t_env_list *env_list);
 int				builtin_exit(char **argv, t_env_list *env_list);
-int				is_numeric(const char *str);
+
 
 #endif
