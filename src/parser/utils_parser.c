@@ -6,11 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:31:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:39:46 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:29:15 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	count_argv_tokens(t_com_tokens *head);
 
 char	**tokens_to_argv(t_com_tokens *head)
 {
@@ -18,35 +20,18 @@ char	**tokens_to_argv(t_com_tokens *head)
 	t_com_tokens	*cur;
 	char			**argv;
 
-	cur = head;
-	count = 0;
-	while (cur && cur->word != NULL && cur->word->type == T_WORD)
-	{
-		if (cur->word->expanded && cur->word->expanded[0] != '\0')
-			count++;
-		cur = cur->next;
-	}
-	argv = malloc(sizeof(char *) * (count + 1));
+	count = count_argv_tokens(head);
+	argv = allocate_argv_array(count);
 	if (!argv)
-	{
-		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
 		return (NULL);
-	}
 	cur = head;
 	count = 0;
 	while (cur && cur->word != NULL && cur->word->type == T_WORD)
 	{
 		if (cur->word->expanded && cur->word->expanded[0] != '\0')
 		{
-			argv[count] = ft_strdup(cur->word->expanded);
-			if (!argv[count])
-			{
-				while (--count >= 0)
-					free(argv[count]);
-				free(argv);
-				check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+			if (move_to_argv(argv, count, cur))
 				return (NULL);
-			}
 			count++;
 		}
 		cur = cur->next;
@@ -55,3 +40,50 @@ char	**tokens_to_argv(t_com_tokens *head)
 	return (argv);
 }
 
+static int	count_argv_tokens(t_com_tokens *head)
+{
+	int				count;
+	t_com_tokens	*cur;
+
+	cur = head;
+	count = 0;
+	while (cur && cur->word != NULL && cur->word->type == T_WORD)
+	{
+		if (cur->word->expanded && cur->word->expanded[0] != '\0')
+			count++;
+		cur = cur->next;
+	}
+	return (count);
+}
+
+char	**allocate_argv_array(int count)
+{
+	char	**argv;
+
+	argv = malloc(sizeof(char *) * (count + 1));
+	if (!argv)
+	{
+		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+		return (NULL);
+	}
+	return (argv);
+}
+
+int	move_to_argv(char **argv, int count, t_com_tokens *cur)
+{
+	argv[count] = ft_strdup(cur->word->expanded);
+	if (!argv[count])
+	{
+		free_argv_array(argv, count);
+		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+		return (1);
+	}
+	return (0);
+}
+
+void	free_argv_array(char **argv, int count)
+{
+	while (--count >= 0)
+		free(argv[count]);
+	free(argv);
+}
