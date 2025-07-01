@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:54:28 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 16:03:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:34:46 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,12 @@ int	find_path(char **value, t_env_list *env_list)
 		return (1);
 	keep_start = pathes;
 	while (*pathes && !is_cmd_path(pathes, &value[0], cmd))
-	{
 		pathes++;
-	}
 	free_arr(keep_start);
 	if (errno == ENOMEM)
 		return (1);
 	return (0);
 }
-
 
 static int	check_pathes(t_env_list *env_list, char ***pathes)
 {
