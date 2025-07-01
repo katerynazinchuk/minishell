@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:31:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:51:04 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:19:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 	count = 0;
 	while (cur && cur->word != NULL && cur->word->type == T_WORD)
 	{
-		if (cur->word->expanded && cur->word->expanded[0] != '\0')
+		if (cur->word->expanded)
 		{
 			if (move_to_argv(argv, count, cur))
 				return (NULL);
@@ -52,7 +52,7 @@ static int	count_argv_tokens(t_com_tokens *head)
 	count = 0;
 	while (cur && cur->word != NULL && cur->word->type == T_WORD)
 	{
-		if (cur->word->expanded && cur->word->expanded[0] != '\0')
+		if (cur->word->expanded)
 			count++;
 		cur = cur->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 14:46:52 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:18:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		else
 		{
 			exp->str = ft_strdup(tmp);
-			if (!exp->str)
-				exp->str = NULL;
 		}
 	}
 	else if (ft_isdigit(*exp->var))

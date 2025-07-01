@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:15:00 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:07:46 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_segment		*create_segment(char *value, t_q_type q_type);
 void			append_segment(t_segment **head, t_segment *new_seg);
 t_segment		*build_segment_list(t_str_pos *lexer);
 size_t			total_length(t_segment *segments);
-char			*join_segments(t_segment *segment, t_quoted *quoted);
+int				join_segments(t_segment *segment, t_quoted *quoted,\
+														char **expanded);
 
 /* -------------------------------------------------------------------------- */
 

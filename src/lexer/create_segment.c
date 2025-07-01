@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:20:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:53:21 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:09:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,45 +71,45 @@ t_segment	*build_segment_list(t_str_pos *lexer)
 	return (head);
 }
 
-char	*join_segments(t_segment *segment, t_quoted *quoted)
+int	join_segments(t_segment *seg, t_quoted *quoted, char **expanded)
 {
 	size_t	total_len;
 	char	*result;
 
+	result = NULL;
 	*quoted = UNQUOTED;
-	total_len = total_length(segment);
-	if (total_len == 0)
-		return (ft_strdup(""));
-	result = malloc(total_len + 1);
-	if (!result)
-		return (NULL);
-	result[0] = '\0';
-	while (segment)
+	total_len = total_length(seg);
+	if (total_len > 0 || seg->q_type == Q_SINGLE || seg->q_type == Q_DOUBLE)
 	{
-		if (segment->q_type == Q_SINGLE || segment->q_type == Q_DOUBLE)
-			*quoted = QUOTED;
-		if (segment->value)
-			ft_strlcat(result, segment->value, total_len + 1);
-		segment = segment->next;
+		result = ft_calloc(sizeof(char), total_len + 1);
+		if (!result)
+			return (check_error(ENOMEM, "create tokens", GENERAL));
 	}
-	return (result);
+	while (seg && total_len)
+	{
+		if (seg->q_type == Q_SINGLE || seg->q_type == Q_DOUBLE)
+			*quoted = QUOTED;
+		if (seg->value)
+			ft_strlcat(result, seg->value, total_len + 1);
+		seg = seg->next;
+	}
+	*expanded = result;
+	return (0);
 }
 
 int	move_to_token_expand(t_token_list *list)
 {
-	t_token	*current;
+	t_token	*cur;
 
-	current = list->head;
-	while (current)
+	cur = list->head;
+	while (cur)
 	{
-		if (!current->expanded)
+		if (!cur->expanded)
 		{
-			current->expanded = join_segments(current->segment, \
-&current->quoted);
-			if (!current->expanded)
-				return (check_error(ENOMEM, "create tokens", GENERAL));
+			if (join_segments(cur->segment, &cur->quoted, &cur->expanded))
+				return (1);
 		}
-		current = current->next;
+		cur = cur->next;
 	}
 	return (0);
 }
