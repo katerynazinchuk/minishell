@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_segments.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:49:00 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 13:31:59 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:58:34 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ t_segment	*add_unquoted_segment(t_str_pos *lexer)
 
 	lexer->start = lexer->cur;
 	while (lexer->input[lexer->cur] && \
-		!is_whitespace(lexer->input[lexer->cur]) && \
-		!is_special_char(lexer->input[lexer->cur]) && \
-		!use_quotes(lexer))
+!is_whitespace(lexer->input[lexer->cur]) && \
+!is_special_char(lexer->input[lexer->cur]) && \
+!use_quotes(lexer))
 	{
 		lexer->cur++;
 	}
