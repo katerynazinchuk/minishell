@@ -6,25 +6,12 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 15:26:54 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:58:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
---leak-check=full
---track-origins=yes
-
-valgrind --leak-check=full --show-leak-kinds=all ./minishell
-
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
-
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp ./minishell
-
-
---track-fds=yes
-*/
 
 int	main(int argc, char **argv, char **env)
 {
