@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:47:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:34:56 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ bool			is_new_line(char *str);
 
 /* -------------------------------------------------------------------------- */
 
+int				create_env_node(t_env_type **input, const char *key,\
+										const char *value);
+int				update_env_node(t_env_type *node, char *new_data);
+int				set_env(t_env_list *env_list, const char *var,\
+												const char *value);
+void			unset_env(t_env_list *env_list, const char *var);
 int				builtin_echo(char **argv, t_env_list *env_list);
 int				builtin_cd(char **argv, t_env_list *env_list);
 int				builtin_pwd(char **argv, t_env_list *env_list);

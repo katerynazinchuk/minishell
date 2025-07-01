@@ -6,14 +6,14 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 15:33:45 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:47:58 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	init_shell(t_shell *shell, char **env)
-{св юю
+{
 	shell->status = 0;
 	shell->env_list = fill_env_list(env);
 	if (!shell->env_list)
