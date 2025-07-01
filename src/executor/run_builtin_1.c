@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:58:42 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 18:36:47 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:40:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	builtin_cd(char **argv, t_env_list *env_list)
 		return (check_error(CD_ERR, "path required", GENERAL));
 	if (argv[2])
 		return (check_error(CD_ERR, "too many arguments", GENERAL));
-	if(!getcwd(old_pwd, sizeof(old_pwd)))
-		return (check_error(errno, \
-			"cannot access current directory", GENERAL));
+	if (!getcwd(old_pwd, sizeof(old_pwd)))
+		return (check_error(errno,\
+				"cannot access current directory", GENERAL));
 	if (chdir(argv[1]) == -1)
 		return (check_error(errno, argv[1], GENERAL));
 	if (getcwd(new_pwd, sizeof(new_pwd)))

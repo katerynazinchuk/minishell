@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 14:48:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:41:43 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	run_cmd(t_ast_node *node, t_session *session)
 	builtin_fn = get_builtin_fn(node->value[0]);
 	if (builtin_fn)
 		session->shell->status = builtin_fn(node->value, \
-			session->shell->env_list);
+session->shell->env_list);
 	else
 		session->shell->status = run_external(node, session);
 	return (session->shell->status);

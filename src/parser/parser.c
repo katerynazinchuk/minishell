@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/27 18:02:08 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:48:43 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_token	*find_last_pipe(t_token *head, t_token *end);
 
 t_ast_node	*parse_command(t_token *head, t_token *end)
 {
@@ -38,18 +40,10 @@ t_ast_node	*parse_command(t_token *head, t_token *end)
 
 t_ast_node	*parse_pipe(t_token *head, t_token *end)
 {
-	t_token		*current;
 	t_token		*last_pipe;
 	t_ast_node	*new_ast_node;
 
-	current = head;
-	last_pipe = NULL;
-	while (current && current != end)
-	{
-		if (current->type == T_PIPE)
-			last_pipe = current;
-		current = current->next;
-	}
+	last_pipe = find_last_pipe(head, end);
 	if (last_pipe)
 	{
 		new_ast_node = create_ast_node(AST_PIPE, NULL);
@@ -72,45 +66,18 @@ t_ast_node	*parse_pipe(t_token *head, t_token *end)
 	return (parse_command(head, end));
 }
 
-char	**tokens_to_argv(t_com_tokens *head)
+static t_token	*find_last_pipe(t_token *head, t_token *end)
 {
-	int				count;
-	t_com_tokens	*cur;
-	char			**argv;
+	t_token		*current;
+	t_token		*last_pipe;
 
-	cur = head;
-	count = 0;
-	while (cur && cur->word != NULL && cur->word->type == T_WORD)
+	current = head;
+	last_pipe = NULL;
+	while (current && current != end)
 	{
-		if (cur->word->expanded && cur->word->expanded[0] != '\0')
-			count++;
-		cur = cur->next;
+		if (current->type == T_PIPE)
+			last_pipe = current;
+		current = current->next;
 	}
-	argv = malloc(sizeof(char *) * (count + 1));
-	if (!argv)
-	{
-		check_error(ENOMEM, "command parsing: ", GENERAL);
-		return (NULL);
-	}
-	cur = head;
-	count = 0;
-	while (cur && cur->word != NULL && cur->word->type == T_WORD)
-	{
-		if (cur->word->expanded && cur->word->expanded[0] != '\0')
-		{
-			argv[count] = ft_strdup(cur->word->expanded);
-			if (!argv[count])
-			{
-				while (--count >= 0)
-					free(argv[count]);
-				free(argv);
-				check_error(ENOMEM, "command parsing: ", GENERAL);
-				return (NULL);
-			}
-			count++;
-		}
-		cur = cur->next;
-	}
-	argv[count] = NULL;
-	return (argv);
+	return (last_pipe);
 }
