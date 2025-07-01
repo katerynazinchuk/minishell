@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:40:06 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:02:08 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 	{
-		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+		check_error(ENOMEM, "command parsing: ", GENERAL);
 		return (NULL);
 	}
 	cur = head;
@@ -104,7 +104,7 @@ char	**tokens_to_argv(t_com_tokens *head)
 				while (--count >= 0)
 					free(argv[count]);
 				free(argv);
-				check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+				check_error(ENOMEM, "command parsing: ", GENERAL);
 				return (NULL);
 			}
 			count++;

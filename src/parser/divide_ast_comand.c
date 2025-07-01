@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:04 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:31:10 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:35:23 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static t_command_parsing	*allocate_structure(void);
 static int					is_redirect_token(t_token *token);
-static int					handle_redirect_token(t_token **current, \
+static int					handle_redirect_token(t_token **current,\
 										t_command_parsing *structure);
-static int					handle_arg_token(t_token *current, \
+static int					handle_arg_token(t_token *current,\
 										t_command_parsing *structure);
 
 t_command_parsing	*extract_red_and_args(t_token *head, t_token *end)
@@ -47,7 +47,7 @@ t_command_parsing	*extract_red_and_args(t_token *head, t_token *end)
 	return (structure);
 }
 
-static int	handle_redirect_token(t_token **current, \
+static int	handle_redirect_token(t_token **current,\
 									t_command_parsing *structure)
 {
 	if (append_redirect(*current, structure))

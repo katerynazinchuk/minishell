@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:01:07 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 19:10:32 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:48:33 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,7 @@ int	builtin_env(char **argv, t_env_list *env_list)
 	t_env_type	*current;
 
 	if (argv[1])
-	{
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (127);
-	}
+		return (check_error(ENV_ERR, argv[1], GENERAL));
 	current = env_list->head;
 	while (current)
 	{
@@ -46,8 +41,7 @@ int	builtin_env(char **argv, t_env_list *env_list)
 		{
 			ft_putstr_fd(current->key, 1);
 			ft_putstr_fd("=", 1);
-			ft_putstr_fd(current->value, 1);
-			write(1, "\n", 1);
+			ft_putendl_fd(current->value, 1);
 		}
 		current = current->next;
 	}
@@ -65,16 +59,16 @@ int	builtin_exit(char **argv, t_env_list *env_list)
 		{
 			if (argv[2])
 			{
-				ft_putstr_fd("exit: too many arguments\n", 2);
+				ft_putstr_fd("minshell: exit: too many arguments\n", 2);
 				return (1);
 			}
 			exit(ft_atoi(argv[1]));
 		}
 		else
 		{
-			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(argv[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			ft_putstr_fd("numeric argument required\n", 2);
 			exit(2);
 		}
 	}

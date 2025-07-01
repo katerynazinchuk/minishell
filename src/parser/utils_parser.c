@@ -6,13 +6,16 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:31:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:29:15 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:36:06 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	count_argv_tokens(t_com_tokens *head);
+static char	**allocate_argv_array(int count);
+static int	move_to_argv(char **argv, int count, t_com_tokens *cur);
+void		free_argv_array(char **argv, int count);
 
 char	**tokens_to_argv(t_com_tokens *head)
 {
@@ -56,20 +59,20 @@ static int	count_argv_tokens(t_com_tokens *head)
 	return (count);
 }
 
-char	**allocate_argv_array(int count)
+static char	**allocate_argv_array(int count)
 {
 	char	**argv;
 
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 	{
-		check_error(ENOMEM, "minishell: command parsing: ", GENERAL);
+		check_error(ENOMEM, "command parsing: ", GENERAL);
 		return (NULL);
 	}
 	return (argv);
 }
 
-int	move_to_argv(char **argv, int count, t_com_tokens *cur)
+static int	move_to_argv(char **argv, int count, t_com_tokens *cur)
 {
 	argv[count] = ft_strdup(cur->word->expanded);
 	if (!argv[count])

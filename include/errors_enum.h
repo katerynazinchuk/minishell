@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/26 19:10:46 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:04:17 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef enum s_error_code
 	CMD_NOT_FOUND,
 	CD_ERR,
 	IS_DIR,
-	EXPORT_ERR
+	EXPORT_ERR,
+	ENV_ERR
 }	t_error_code;
 
 #endif

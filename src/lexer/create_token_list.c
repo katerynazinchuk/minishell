@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 19:19:50 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:32:43 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*create_token(char *value, t_tok_type types, t_quoted quoted)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 	{
-		check_error(ENOMEM, "minishell : lexer", GENERAL);
+		check_error(ENOMEM, "lexer", GENERAL);
 		return (NULL);
 	}
 	if (value)
@@ -28,7 +28,7 @@ t_token	*create_token(char *value, t_tok_type types, t_quoted quoted)
 		new_token->expanded = NULL;
 	if (!new_token->expanded && value)
 	{
-		check_error(ENOMEM, "minishell : lexer", GENERAL);
+		check_error(ENOMEM, "lexer", GENERAL);
 		free(new_token);
 		return (NULL);
 	}
@@ -70,7 +70,7 @@ t_token_list	*init_token_list(void)
 	list = (t_token_list *)malloc(sizeof(t_token_list));
 	if (!list)
 	{
-		check_error(ENOMEM, "minishell : token list", GENERAL);
+		check_error(ENOMEM, "token list", GENERAL);
 		return (NULL);
 	}
 	list->head = NULL;
