@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:37:53 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:14:37 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:01:53 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ bool			is_new_line(char *str);
 
 int				create_env_node(t_env_type **input, const char *key,\
 										const char *value);
-int				update_env_node(const char *var, t_env_list *env_list,\
-												char *new_data);
+int				update_env_node(t_env_type *node, char *new_data);
 int				set_env(t_env_list *env_list, const char *var,\
 												const char *value);
 void			unset_env(t_env_list *env_list, const char *var);

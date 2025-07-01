@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:56:35 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:56 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:02:09 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	update_env_node(t_env_type *node, char *new_data)
 {
 	if (!new_data)
 		return (1);
-	free(cur->value);
-	cur->value = ft_strdup(new_data);
-	if (!cur->value)
+	free(node->value);
+	node->value = ft_strdup(new_data);
+	if (!node->value)
 		return (check_error(ENOMEM, NULL, GENERAL));
 	return (0);
 }

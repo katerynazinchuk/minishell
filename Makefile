@@ -30,7 +30,8 @@ BUILT_IN = src/builtins/cd_pwd.c \
 			src/builtins/exit.c \
 			src/builtins/export.c \
 			src/builtins/get_builtin.c \
-			src/builtins/unset_env.c 
+			src/builtins/unset_env.c \
+			src/builtins/utils_builtins.c
 
 LEXER = src/lexer/create_token_list.c \
 		src/lexer/free_lexer.c \
