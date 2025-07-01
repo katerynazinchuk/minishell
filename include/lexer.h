@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:52:33 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 18:14:05 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:15:00 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char			*join_segments(t_segment *segment, t_quoted *quoted);
 void			skip_whitespace(t_str_pos *lexer);
 int				add_pipe_token(t_token_list *list, t_str_pos *lexer);
 void			add_red_token(t_token_list *list, t_str_pos *lexer);
-int				create_red_token(t_token_list *list, char *symbol, \
+int				create_red_token(t_token_list *list, char *symbol,\
 												t_tok_type type);
 int				add_word_token(t_token_list *list, t_str_pos *lexer);
 int				add_eof_token(t_token_list *list);
