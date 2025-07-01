@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: Amirre <Amirre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 16:30:48 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:48:25 by Amirre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int	run_external(t_ast_node *node, t_session *session)
 static void	run_cmd_in_child(t_ast_node *node, t_session *session, int status)
 {
 	char	**env_arr;
+	char	cmd[PATH_MAX];
+
+	ft_strlcpy(cmd, value[0], PATH_MAX);
 	env_arr = env_to_arr(session->shell->env_list);
 	if (!env_arr)
 		exit (free_in_fork(session, NULL));
@@ -49,9 +52,9 @@ static void	run_cmd_in_child(t_ast_node *node, t_session *session, int status)
 	if (execve(node->value[0], node->value, env_arr) == -1)
 	{
 		if (errno == ENOENT || errno == EACCES)
-			status = check_error(CMD_NOT_FOUND, node->value[0], EXEC);
+			status = check_error(CMD_NOT_FOUND, cmd, EXEC);
 		else
-			status = check_error(errno, node->value[0], EXEC);
+			status = check_error(errno, cmd, EXEC);
 		free_in_fork(session, env_arr);
 		exit (status);
 	}
