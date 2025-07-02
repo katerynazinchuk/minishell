@@ -68,7 +68,8 @@ UTILS = src/utils/utils_general.c \
 ERRORS = src/errors/dispatch_errors.c \
 		src/errors/input_syntax_error.c \
 		src/errors/syntax_fn.c \
-		src/errors/execute_fn.c
+		src/errors/execute_fn.c \
+		src/errors/builtin_errors.c
 
 
 SRC = $(LEXER) $(UTILS) $(ERRORS) $(ENV) $(EXPANDER) $(PARSER) $(HEREDOC) $(MY_SIGNAL) $(EXECUTOR) $(BUILT_IN) src/main.c

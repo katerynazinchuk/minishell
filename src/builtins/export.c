@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 13:47:31 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:56:47 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_export(t_env_list *env_list);
 int		is_valid_input(char *var);
 
 static int	add_to_env(char *arg, t_env_list *env_list)
-{	
+{
 	char	*divider;
 	char	*key;
 	char	*value;
@@ -34,7 +34,7 @@ static int	add_to_env(char *arg, t_env_list *env_list)
 	}
 	free(key);
 	free(value);
-	return (0);	
+	return (0);
 }
 
 static int	no_args(char **argv, t_env_list *env_list)
@@ -62,7 +62,7 @@ int	builtin_export(char **argv, t_env_list *env_list)
 			return (check_error(EXPORT_ERR, argv[i], GENERAL));
 		else
 		{
-			if(ft_strchr(argv[i], '='))
+			if (ft_strchr(argv[i], '='))
 			{
 				if (add_to_env(argv[i], env_list))
 					return (1);

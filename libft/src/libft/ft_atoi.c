@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:43:00 by tchernia          #+#    #+#             */
-/*   Updated: 2024/10/15 14:41:56 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:56:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_atoi(const char *nptr)
 	sign = 1;
 	num = 0;
 	while (*nptr == ' ' || *nptr == '\f' \
-		|| *nptr == '\n' || *nptr == '\r' \
-		|| *nptr == '\t' || *nptr == '\v')
+|| *nptr == '\n' || *nptr == '\r' \
+|| *nptr == '\t' || *nptr == '\v')
 	{
 		nptr++;
 	}

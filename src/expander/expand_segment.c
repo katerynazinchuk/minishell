@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 16:42:24 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:00:57 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	expand_segments(t_session *session)
 		seg = cur->segment;
 		while (seg)
 		{
-			tmp = expand_seg_value(seg, session->shell);//TODO what if NULL?
+			tmp = expand_seg_value(seg, session->shell);
 			if (!tmp)
 				return (handle_expansion_error(seg));
 			free(seg->value);
@@ -43,6 +43,8 @@ int	expand_segments(t_session *session)
 
 char	*expand_seg_value(t_segment *seg, t_shell *shell)
 {
+	char	*res;
+
 	if (ft_strchr(seg->value, '$') && seg->q_type != Q_SINGLE)
 	{
 		if (check_subs(seg->value))
@@ -52,7 +54,13 @@ char	*expand_seg_value(t_segment *seg, t_shell *shell)
 		}
 		return (expand_value(seg->value, shell));
 	}
-	return (ft_strdup(seg->value));
+	res = ft_strdup(seg->value);
+	if (!res)
+	{
+		check_error(ENOMEM, NULL, GENERAL);
+		return (NULL);
+	}
+	return (res);
 }
 
 int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *init_shell)

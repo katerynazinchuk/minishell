@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 17:38:30 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:57:01 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -52,7 +51,6 @@ int	shell_loop(t_session *session)
 	rl_event_hook = NULL;
 	input_status = check_input(readline(session->prompt), session);
 	add_history(session->line);
-	
 	if (g_signal != 0)
 	{
 		session->shell->status = 128 + g_signal;
