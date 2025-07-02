@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:59:49 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/27 13:59:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:26:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static t_env_list	*init_env_list(void)
 	env_list->head = NULL;
 	env_list->tail = NULL;
 	env_list->size = 0;
+	env_list->is_run = 1;
 	return (env_list);
 }
 

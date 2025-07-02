@@ -62,8 +62,7 @@ MY_SIGNAL = src/signals/signal.c
 UTILS = src/utils/utils_general.c \
 		src/utils/init_shell.c \
 		src/utils/utils_main.c \
-		src/utils/shell_debug.c \
-		src/utils/destroy_shell.c
+		src/utils/shell_debug.c
 
 ERRORS = src/errors/dispatch_errors.c \
 		src/errors/input_syntax_error.c \

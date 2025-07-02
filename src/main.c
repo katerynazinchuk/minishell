@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 14:57:01 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:27:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	main(int argc, char **argv, char **env)
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
-	free_env_list(shell.env_list);
-	shell.env_list = NULL;
-	destroy_fd(shell.fd);
+	destroy_shell(&shell);
 	return (shell.status);
 }
 
@@ -32,7 +30,7 @@ void	run_shell(t_shell *shell)
 	t_session	session;
 
 	init_session(&session, shell);
-	while (1)
+	while (shell->env_list->is_run)
 	{
 		errno = 0;
 		if (shell_loop(&session))

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:12 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 13:54:01 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:33:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_numeric(const char *str);
 int	builtin_exit(char **argv, t_env_list *env_list)
 {
 	(void)argv;
-	(void)env_list;
+	env_list->is_run = 0;
 	ft_putendl_fd("exit", 1);
 	if (argv[1])
 	{
@@ -25,20 +25,21 @@ int	builtin_exit(char **argv, t_env_list *env_list)
 		{
 			if (argv[2])
 			{
+				env_list->is_run = 1;
 				ft_putstr_fd("minshell: exit: too many arguments\n", 2);
 				return (1);
 			}
-			exit(ft_atoi(argv[1]));
+			return (ft_atoi(argv[1]));
 		}
 		else
 		{
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(argv[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
-			exit(2);
+			return (2);
 		}
 	}
-	exit (0);
+	return (0);
 }
 
 static int	is_numeric(const char *str)
