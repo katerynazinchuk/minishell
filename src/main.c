@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 19:03:26 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:09:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-	while (1)
-	{
-		line = readline(prompt);
-		if (!line)
-		{
-			ft_putendl_fd("error", 2);
-			exit (1);
-		}
-		printf("command: %s\n", line);
-		free(line);
-	}
-	return (0);
 	if (init_shell(&shell, env))
 		return (1);
 	ignore_args(argc, argv);
