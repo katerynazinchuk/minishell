@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 17:45:14 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:36:15 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	check_subs(char *raw)
 {
 	while (*raw)
 	{
-		if (*raw == '{' && *(raw + 1) == '{')
+		if (*raw == '{' && ft_strchr(raw + 1, '{') != 0)
 			return (true);
 		raw++;
 	}
@@ -31,7 +31,10 @@ int	init_exp(t_expand_type *exp, char *raw)
 	exp->j = 0;
 	exp->res = ft_calloc(exp->len_raw + 1, sizeof(char));
 	if (!exp->res)
+	{
+		check_error(ENOMEM, NULL, GENERAL);
 		return (1);
+	}
 	exp->var = NULL;
 	exp->str = NULL;
 	return (0);
@@ -59,6 +62,7 @@ void	*my_realloc(void *ptr, size_t old_size, size_t new_size)
 	{
 		if (ptr)
 			free(ptr);
+		check_error(ENOMEM, "my_relloc fail", GENERAL);
 		return (NULL);
 	}
 	if (ptr)

@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:12 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:48:44 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:42:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_exit(char **argv, t_env_list *env_list)
 		{
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(argv[1], 2);
-			ft_putstr_fd("numeric argument required\n", 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
 			exit(2);
 		}
 	}

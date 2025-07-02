@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatch_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 23:41:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 12:00:07 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:20:57 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_error_fn	get_syntax_fn(int err_code)
 	static const t_error	error[] = {
 	{SYNTAX_ERR, handle_syntax_error},
 	{TOKEN_ERR, handle_token_error},
-	{BAD_SUBS, handle_bad_subs},
+	{SUBS_ERR, handle_bad_subs},
 	{0, NULL}
 	};
 	int						i;

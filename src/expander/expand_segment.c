@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 17:53:02 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:40:06 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*expand_seg_value(t_segment *seg, t_shell *shell)
 	{
 		if (check_subs(seg->value))
 		{
-			//TODO need to set somewhere "bad subs" to track int in lexer
+			check_error(SUBS_ERR, seg->value, GENERAL);
 			return (NULL);
 		}
 		return (expand_value(seg->value, shell));
