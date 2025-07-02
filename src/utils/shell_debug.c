@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   shell_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 14:50:51 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/28 13:54:00 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/05/21 18:57:30 by tchernia          #+#    #+#             */
+/*   Updated: 2025/07/01 11:51:59 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void	print_shell(t_shell *shell)
 {
-	char	*dup_s;
+	if (shell->env_list)
+		print_env_list(shell->env_list);
+	printf("lsat exit status: %i\n", shell->status);
+}
 
-	dup_s = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (dup_s == NULL)
-		return (NULL);
-	ft_memcpy(dup_s, s, ft_strlen(s) +1);
-	return (dup_s);
+void	print_env_list(t_env_list *env_list)
+{
+	t_env_type	*current;
+
+	current = env_list->head;
+	while (current)
+	{
+		printf("key: %s\n value: %s\n\n", current->key, current->value);
+		current = current->next;
+	}
 }

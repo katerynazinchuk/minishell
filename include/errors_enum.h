@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   errors_enum.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 13:39:33 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 17:59:48 by tchernia         ###   ########.fr       */
+/*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
+/*   Updated: 2025/07/02 13:20:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef ERRORS_ENUM_H
+# define ERRORS_ENUM_H
 
-size_t	ft_strlen(const char *s)
+typedef enum s_error_code
 {
-	size_t	length;
+	SYNTAX_ERR = 200,
+	TOKEN_ERR,
+	SUBS_ERR,
+	EXECUTE_ERR = 250,
+	REDIRECT_FAIL,
+	CMD_NOT_FOUND,
+	CD_ERR,
+	IS_DIR,
+	EXPORT_ERR,
+	ENV_ERR
+}	t_error_code;
 
-	length = 0;
-	while (s[length] != '\0')
-	{
-		length++;
-	}
-	return (length);
-}
+#endif

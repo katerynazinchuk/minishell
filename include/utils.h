@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 13:39:33 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 17:59:48 by tchernia         ###   ########.fr       */
+/*   Created: 2025/05/27 15:03:54 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/25 17:05:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	length;
+char	*ft_strndup(const char *s, size_t n);
+int		is_whitespace(char c);
+int		is_special_char(char c);
+void	ignore_args(int argc, char **argv);
 
-	length = 0;
-	while (s[length] != '\0')
-	{
-		length++;
-	}
-	return (length);
-}
+#endif

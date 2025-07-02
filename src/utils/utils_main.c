@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 14:50:51 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/28 13:54:00 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/06/19 19:25:07 by tchernia          #+#    #+#             */
+/*   Updated: 2025/07/02 18:45:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+void ignore_args(int argc, char **argv)
 {
-	char	*dup_s;
+	(void)argc;
+	(void)argv;
+}
 
-	dup_s = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (dup_s == NULL)
-		return (NULL);
-	ft_memcpy(dup_s, s, ft_strlen(s) +1);
-	return (dup_s);
+int shell_exit(t_session *session)
+{
+	write(1, "exit\n", 5);
+	free_for_fork(session);
+	return (1);
+}
+
+void destroy_shell(t_shell *shell)
+{
+	free_env_list(shell->env_list);
+	shell->env_list = NULL;
+	destroy_fd(shell->fd);
+}
+
+void destroy_fd(int *fd)
+{
+	close(fd[0]);
+	close(fd[1]);
 }

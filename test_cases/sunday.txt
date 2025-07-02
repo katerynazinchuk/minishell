@@ -1,0 +1,9 @@
+➜  4_Minishell git:(error-handler) ✗ ./minishell
+tchernia:~$ /home
+minishell: /home: Is a directory
+tchernia:~$ echo $?
+1
+tchernia:~$ ^C
+tchernia:~$ ./Makefile 
+tchernia:~$ 
+exit

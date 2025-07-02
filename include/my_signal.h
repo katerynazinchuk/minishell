@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   my_signal.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 13:39:33 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/12 17:59:48 by tchernia         ###   ########.fr       */
+/*   Created: 2025/06/25 16:58:28 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/06/27 16:30:35 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MY_SIGNAL_H
+# define MY_SIGNAL_H
 
-size_t	ft_strlen(const char *s)
+# include <signal.h>
+
+typedef enum e_sigtype
 {
-	size_t	length;
+	MAIN_SIG,
+	HEREDOC_SIG,
+	DEFAULT_SIG,
+}	t_sigtype;
 
-	length = 0;
-	while (s[length] != '\0')
-	{
-		length++;
-	}
-	return (length);
-}
+void	sigint_main(int signal_type);
+void	sigint_heredoc(int signal_type);
+void	setsignal(t_sigtype type);
+
+#endif

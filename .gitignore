@@ -1,0 +1,7 @@
+
+# build artefacts
+*.o
+/obj/
+libft/build/
+libft/libft.a
+/minishell

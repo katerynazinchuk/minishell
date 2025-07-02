@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   env_errors_frees.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 16:43:00 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 14:56:33 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/05/06 13:20:09 by tchernia          #+#    #+#             */
+/*   Updated: 2025/06/26 13:30:26 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *nptr)
-{
-	int	num;
-	int	sign;
+#include "minishell.h"
 
-	sign = 1;
-	num = 0;
-	while (*nptr == ' ' || *nptr == '\f' \
-|| *nptr == '\n' || *nptr == '\r' \
-|| *nptr == '\t' || *nptr == '\v')
+void	free_env_list(t_env_list *env_list)
+{
+	t_env_type	*current;
+	t_env_type	*next;
+
+	if (!env_list)
+		return ;
+	current = env_list->head;
+	while (current)
 	{
-		nptr++;
+		next = current->next;
+		free_env_node(current);
+		current = next;
 	}
-	if (*nptr == '-' || *nptr == '+')
+	free(env_list);
+}
+
+void	free_env_node(t_env_type *node)
+{
+	if (node)
 	{
-		if (*nptr == '-')
-			sign = -sign;
-		nptr++;
+		if (node->key)
+			free(node->key);
+		if (node->value)
+			free(node->value);
+		free(node);
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		num = num * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (num * sign);
 }

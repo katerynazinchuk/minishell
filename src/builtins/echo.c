@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 14:50:51 by tchernia          #+#    #+#             */
-/*   Updated: 2025/05/28 13:54:00 by kzinchuk         ###   ########.fr       */
+/*   Created: 2025/07/01 12:05:54 by kzinchuk          #+#    #+#             */
+/*   Updated: 2025/07/01 12:23:20 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+int	builtin_echo(char **argv, t_env_list *env_list)
 {
-	char	*dup_s;
+	int		new_line;
 
-	dup_s = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (dup_s == NULL)
-		return (NULL);
-	ft_memcpy(dup_s, s, ft_strlen(s) +1);
-	return (dup_s);
+	(void)env_list;
+	argv++;
+	new_line = 1;
+	while (*argv && is_new_line(*argv))
+	{
+		new_line = 0;
+		argv++;
+	}
+	while (*argv)
+	{
+		ft_putstr_fd(*argv, 1);
+		if (*(argv + 1))
+			write(1, " ", 1);
+		argv++;
+	}
+	if (new_line)
+		write(1, "\n", 1);
+	return (0);
 }
