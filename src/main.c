@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 17:27:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:36:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv, char **env)
 	ignore_args(argc, argv);
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
+	destroy_shell(&shell);
 	destroy_shell(&shell);
 	return (shell.status);
 }

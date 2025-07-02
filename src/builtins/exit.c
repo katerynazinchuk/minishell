@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:12 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 17:33:24 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:35:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtin_exit(char **argv, t_env_list *env_list)
 			if (argv[2])
 			{
 				env_list->is_run = 1;
-				ft_putstr_fd("minshell: exit: too many arguments\n", 2);
+				ft_putendl_fd("minshell: exit: too many arguments", 2);
 				return (1);
 			}
 			return (ft_atoi(argv[1]));
