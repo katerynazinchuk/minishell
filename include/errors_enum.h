@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:19:33 by Amirre            #+#    #+#             */
-/*   Updated: 2025/06/27 11:04:17 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:20:41 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef enum s_error_code
 {
 	SYNTAX_ERR = 200,
 	TOKEN_ERR,
-	BAD_SUBS,
+	SUBS_ERR,
 	EXECUTE_ERR = 250,
 	REDIRECT_FAIL,
 	CMD_NOT_FOUND,

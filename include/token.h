@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:51:26 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/25 16:53:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:08:50 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef enum e_quoted
 typedef struct s_token
 {
 	char				*expanded;
-	int					bad_subs;
 	t_tok_type			type;
 	t_quoted			quoted;
 	struct s_segment	*segment;
@@ -50,6 +49,7 @@ typedef struct s_token
 
 typedef struct s_segment
 {
+	int					bad_subs;
 	char				*value;
 	t_q_type			q_type;
 	struct s_segment	*next;

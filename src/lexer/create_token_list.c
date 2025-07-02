@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:25 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:53:25 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:15:57 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_token	*create_token(char *value, t_tok_type types, t_quoted quoted)
 		free(new_token);
 		return (NULL);
 	}
-	new_token->bad_subs = 0;
 	new_token->type = types;
 	new_token->quoted = quoted;
 	new_token->segment = NULL;

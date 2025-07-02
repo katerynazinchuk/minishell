@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 15:58:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:38:30 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int	shell_loop(t_session *session)
 
 	if (update_prompt(&session->prompt))
 		return (0);
+	rl_event_hook = NULL;
 	input_status = check_input(readline(session->prompt), session);
 	add_history(session->line);
+	
 	if (g_signal != 0)
 	{
 		session->shell->status = 128 + g_signal;
@@ -63,8 +65,7 @@ int	shell_loop(t_session *session)
 	setsignal(MAIN_SIG);
 	if (process_line(session))
 		free_for_fork(session);
-	if (session->ast)
-		free_ast(&session->ast);
+	free_ast(&session->ast);
 	return (0);
 }
 
@@ -72,7 +73,7 @@ int	process_line(t_session *session)
 {
 	if (parser(session))
 		return (1);
-	heredoc(session->ast, session);//переписати на int
+	heredoc(session->ast, session);
 	if (g_signal != 0)
 		return (g_signal = 0, 1);
 	free_for_fork(session);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:58:52 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 16:03:11 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:39:24 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	fill_tokens(char *line, t_token_list **tokens)
 
 int	lexer(t_session *session)
 {
+
 	if (fill_tokens(session->line, &session->tokens))
 		return (1);
 	if (!session->tokens)

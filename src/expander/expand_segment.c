@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expand_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
 /*   Updated: 2025/07/01 16:42:24 by kzinchuk         ###   ########.fr       */
@@ -47,7 +47,7 @@ char	*expand_seg_value(t_segment *seg, t_shell *shell)
 	{
 		if (check_subs(seg->value))
 		{
-			check_error(BAD_SUBS, seg->value, GENERAL);
+			check_error(SUBS_ERR, seg->value, GENERAL);
 			return (NULL);
 		}
 		return (expand_value(seg->value, shell));

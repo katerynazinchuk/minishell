@@ -1,8 +1,9 @@
 {
-   <Readline>
+   <Readline/AddHistory>
    Memcheck:Leak
    match-leak-kinds: reachable
+   fun:malloc
    ...
-   fun:readline
+   fun:add_history
    ...
 }
