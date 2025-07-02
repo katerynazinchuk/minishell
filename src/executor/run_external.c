@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 17:59:32 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 17:44:35 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:27:44 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	run_external(t_ast_node *node, t_session *session)
 		return (-1);
 	if (proc_id == 0)
 		run_cmd_in_child(node, session, exit_status);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	waitpid(proc_id, &exit_status, 0);
+	setsignal(MAIN_SIG);
 	if (WIFSIGNALED(exit_status))
 		return (128 + WTERMSIG(exit_status));
 	if (WIFEXITED(exit_status))

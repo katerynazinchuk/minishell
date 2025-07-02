@@ -6,15 +6,15 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 17:49:50 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:45:17 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
-	t_shell	shell;
+	t_shell shell;
 
 	if (init_shell(&shell, env))
 		return (1);
@@ -22,28 +22,27 @@ int	main(int argc, char **argv, char **env)
 	setsignal(MAIN_SIG);
 	run_shell(&shell);
 	destroy_shell(&shell);
-	destroy_shell(&shell);
 	return (shell.status);
 }
 
-void	run_shell(t_shell *shell)
+void run_shell(t_shell *shell)
 {
-	t_session	session;
+	t_session session;
 
 	init_session(&session, shell);
 	while (shell->env_list->is_run)
 	{
 		errno = 0;
 		if (shell_loop(&session))
-			break ;
+			break;
 		if (errno == ENOMEM)
-			break ;
+			break;
 	}
 }
 
-int	shell_loop(t_session *session)
+int shell_loop(t_session *session)
 {
-	int	input_status;
+	int input_status;
 
 	if (update_prompt(&session->prompt))
 		return (0);
@@ -66,7 +65,7 @@ int	shell_loop(t_session *session)
 	return (0);
 }
 
-int	process_line(t_session *session)
+int process_line(t_session *session)
 {
 	if (parser(session))
 		return (1);
@@ -75,12 +74,10 @@ int	process_line(t_session *session)
 		return (g_signal = 0, 1);
 	free_for_fork(session);
 	executor(session);
-	if (session->shell->status == 131)
-		ft_putendl_fd("Quit", 1);
 	return (0);
 }
 
-int	parser(t_session *session)
+int parser(t_session *session)
 {
 	if (lexer(session))
 		return (1);
