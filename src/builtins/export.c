@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:06:57 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:36 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:47:31 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,57 @@
 void	print_export(t_env_list *env_list);
 int		is_valid_input(char *var);
 
-int	builtin_export(char **argv, t_env_list *env_list)
-{
-	int		i;
+static int	add_to_env(char *arg, t_env_list *env_list)
+{	
 	char	*divider;
 	char	*key;
 	char	*value;
 
-	(void)env_list;
-	i = 1;
+	divider = ft_strchr(arg, '=');
+	if (!divider)
+		return (1);
+	key = ft_substr(arg, 0, divider - arg);
+	value = ft_strdup(divider + 1);
+	if (!key || !value || set_env(env_list, key, value))
+	{
+		free(key);
+		free(value);
+		return (check_error(ENOMEM, NULL, GENERAL));
+	}
+	free(key);
+	free(value);
+	return (0);	
+}
+
+static int	no_args(char **argv, t_env_list *env_list)
+{
 	if (!argv[1])
+	{
 		print_export(env_list);
-	while (argv[i])
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int	builtin_export(char **argv, t_env_list *env_list)
+{
+	int		i;
+
+	(void)env_list;
+	i = 0;
+	if (no_args(argv, env_list))
+		return (0);
+	while (argv[++i])
 	{
 		if (!is_valid_input(argv[i]))
 			return (check_error(EXPORT_ERR, argv[i], GENERAL));
 		else
 		{
-			divider = ft_strchr(argv[i], '=');
-			if (divider)
+			if(ft_strchr(argv[i], '='))
 			{
-				key = ft_substr(argv[i], 0, divider - argv[i]);
-				value = ft_strdup(divider + 1);
-				if (!key || !value || set_env(env_list, key, value))
-					return (check_error(ENOMEM, NULL, GENERAL));
-				free(key);
-				free(value);
+				if (add_to_env(argv[i], env_list))
+					return (1);
 			}
 			else
 			{
@@ -48,7 +73,6 @@ int	builtin_export(char **argv, t_env_list *env_list)
 					return (1);
 			}
 		}
-		i++;
 	}
 	return (0);
 }
