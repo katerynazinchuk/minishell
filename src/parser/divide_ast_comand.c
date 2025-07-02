@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:34:04 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:49:35 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:44:17 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static int	handle_redirect_token(t_token **current,\
 {
 	if (append_redirect(*current, structure))
 	{
+		if (structure->redirect)
+			free_redirects(structure->redirect);
 		free_structure(structure);
 		return (1);
 	}

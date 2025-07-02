@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:19:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:51:39 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:42:00 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_redir	*create_redirect_node(t_red_type red, char *connection, t_quoted quoted)
 		return (NULL);
 	redirect->type = red;
 	redirect->connection = ft_strdup(connection);
+	if (!redirect->connection)
+		return (NULL);
 	redirect->quoted = quoted;
 	redirect->next = NULL;
 	return (redirect);
