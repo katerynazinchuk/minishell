@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 17:36:07 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:49:50 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,10 @@ int	parser(t_session *session)
 {
 	if (lexer(session))
 		return (1);
-	// print_tokens(session->tokens);
 	session->ast = parse_pipe(session->tokens->head, session->tokens->tail);
 	if (!session->ast)
 	{
 		return (1);
-	// print_node(session->ast, 0);
 	}
-	// print_node(session->ast, 0);
-	// print_node(session->ast, 0);
 	return (0);
 }

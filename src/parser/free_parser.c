@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:00:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 12:01:45 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:49:30 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	free_structure(t_command_parsing *structure)
 		free(current);
 		current = next;
 	}
-	// if (structure->redirect)
-	// 	free_redirects(structure->redirect);
 	free(structure);
 }
 
