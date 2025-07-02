@@ -38,8 +38,7 @@ LEXER = src/lexer/create_token_list.c \
 		src/lexer/define_token_type.c \
 		src/lexer/lexer.c \
 		src/lexer/create_segment.c \
-		src/lexer/utils_segments.c \
-		src/lexer/lexer_debug.c
+		src/lexer/utils_segments.c
 
 EXPANDER = src/expander/expand_var.c \
 			src/expander/expand_segment.c \
