@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 13:35:45 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:00:13 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
 		exp->str = ft_itoa(shell->status);
+	else if (*exp->var == '/')
+		exp->str = ft_strdup("$/");
 	else
 		exp->str = ft_strdup("");
 	if (!exp->str)

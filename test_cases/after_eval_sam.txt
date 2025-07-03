@@ -1,0 +1,6 @@
+➜  ~ bash
+tchernia@f1r1s7:~$ echo $/
+$/
+
+
+error in to_str
