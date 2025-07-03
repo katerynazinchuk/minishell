@@ -3,7 +3,6 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -O0
 CFLAGS += -I$(LIBFT_DIR)/include
 CFLAGS += -I$(INCLUDE_DIR)
-# CFLAGS += -fsanitize=address,undefined,leak
 LFLAGS += -lreadline -lncurses 
 SRC_DIR = src
 BUILD_DIR = obj
@@ -100,16 +99,7 @@ fclean: clean
 
 re: fclean all
 
-#valgrind: $(NAME)
-#	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s --suppressions=readline.supp --log-file=valgrind.log ./$(NAME)
-
-LOG_DIR := valgrind_logs
-
-valgrind: $(NAME)
-	@mkdir -p $(LOG_DIR)
-	@VALGRIND_LOG_FILE=$(LOG_DIR)/valgrind_$(shell date +"%Y%m%d_%H%M%S").log; \
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp --log-file=$$VALGRIND_LOG_FILE ./$(NAME)
-
 nolog:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s --suppressions=readline.supp ./minishell
+
 .PHONY: all clean fclean re valgrind nolog

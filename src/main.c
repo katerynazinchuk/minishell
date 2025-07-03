@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 19:09:30 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:16:33 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	shell_loop(t_session *session)
 int	process_line(t_session *session)
 {
 	if (parser(session))
+	{
+		session->shell->status = 1;
 		return (1);
+	}
 	heredoc(session->ast, session);
 	if (g_signal != 0)
 		return (g_signal = 0, 1);

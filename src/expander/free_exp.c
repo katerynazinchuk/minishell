@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:16:23 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/01 16:14:27 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:23:51 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	error_free(t_expand_type *exp)
 	return (1);
 }
 
-int	handle_expansion_error(t_segment *seg)
-{
-	free(seg->value);
-	return (1);
-}
+// int	handle_expansion_error(t_segment *seg)
+// {
+// 	free(seg->value);
+// 	return (1);
+// }

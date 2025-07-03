@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 15:00:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:24:02 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	expand_segments(t_session *session)
 		{
 			tmp = expand_seg_value(seg, session->shell);
 			if (!tmp)
-				return (handle_expansion_error(seg));
+				return (1);
 			free(seg->value);
 			seg->value = tmp;
 			seg = seg->next;
