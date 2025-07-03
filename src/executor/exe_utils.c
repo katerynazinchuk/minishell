@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/03 16:49:41 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:59:25 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+static int	fill_env_array(char **env_arr, t_env_type *current);
 
 static char	*to_str(t_env_type *cur)
 {
@@ -49,6 +50,43 @@ static size_t	count_env(t_env_list *env_list)
 char	**env_to_arr(t_env_list *env_list)
 {
 	char		**env_arr;
+
+	env_arr = (char **)ft_calloc(sizeof(char *), count_env(env_list) + 1);
+	if (!env_arr)
+	{
+		check_error(ENOMEM, "executor", GENERAL);
+		return (NULL);
+	}
+	if (fill_env_array(env_arr, env_list->head))
+		return (NULL);
+	return (env_arr);
+}
+
+static int	fill_env_array(char **env_arr, t_env_type *current)
+{
+	size_t	i;
+
+	i = 0;
+	while (current)
+	{
+		if (current->value)
+		{
+			env_arr[i] = to_str(current);
+			if (!env_arr[i])
+			{
+				env_arr[i] = NULL;
+				free_arr(env_arr);
+				return (1);
+			}
+			i++;
+		}
+		current = current->next;
+	}
+	return (0);
+}
+/* char	**env_to_arr(t_env_list *env_list)
+{
+	char		**env_arr;
 	t_env_type	*current;
 	size_t		i;
 
@@ -76,7 +114,7 @@ char	**env_to_arr(t_env_list *env_list)
 		current = current->next;
 	}
 	return (env_arr);
-}
+} */
 
 bool	is_new_line(char *str)
 {
