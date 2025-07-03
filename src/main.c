@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/03 17:04:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:44:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	run_shell(t_shell *shell)
 		if (errno == ENOMEM)
 			break ;
 	}
-	// rl_clear_history();
 }
 
 int	shell_loop(t_session *session)
@@ -57,7 +56,10 @@ int	shell_loop(t_session *session)
 	if (input_status == 1)
 		return (shell_exit(session));
 	else if (input_status != 0)
+	{
+		free(session->line);
 		return (0);
+	}
 	add_history(session->line);
 	setsignal(MAIN_SIG);
 	if (process_line(session))
