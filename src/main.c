@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/03 17:47:20 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:50:51 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	shell_loop(t_session *session)
 	if (input_status == 1)
 		return (shell_exit(session));
 	else if (input_status != 0)
+	{
+		free(session->line);
 		return (0);
+	}
 	add_history(session->line);
 	setsignal(MAIN_SIG);
 	if (process_line(session))
