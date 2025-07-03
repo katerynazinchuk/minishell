@@ -6,12 +6,13 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:08:39 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 18:59:44 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:14:24 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	handle_fork_fail(t_session *session, int *pipe_fd, pid_t id_left);
 static int	handle_fork_fail(t_session *session, int *pipe_fd, pid_t id_left);
 
 void	executor(t_session *session)

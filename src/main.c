@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/03 12:16:33 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:13:11 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	t_shell	shell;
 	t_shell	shell;
 
 	if (init_shell(&shell, env))
@@ -38,6 +39,7 @@ void	run_shell(t_shell *shell)
 		if (errno == ENOMEM)
 			break ;
 	}
+	rl_clear_history();
 }
 
 int	shell_loop(t_session *session)
@@ -48,7 +50,6 @@ int	shell_loop(t_session *session)
 		return (0);
 	rl_event_hook = NULL;
 	input_status = check_input(readline(session->prompt), session);
-	add_history(session->line);
 	if (g_signal != 0)
 	{
 		session->shell->status = 128 + g_signal;
@@ -57,7 +58,11 @@ int	shell_loop(t_session *session)
 	if (input_status == 1)
 		return (shell_exit(session));
 	else if (input_status != 0)
+	{
+		free(session->line);
 		return (0);
+	}
+	add_history(session->line);
 	setsignal(MAIN_SIG);
 	if (process_line(session))
 		free_for_fork(session);
