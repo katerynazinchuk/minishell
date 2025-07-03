@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 13:18:42 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/06/26 13:30:42 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:39:13 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ bool	first_pipe_error(char *line)
 
 int	check_input(char *line, t_session *session)
 {
+	session->line = line;
 	if (!line)
 		return (1);
 	if (check_unmached_quotes(line))
@@ -69,6 +70,5 @@ int	check_input(char *line, t_session *session)
 		return (2);
 	if (last_pipe_error(line))
 		return (2);
-	session->line = line;
 	return (0);
 }
