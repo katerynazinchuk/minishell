@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:07:56 by tchernia          #+#    #+#             */
-/*   Updated: 2025/06/26 13:35:14 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:49:41 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,29 @@ static char	*to_str(t_env_type *cur)
 	return (str);
 }
 
+static size_t	count_env(t_env_list *env_list)
+{
+	t_env_type	*head;
+	int			count;
+
+	count = 0;
+	head = env_list->head;
+	while (head)
+	{
+		if (head->value != NULL)
+			count++;
+		head = head->next;
+	}
+	return (count);
+}
+
 char	**env_to_arr(t_env_list *env_list)
 {
 	char		**env_arr;
 	t_env_type	*current;
 	size_t		i;
 
-	env_arr = (char **)ft_calloc(sizeof(char *), env_list->size + 1);
+	env_arr = (char **)ft_calloc(sizeof(char *), count_env(env_list) + 1);
 	if (!env_arr)
 	{
 		check_error(ENOMEM, "executor", GENERAL);
@@ -46,14 +62,17 @@ char	**env_to_arr(t_env_list *env_list)
 	i = 0;
 	while (current)
 	{
-		env_arr[i] = to_str(current);
-		if (!env_arr[i])
+		if (current->value)
 		{
-			env_arr[i] = NULL;
-			free_arr(env_arr);
-			return (NULL);
+			env_arr[i] = to_str(current);
+			if (!env_arr[i])
+			{
+				env_arr[i] = NULL;
+				free_arr(env_arr);
+				return (NULL);
+			}
+			i++;
 		}
-		i++;
 		current = current->next;
 	}
 	return (env_arr);
