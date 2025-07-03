@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/03 18:13:11 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:00 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell	shell;
 	t_shell	shell;
 
 	if (init_shell(&shell, env))
