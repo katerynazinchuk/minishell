@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:11:01 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/03 17:04:13 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:47:20 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	run_shell(t_shell *shell)
 		if (errno == ENOMEM)
 			break ;
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
 
 int	shell_loop(t_session *session)
