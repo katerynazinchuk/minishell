@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_segment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/02 15:00:57 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:32:16 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,42 +63,6 @@ char	*expand_seg_value(t_segment *seg, t_shell *shell)
 	return (res);
 }
 
-int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *init_shell)
-{
-	while (raw[exp->i])
-	{
-		if (raw[exp->i] == '$')
-		{
-			if (raw[exp->i + 1] == '$' || is_whitespace(raw[exp->i + 1]) \
-|| raw[exp->i + 1] == '\0')
-			{
-				handle_double_dollar_sign(raw, exp);
-			}
-			else
-			{
-				exp->i++;
-				if (process_var(raw, exp, init_shell))
-				{
-					error_free(exp);
-					return (1);
-				}
-				exp->i += exp->len_var;
-				free_exp(exp);
-			}
-		}
-		else
-			exp->res[exp->j++] = raw[exp->i++];
-	}
-	return (0);
-}
-
-void	handle_double_dollar_sign(char *raw, t_expand_type *exp)
-{
-	while (raw[exp->i + 1] && raw[exp->i + 1] == '$')
-		exp->res[exp->j++] = raw[exp->i++];
-	exp->res[exp->j++] = raw[exp->i++];
-}
-
 char	*expand_value(char *raw, t_shell *shell)
 {
 	t_expand_type	exp;
@@ -112,4 +76,42 @@ char	*expand_value(char *raw, t_shell *shell)
 	}
 	exp.res[exp.j] = '\0';
 	return (exp.res);
+}
+
+int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *shell)
+{
+	while (raw[exp->i])
+	{
+		if (raw[exp->i] == '$')
+		{
+			if (raw[exp->i + 1] == '$' || is_whitespace(raw[exp->i + 1]) \
+|| raw[exp->i + 1] == '\0')
+			{
+				handle_double_dollar_sign(raw, exp);
+			}
+			else if (raw[exp->i + 1] == '/')
+				handle_forward_slash(raw, exp);
+			else
+			{
+				if (handle_variable_exp(raw, exp, shell))
+					return (1);
+			}
+		}
+		else
+			exp->res[exp->j++] = raw[exp->i++];
+	}
+	return (0);
+}
+
+int	handle_variable_exp(char *raw, t_expand_type *exp, t_shell *shell)
+{
+	exp->i++;
+	if (process_var(raw, exp, shell))
+	{
+		error_free(exp);
+		return (1);
+	}
+	exp->i += exp->len_var;
+	free_exp(exp);
+	return (0);
 }

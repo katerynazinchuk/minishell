@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 14:56:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:31:23 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ typedef struct s_expand_type
 
 int		expand_segments(t_session *session);
 char	*expand_seg_value(t_segment *seg, t_shell *shell);
-int		process_expansion_loop(char *raw, t_expand_type *exp,\
-									t_shell *init_shell);
+int		process_expansion_loop(char *raw, t_expand_type *exp, t_shell *shell);
 void	handle_double_dollar_sign(char *raw, t_expand_type *exp);
+int		handle_variable_exp(char *raw, t_expand_type *exp, t_shell *shell);
+void	handle_forward_slash(char *raw, t_expand_type *exp);
 char	*expand_value(char *raw, t_shell *shell);
 int		process_var(char *raw, t_expand_type *exp, t_shell *shell);
 void	extract_var(char *raw, t_expand_type *exp);

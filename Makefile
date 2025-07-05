@@ -44,7 +44,8 @@ LEXER = src/lexer/create_token_list.c \
 EXPANDER = src/expander/expand_var.c \
 			src/expander/expand_segment.c \
 			src/expander/utils_expander.c \
-			src/expander/free_exp.c
+			src/expander/free_exp.c \
+			src/expander/handle_special_cases.c 
 
 PARSER = src/parser/parser.c \
 		src/parser/create_ast_node.c \

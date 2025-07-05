@@ -6,13 +6,11 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/03 17:00:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 12:33:52 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	process_var(char *raw, t_expand_type *exp, t_shell *shell);
 
 int	process_var(char *raw, t_expand_type *exp, t_shell *shell)
 {
