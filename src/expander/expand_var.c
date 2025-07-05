@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/05 12:33:52 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:01:07 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
 		exp->str = ft_itoa(shell->status);
-	else if (*exp->var == '/')
-		exp->str = ft_strdup("$/");
 	else
 		exp->str = ft_strdup("");
 	if (!exp->str)
@@ -94,4 +92,11 @@ void	append_exp_str(t_expand_type *exp)
 		k++;
 	}
 	exp->res[exp->j] = '\0';
+}
+
+bool	is_valid_var(char *var)
+{
+	if (ft_isalpha(*var) || *var == '_')
+		return (true);
+	return (false);
 }

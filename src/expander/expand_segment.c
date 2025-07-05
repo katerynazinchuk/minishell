@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 13:40:38 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/05 12:32:16 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:59:42 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,15 @@ int	process_expansion_loop(char *raw, t_expand_type *exp, t_shell *shell)
 {
 	while (raw[exp->i])
 	{
-		if (raw[exp->i] == '$')
+		if (raw[exp->i] == '$' && raw[exp->i + 1] != '\0')
 		{
-			if (raw[exp->i + 1] == '$' || is_whitespace(raw[exp->i + 1]) \
-|| raw[exp->i + 1] == '\0')
-			{
-				handle_double_dollar_sign(raw, exp);
-			}
-			else if (raw[exp->i + 1] == '/')
-				handle_forward_slash(raw, exp);
-			else
+			if (check_expand_case(raw[exp->i +1]))
 			{
 				if (handle_variable_exp(raw, exp, shell))
 					return (1);
 			}
+			else
+				exp->res[exp->j++] = raw[exp->i++];
 		}
 		else
 			exp->res[exp->j++] = raw[exp->i++];

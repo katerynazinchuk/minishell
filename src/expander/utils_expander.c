@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:42:08 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 13:36:15 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:01:32 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ int	init_exp(t_expand_type *exp, char *raw)
 	return (0);
 }
 
-bool	is_valid_var(char *var)
+int	check_expand_case(char c)
 {
-	if (ft_isalpha(*var) || *var == '_')
-		return (true);
-	return (false);
+	if (ft_isalpha(c) || c == '_')
+		return (1);
+	else if (c == '?')
+		return (1);
+	else if (ft_isdigit(c))
+		return (1);
+	return (0);
 }
 
 void	*my_realloc(void *ptr, size_t old_size, size_t new_size)

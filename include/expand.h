@@ -6,7 +6,7 @@
 /*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/05 12:31:23 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:58:29 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	free_exp(t_expand_type *exp);
 int		error_free(t_expand_type *exp);
 int		handle_expansion_error(t_segment *seg);
 int		is_quote(char c);
+int		check_expand_case(char c);
 
 #endif
