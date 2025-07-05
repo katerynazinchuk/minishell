@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:50:25 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/03 17:00:13 by tchernia         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:08:51 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	process_var(char *raw, t_expand_type *exp, t_shell *shell);
 
 int	process_var(char *raw, t_expand_type *exp, t_shell *shell)
 {
@@ -69,8 +67,6 @@ void	expand_var(t_expand_type *exp, t_shell *shell)
 		exp->str = ft_strdup(exp->var + 1);
 	else if (*exp->var == '?')
 		exp->str = ft_itoa(shell->status);
-	else if (*exp->var == '/')
-		exp->str = ft_strdup("$/");
 	else
 		exp->str = ft_strdup("");
 	if (!exp->str)
@@ -96,4 +92,11 @@ void	append_exp_str(t_expand_type *exp)
 		k++;
 	}
 	exp->res[exp->j] = '\0';
+}
+
+bool	is_valid_var(char *var)
+{
+	if (ft_isalpha(*var) || *var == '_')
+		return (true);
+	return (false);
 }

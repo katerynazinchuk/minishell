@@ -6,7 +6,7 @@
 /*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:34:24 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 19:01:22 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:07:43 by kzinchuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ typedef struct s_expand_type
 
 int		expand_segments(t_session *session);
 char	*expand_seg_value(t_segment *seg, t_shell *shell);
-int		process_expansion_loop(char *raw, t_expand_type *exp,\
-									t_shell *init_shell);
-void	handle_double_dollar_sign(char *raw, t_expand_type *exp);
+int		process_expansion_loop(char *raw, t_expand_type *exp, t_shell *shell);
+int		handle_variable_exp(char *raw, t_expand_type *exp, t_shell *shell);
 char	*expand_value(char *raw, t_shell *shell);
 int		process_var(char *raw, t_expand_type *exp, t_shell *shell);
 void	extract_var(char *raw, t_expand_type *exp);
@@ -49,5 +48,6 @@ void	free_exp(t_expand_type *exp);
 int		error_free(t_expand_type *exp);
 int		handle_expansion_error(t_segment *seg);
 int		is_quote(char c);
+int		check_expand_case(char c);
 
 #endif
