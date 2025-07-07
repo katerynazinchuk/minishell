@@ -40,7 +40,7 @@ Careful cleanup of all allocated resources.
 - Built-ins
 - Heredoc
 
-**My teammate worked on:**
+**My teammate worked on:** [@tetiana-cherni](https://github.com/tetiana-cherni)  
 - Environment variable expansion
 - Executor
 - Error handling
