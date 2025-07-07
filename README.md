@@ -1,57 +1,48 @@
 # Minishell
 
-Minishell is an educational project developed as part of the **42 school** program. It implements a basic Unix-like shell in C, supporting:
+Minishell is a project for the **42 school** curriculum. It is a simple Unix-like shell written in C that supports command execution, pipes, redirections, and other basic shell features. The project uses an abstract syntax tree (AST) for parsing, dispatch tables for built-in commands, and clear error handling.
 
-- program execution with arguments
-- pipes
-- input/output redirections
-- heredoc
-- environment variable expansion
-- signal handling
+Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-cherni).
+
+---
 
 ## Features
 
-**Lexer and Parser**  
-A lexer to tokenize user input and a recursive parser to build the internal command structure.
+- Command execution with arguments
+- Pipes and redirections (including heredoc)
+- Environment variable expansion
+- Built-in commands
+- Command history
+- Signal handling (Ctrl+C, Ctrl+D)
+- Exit status handling (`$?`)
+- Memory management to prevent leaks
 
-**Signal Handling**  
-Support for Ctrl+C and Ctrl+D, including correct heredoc termination.
-
-**Heredoc**  
-Implementation of heredoc with variable expansion and EOF handling.
-
-**Variable Expansion**  
-Expanding environment variables in commands.
-
-**Command Execution**  
-Running binaries and built-in commands with pipes and redirections.
-
-**Error Handling**  
-Displaying appropriate error messages for invalid commands or syntax errors.
-
-**Memory Management**  
-Careful cleanup of all allocated resources.
+---
 
 ## Work Split
 
-**I worked on:**
+**Me:**
+
 - Lexer and parser
 - Signal handling
 - Built-ins
 - Heredoc
 
-**My teammate worked on:** [@tetiana-cherni](https://github.com/tetiana-cherni)  
+**[@tetiana-cherni](https://github.com/tetiana-cherni):**
+
 - Environment variable expansion
 - Executor
 - Error handling
 
-**We worked together on:**
+**Shared responsibilities:**
+
 - Memory management
 - Testing and debugging
+
+---
 
 ## Build and Run
 
 ```bash
 make
 ./minishell
-```
