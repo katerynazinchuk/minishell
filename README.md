@@ -4,8 +4,6 @@ Minishell is a project for the **42 school** curriculum. It is a simple Unix-lik
 
 Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-cherni).
 
----
-
 ## Features
 
 - Command execution with arguments
@@ -16,8 +14,6 @@ Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-che
 - Signal handling (Ctrl+C, Ctrl+D)
 - Exit status handling (`$?`)
 - Memory management to prevent leaks
-
----
 
 ## Work Split
 
@@ -38,8 +34,6 @@ Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-che
 
 - Memory management
 - Testing and debugging
-
----
 
 ## Build and Run
 
