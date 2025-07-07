@@ -13,16 +13,22 @@ Minishell is an educational project developed as part of the **42 school** progr
 
 **Lexer and Parser**  
 A lexer to tokenize user input and a recursive parser to build the internal command structure.
+
 **Signal Handling**  
 Support for Ctrl+C and Ctrl+D, including correct heredoc termination.
+
 **Heredoc**  
 Implementation of heredoc with variable expansion and EOF handling.
+
 **Variable Expansion**  
 Expanding environment variables in commands.
+
 **Command Execution**  
 Running binaries and built-in commands with pipes and redirections.
+
 **Error Handling**  
 Displaying appropriate error messages for invalid commands or syntax errors.
+
 **Memory Management**  
 Careful cleanup of all allocated resources.
 
