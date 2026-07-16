@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:27:31 by tchernia          #+#    #+#             */
-/*   Updated: 2025/07/02 18:59:03 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2026/07/14 19:56:43 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char*	get_user_name(void);
 
 int	init_shell(t_shell *shell, char **env)
 {
@@ -70,9 +72,7 @@ int	update_prompt(char **prompt)
 	char		*new_prompt;
 	const char	*color = "\001\033[1;35m\002";
 
-	tmp_name = ft_strdup(getenv("LOGNAME"));
-	if (!tmp_name)
-		tmp_name = ft_strdup("unknown");
+	tmp_name = get_user_name();
 	if (!tmp_name)
 		return (check_error(ENOMEM, "prompt", GENERAL));
 	new_prompt = ft_strjoin(color, tmp_name);
@@ -87,4 +87,19 @@ int	update_prompt(char **prompt)
 	free(*prompt);
 	*prompt = tmp_name;
 	return (0);
+}
+
+char*	get_user_name(void)
+{
+	char		*env_user;
+	char		*tmp_name;
+	
+	env_user = getenv("LOGNAME");
+	if (!env_user)
+		env_user = getenv("USER");
+	if (env_user)
+		tmp_name = ft_strdup(env_user);
+	else
+		tmp_name = ft_strdup("unknown");
+	return (tmp_name);
 }

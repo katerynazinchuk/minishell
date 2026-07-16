@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzinchuk <kzinchuk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchernia <tchernia@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:05:29 by kzinchuk          #+#    #+#             */
-/*   Updated: 2025/07/01 11:49:40 by kzinchuk         ###   ########.fr       */
+/*   Updated: 2026/07/14 19:58:50 by tchernia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ static t_token	*find_last_pipe(t_token *head, t_token *end);
 
 t_ast_node	*parse_command(t_token *head, t_token *end)
 {
-	t_token				*current;
 	t_ast_node			*new_ast_node;
 	t_command_parsing	*structure;
 
-	current = head;
 	new_ast_node = create_ast_node(AST_COMMAND, NULL);
 	if (!new_ast_node)
 		return (NULL);

@@ -27,8 +27,9 @@ Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-che
 **[@tetiana-cherni](https://github.com/tetiana-cherni):**
 
 - Environment variable expansion
-- Executor
-- Error handling
+- Execution engine
+- Centralised error handling
+- Shell lifecycle
 
 **Shared responsibilities:**
 
@@ -40,3 +41,21 @@ Developed in collaboration with [@tetiana-cherni](https://github.com/tetiana-che
 ```bash
 make
 ./minishell
+```
+
+### Run with Docker
+
+You can run minishell in an isolated Linux environment using Docker. This ensures the project runs identically across macOS, Windows and Linux.
+
+Prerequisites:
+- Docker Desktop installed and running
+
+1. Build the Docker image:
+```bash
+docker build -t minishell_img .
+```
+
+2. Run the interactive container:
+```bash
+docker run -it --rm minishell_img
+```
